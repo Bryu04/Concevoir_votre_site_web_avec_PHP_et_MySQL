@@ -1,0 +1,50 @@
+                                       Faites vos premiers pas en PHP
+
+Tirez un maximum de ce cours
+
+Bonjour et bienvenue dans ce cours !
+
+Rencontrez vos professeurs
+Mathieu Nebra
+
+
+Faut-il encore vous présenter Mathieu ? Le premier enseignant de la plateforme ! Tous ses cours sont très suivis et appréciés. Nous les mettons progressivement à jour pour qu’ils correspondent à ce que nous savons faire de mieux en termes de multimédia et de pédagogie.
+
+Mathieu, qui a écrit la première version de ce cours il y a plusieurs années, vous accompagnera dans ce cours pour vous présenter les notions clés. Vous le retrouverez en vidéo et dans le texte des chapitres.
+
+Mickaël Andrieu
+
+
+Mickaël est également auteur de cours chez OpenClassrooms… et ailleurs ! Sa vie professionnelle se partage notamment entre le développement PHP et la Data, domaine dans lequel il se forme actuellement.
+
+C’est Mickäel qui a mis à jour le cours de Mathieu, et qui a enregistré des vidéos tutorées, pour vous aider à mettre les concepts en pratique !
+
+Stéphane Bourse
+
+
+Stéphane cumule plusieurs années d'expérience dans le domaine du développement, se spécialisant notamment dans PHP et Symfony. Mais il a élargi ses compétences au domaine du JavaScript avec React. En tant que mentor chez OpenClassrooms, il apprécie partager son expertise et sa passion du développement.
+
+Stéphane a actualisé le cours pour PHP 8.2. Des exercices 'Exercez-vous' ont été intégrés pour permettre aux apprenants de construire progressivement le projet fil rouge et de renforcer leur compréhension des concepts enseignés.
+
+Ce cours a été mis à jour, cependant dans certaines vidéos vous remarquerez quelques petites incohérences. Cela ne devrait pas vous empêcher de réaliser le cours.
+
+Mettez-vous à niveau en HTML et CSS si besoin
+
+La plupart des sites web que vous visitez aujourd'hui, y compris OpenClassrooms, sont des sites dynamiques. Le seul prérequis pour apprendre à créer ce type de site est de savoir réaliser des sites statiques en HTML et CSS.
+
+Vous pouvez suivre le cours HTML/CSS sur OpenClassrooms pour vous mettre à niveau.
+
+Pour découvrir l'écosystème du développement web et tous les cours que nous vous proposons à ce sujet, nous vous invitons à faire un tour sur notre Carte des Connaissances ! Vous pourrez y voir en un clin d'œil les différents langages et spécialisations auxquels vous pourrez vous former avec OpenClassrooms !
+
+Pratiquez en suivant le projet fil rouge
+
+L'objectif de ce cours est de vous permettre de réaliser des sites web dynamiques, pas à pas.
+
+Pour cela, nous avons mis au point dans ce cours un projet fil rouge. Cela signifie que vous allez avancer chapitre par chapitre en apprenant comment réaliser un site web dynamique de partage de recettes de cuisine. Chaque chapitre vous donnera des clés supplémentaires pour avancer dans ce projet pratique.
+
+Vous pouvez trouver l'ensemble de fichiers liés au projet fil rouge dans notre repo Github.
+
+Ce cours commence par la base de la base… Et c'est le sujet du prochain chapitre ! Alors, vous êtes prêt ? On y va !
+
+##############################################################################################################
+
