@@ -48,3 +48,209 @@ Ce cours commence par la base de la base… Et c'est le sujet du prochain chapit
 
 ##############################################################################################################
 
+Découvrez le fonctionnement d'un site écrit en PHP
+
+Ce qui fait le succès du Web aujourd'hui, c'est sa simplicité, sa facilité d'accès. Un internaute lambda n'a pas besoin de savoir comment ça fonctionne concrètement. Et heureusement pour lui.
+
+En revanche, un apprenti webmaster tel que vous doit, avant toute chose, connaître les bases du fonctionnement d'un site web.
+
+Qu'est-ce qu'un serveur et un client ? Comment rend-on son site dynamique ? Et que signifient PHP et MySQL ?
+
+Pas d'inquiétude !
+
+Ce premier chapitre est là pour répondre à toutes ces questions et vous montrer que vous êtes capable d'apprendre à créer des sites web dynamiques !
+
+Faites la différence entre site statique et dynamique
+
+On considère qu'il existe deux types de sites web :
+
+  1. Les sites statiques.
+
+  2. Et les sites dynamiques.
+
+Découvrez le principe d'un site statique 
+
+Un site statique est réalisé uniquement à l'aide des langages HTML et CSS.
+
+Il fonctionne très bien, mais son contenu ne peut pas être mis à jour automatiquement : il faut que le webmaster modifie le code source pour y ajouter des nouveautés.
+
+Ce n'est pas très pratique quand on doit mettre à jour son site plusieurs fois dans la même journée…
+
+Un site statique est adapté pour un site « vitrine » (pour présenter par exemple son entreprise), mais sans aller plus loin.
+
+Ce type de site se fait de plus en plus rare aujourd'hui, car dès que l'on rajoute un élément d'interaction (comme un formulaire de contact), on ne parle plus de site statique mais de site dynamique.
+
+Découvrez le principe d'un site dynamique
+
+Plus complexe, un site dynamique utilise d'autres langages en plus de HTML et CSS, tels que PHP et MySQL.
+
+Le contenu de ce type de site est dit « dynamique » parce qu'il peut changer sans l'intervention du webmaster !
+
+Maintenant que vous comprenez la différence entre un site statique et un site dynamique, nous pouvons passer à la suite !
+
+OK, je vois la différence mais au fond, comment ça fonctionne ?
+
+J'y viens ! C'est l'objet de la suite de ce chapitre.
+
+Comprenez le fonctionnement d'un site web
+
+Lorsque vous voulez visiter un site web, vous tapez son adresse dans votre navigateur web. Mais ne vous êtes-vous jamais demandé comment faisait la page web pour arriver jusqu'à vous ?
+
+Il faut savoir qu'Internet est un réseau composé d'ordinateurs. Ceux-ci peuvent être classés en deux catégories :
+
+  1. Les clients : ce sont les ordinateurs des internautes comme vous. Votre ordinateur fait donc partie de la 
+     catégorie des clients. Chaque client représente un visiteur d'un site web.
+
+  2. Les serveurs : ce sont des ordinateurs puissants qui stockent et délivrent des sites web aux internautes, 
+     c'est-à-dire aux clients. La plupart des internautes n'ont jamais vu un serveur de leur vie. Pourtant, 
+     les serveurs sont indispensables au bon fonctionnement du Web. 
+
+Vous avez envie d'en savoir plus le modèle client-serveur ? N'hésitez pas à suivre le cours comprendre le Web.
+
+On résume : votre ordinateur est appelé le client, tandis que l'ordinateur qui détient le site web est appelé le serveur.
+
+Comment les deux communiquent-ils ?
+
+C'est justement là que se fait la différence entre un site statique et un site dynamique. Voyons ensemble ce qui change.
+
+Consultez un site statique
+Lorsque vous vous rendez sur site statique, c'est très simple. Cela se passe en deux temps :
+
+  1. Le client demande au serveur à voir une page web.
+
+  2. Le serveur lui répond en lui envoyant la page réclamée.
+
+La communication est donc plutôt basique :
+
+  - « Bonjour, je suis le client, je voudrais voir cette page web. »
+
+  - « Tiens, voilà la page que tu m'as demandée. »
+
+Sur un site statique, il ne se passe rien d'autre. Le serveur stocke des pages web et les envoie aux clients qui les demandent, sans les modifier.
+
+Consultez un site dynamique
+
+Lorsque vous consultez un site dynamique, il y a une étape intermédiaire : la page est générée.
+
+Qu'est-ce que ça veut dire ?
+
+Eh bien, il y a une étape supplémentaire, et elle se situe entre les deux étapes de base :
+
+  1. Le client demande au serveur à voir une page web.
+
+  2. Le serveur prépare la page spécialement pour le client (il la génère).
+
+  3. Le serveur lui envoie la page qu'il vient de générer.
+
+La page web est générée à chaque fois qu'un client la réclame. C'est précisément ce qui rend les sites dynamiques "vivants" : le contenu d'une même page peut changer d'un instant à l'autre.
+
+C'est comme cela que certains sites parviennent à afficher par exemple votre pseudonyme sur toutes les pages. Étant donné que le serveur génère une page à chaque fois qu'on lui en demande une, il peut la personnaliser en fonction des goûts et des préférences du visiteur.
+
+Exploitez les langages du Web
+
+Lorsqu'on crée un site web, on est amené à manipuler non pas un mais plusieurs langages. En tant que webmaster, il faut impérativement les connaître.
+
+Utilisez HTML et CSS pour un site statique
+De nombreux langages ont été créés pour produire des sites web. Deux d'entre eux constituent une base incontournable pour tous les webmasters.
+
+HTML
+C'est le langage à la base des sites web. Simple à apprendre, il fonctionne à partir de balises. Voici un exemple de code HTML :
+
+<p>Bonjour, je suis un <em>paragraphe</em> de texte !</p>
+
+CSS 
+
+C'est le langage de mise en forme des sites web. Alors que le HTML permet d'écrire le contenu de vos pages web et de le structurer, le langage CSS s'occupe de la mise en forme et de la mise en page. C'est en CSS que l'on choisit notamment la couleur, la taille des menus et bien d'autres choses encore.
+
+Voici un code CSS :
+
+div.banner {
+   text-align: center;
+   font-weight: bold;
+   font-size: 120%;
+}
+
+Ces langages sont la base de tous les sites web. Lorsque le serveur envoie la page web au client, il envoie en fait du code écrit avec les langages HTML et CSS.
+
+Le problème, c'est que lorsqu'on connaît seulement HTML et CSS, on ne peut produire que des sites statiques… et non des sites dynamiques ! Pour ces derniers, il est nécessaire de manipuler d'autres langages, en plus de HTML et CSS.
+
+Ajoutez PHP et MySQL pour un site dynamique
+
+Quel que soit le site web que l'on souhaite créer, HTML et CSS sont donc indispensables. Cependant, ils ne suffisent pas pour réaliser des sites dynamiques. Il faut les compléter avec d'autres langages.
+
+C'est justement tout l'objet de ce cours : vous allez apprendre à manipuler PHP et MySQL pour réaliser un site web dynamique.
+
+PHP
+
+C'est un langage que seuls les serveurs comprennent, et qui permet de rendre votre site dynamique. C'est PHP qui « génère » la page web comme on l'a vu sur un des schémas précédents.
+
+Ce sera le premier langage que nous découvrirons dans ce cours.
+
+Voici un code PHP :
+
+<?php echo "Vous êtes le visiteur n°" . $nbre_visiteurs; ?>
+
+Le langage PHP peut fonctionner seul, mais il ne prend vraiment de l'intérêt que s'il est combiné à un outil tel que MySQL.
+
+MySQL
+
+MySQL est ce que l'on appelle un Système de Gestion de Bases de Données (SGBD).
+
+Pour faire simple : son rôle est d'enregistrer des données de manière organisée, afin de vous aider à les retrouver facilement plus tard.
+
+C'est grâce à MySQL que vous pourrez enregistrer :
+
+  - la liste des membres de votre site web ;
+
+  - les messages postés sur le forum ;
+
+  - etc.
+
+Rappelez-vous, dans ce cours on découvre toutes les notions de base et on les met en pratique au travers d'un projet fil rouge : la création d'un site de recettes de cuisine !
+
+Le langage qui permet de communiquer avec la base de données s'appelle le SQL.
+
+Voici un code en langage SQL :
+
+SELECT id, auteur, message, datemsg FROM livreor ORDER BY datemsg DESC LIMIT 0, 10
+
+PHP et MySQL sont disponibles gratuitement et sous licence Open Source. Cela signifie une chose essentielle : vous n'aurez pas à débourser un centime pour construire votre site web !
+
+Oublions pour le moment MySQL et concentrons-nous sur PHP.
+
+Les clients sont incapables de comprendre le code PHP : ils ne connaissent que le HTML et le CSS. Seul le serveur est capable de lire du PHP. Le rôle de PHP est justement de générer du code HTML, code qui est ensuite envoyé au client de la même manière qu'un site statique, comme le montre la figure suivante :
+
+PHP est un langage de programmation utilisé sur de nombreux serveurs pour prendre des décisions. C'est PHP qui décide du code HTML qui sera généré et envoyé au client à chaque fois.
+
+Pour bien comprendre l'intérêt de tout cela, prenons un exemple.
+
+On peut écrire en PHP :
+
+« Si le visiteur est membre de mon site et qu'il s'appelle Jonathan, affiche Bienvenue Jonathan sur la page web. En revanche, si ce n'est pas un membre de mon site, affiche Bienvenue à la place, et propose au visiteur de s’inscrire. »
+
+C'est un exemple très basique de site dynamique : selon que vous êtes un membre enregistré ou non, vous ne verrez pas les mêmes choses, et n'aurez peut-être pas accès au même contenu.
+
+En résumé
+
+- Il existe deux types de sites web :
+
+      1. Les sites statiques : réalisés en HTML et CSS, leur contenu ne peut être mis à jour que par le 
+         webmaster.
+
+      2. Les sites dynamiques : réalisés avec d'autres outils comme PHP et MySQL en plus de HTML et CSS, ils 
+         permettent aux visiteurs de participer à la vie du site, de poster des messages… bref, de rendre le 
+         site vivant !
+
+- Les visiteurs du site sont appelés les "clients". Ils demandent au serveur qui héberge le site de leur 
+  transmettre les pages web.
+
+- PHP est un langage exécuté par le serveur. Il permet de personnaliser la page en fonction du visiteur, de 
+  traiter ses messages, d'effectuer des calculs, etc. Il génère une page HTML.
+
+- MySQL est un système de gestion de bases de données. Il se charge du stockage des informations (liste des 
+  messages, des membres…).
+
+Dans le prochain chapitre, nous allons voir comment vous préparer pour commencer à coder !
+
+##############################################################################################################
+
