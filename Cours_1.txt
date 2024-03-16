@@ -823,3 +823,116 @@ Dans ce chapitre vous avez découvert les toutes premières notions qui vont vou
 
 ##############################################################################################################
 
+Configurez PHP pour visualiser les erreurs
+
+Avant d'aller plus loin, il est important de faire un petit point à propos de quelque chose que vous allez sans doute beaucoup rencontrer (et ce n'est absolument pas grave !) : les erreurs.
+
+En effet, lorsqu'un script PHP plante, le comportement par défaut de PHP est de n'afficher qu'une page blanche (une page de navigateur sans contenu).
+
+Pour faciliter notre vie de développeur, il va falloir faire en sorte que les erreurs PHP s'affichent. Sinon, nous aurons de grosses difficultés par la suite pour comprendre pourquoi nos pages ne marchent pas.
+
+Nous allons donc changer la configuration de PHP.
+
+Configurez PHP pour afficher les erreurs
+
+Eh oui, PHP est configurable !
+
+Si les erreurs s'affichent déjà bien dans votre navigateur, inutile de faire les manipulations qui vont suivre !
+
+Par défaut, PHP n'affiche pas les erreurs.
+
+Pourquoi ?
+
+Pour des raisons de sécurité ! C'est pour éviter de donner trop d'indications aux utilisateurs, tout simplement.
+
+Un mantra à vous répéter :
+
+"Moins l'utilisateur en sait sur mon application, mieux mon application se portera."
+
+La configuration de PHP se fait dans un fichier appelé php.ini
+
+Où est-ce qu'il se trouve, ce fichier ?
+
+En fait, vous allez devoir le localiser. Mais pas de panique, je vous explique tout !
+
+Localisez le fichier de configuration PHP du serveur web
+
+Pour connaître l'ensemble des informations relatives au PHP utilisé par le serveur web, il existe une commande PHP, phpinfo() (on parle de fonction, mais on y reviendra).
+
+Nous allons utiliser phpinfo() pour localiser le fichier de configuration, puis le modifier.
+
+Je vous invite donc à créer un fichier PHP avec le code qui suit :
+
+<?php
+
+phpinfo();
+
+Enregistrez-le sous le nom info.php  dans le dossier accessible pour votre serveur web (normalement htdocs ou www  ).
+
+Et enfin, affichez la page. Vous devriez obtenir le résultat suivant :
+
+Cette page contient toute une flopée d'informations, dont :
+
+  - la version de PHP utilisée (pour moi, il s'agit de PHP 8.2.12) ;
+
+  - le type de serveur web (ici Apache) ;
+
+  - et la localisation du (ou des fichiers) de configuration pour PHP.
+
+Notez que vous pouvez aussi accéder au phpinfo depuis le menu "PHPINFO" en haut de la page d'accueil de XAMPP.
+
+Retrouvez la ligne "Loaded Configuration File" (ce qui signifie "fichier de configuration chargé", en anglais), et regardez la valeur. Dans mon cas, on peut voir ceci :
+
+Je vais donc ouvrir ce fichier et le modifier.
+
+Modifiez le fichier de configuration PHP
+
+Il faut s'assurer que :
+
+ - la clé de configuration error_reporting a la valeur E_ALL
+
+ - la clé de configuration  display_errors a la valeur On 
+
+Allons-y étape par étape :
+
+ 1. Effectuez une recherche dans le fichier avec le terme error_reporting . S'il n'y a pas écrit  
+    error_reporting = E_ALL , remplacez-la par la bonne valeur.
+
+ 2. Ensuite, effectuez une nouvelle recherche dans le fichier avec le terme display_errors . S'il n'y a pas 
+    écrit display_errors = On , remplacez-la par la bonne valeur.
+
+ 3. Enregistrez le fichier.
+
+ 4. Relancez le serveur pour qu'il prenne en compte vos modifications. Il suffit de relancer XAMPP, par 
+    exemple.
+
+Dans le fichier de configuration, le point-virgule ( ; ) en début de ligne signifie que tout ce qui suit est un commentaire, et est donc ignoré.
+
+Si l'une de ces lignes (ou les deux) sont commentées, il suffit de retirer le point-virgule en début de ligne.
+
+Faites attention à ce que ces lignes de configuration n'existent qu'une seule fois dans le fichier : en effet, ne créez pas ces lignes si elles existaient déjà.
+
+Testez l'affichage des erreurs
+
+Nous allons maintenant créer une erreur dans un script PHP pour nous assurer que l'erreur s'affiche dans le navigateur.
+
+Dans le script (que nous avons créé pour afficher les informations relatives à PHP pour le serveur web ; nous l'avions appelé  info.php  ), retirez une parenthèse, puis enregistrez le fichier.
+
+Ça devrait donner ceci :
+
+<?php
+
+phpinfo(;
+
+Oui, je sais, il manque une parenthèse, c'est une erreur, on le fait exprès.
+
+Maintenant, affichez la page à l'aide de votre navigateur web.
+
+Et voilà !
+
+Si vous voyez bien cette erreur, c'est que PHP est configuré pour afficher le détail des erreurs.
+
+Ouf ! Ça nous fera gagner beaucoup de temps pour comprendre nos problèmes par la suite.
+
+En résumé
+
