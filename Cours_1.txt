@@ -807,3 +807,19 @@ echo "J'ai 92 ans.";
 Ici, les commentaires n'ont pas grande utilité, mais vous verrez de quelle façon je les utilise dans les prochains chapitres pour vous décrire le code PHP.
 
 En résumé
+
+- Les pages web contenant du PHP ont l'extension .php 
+
+- Une page PHP est une simple page HTML qui contient des instructions en langage PHP.
+
+- Les instructions PHP sont placées dans une balise ouvrante et fermante : <?php ?>  
+
+- Pour afficher du texte en PHP, on utilise l'instruction echo  
+
+- Il est possible d'ajouter des commentaires en PHP pour décrire le fonctionnement du code. On utilise pour 
+  cela les symboles // ou /* */  
+
+Dans ce chapitre vous avez découvert les toutes premières notions qui vont vous permettre de passer à la suite : visualiser ses erreurs !
+
+##############################################################################################################
+
