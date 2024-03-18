@@ -936,3 +936,17 @@ Ouf ! Ça nous fera gagner beaucoup de temps pour comprendre nos problèmes par 
 
 En résumé
 
+- PHP dispose d'un mode de déboggage pour afficher les erreurs contenues dans vos scripts.
+
+- Pour activer le déboggage, on modifie la configuration de PHP en éditant le fichier php.ini.
+
+- On peut trouver la localisation de ce fichier (et plein d'autres informations) en exécutant la fonction 
+  phpinfo() <?php phpinfo(); ?>  .
+
+- Pour activer l'affichage, on change la propriété display_errors à On et on filtre le type d'erreurs avec 
+  error_reporting (on choisira E_ALL pour voir toutes les erreurs !).
+
+C'est la fin de cette première partie, maintenant testez vos connaissances avec le quiz !
+
+##############################################################################################################
+
