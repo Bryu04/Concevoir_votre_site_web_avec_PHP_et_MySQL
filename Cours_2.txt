@@ -1861,3 +1861,41 @@ $ php exemple.php
 Voilà les fonctions qu'il fallait connaître pour faire une recherche dans un tableau. Il y en a d'autres, mais vous connaissez maintenant les principales.
 
 Exercez-vous 
+
+Avec tout ce que nous avons appris dans ce chapitre, nous pouvons améliorer le code d'affichage des recettes de notre projet fil rouge.
+
+1. Utilisez le tableau fourni  $recipes  qui contient plusieurs recettes. Chaque recette possède des clés telles que  
+        title  ,  recipe  ,  author  et  is_enabled  : 
+
+<?php
+$recipes = [
+    [
+        'title' => 'Cassoulet',
+        'recipe' => 'Etape 1 : des flageolets !',
+        'author' => 'mickael.andrieu@exemple.com',
+        'is_enabled' => true,
+    ],
+    [
+        'title' => 'Couscous',
+        'recipe' => 'Etape 1 : de la semoule',
+        'author' => 'mickael.andrieu@exemple.com',
+        'is_enabled' => false,
+    ],
+    [
+        'title' => 'Escalope milanaise',
+        'recipe' => 'Etape 1 : prenez une belle escalope',
+        'author' => 'mathieu.nebra@exemple.com',
+        'is_enabled' => true,
+    ],
+];
+
+2. Pour chaque recette, vérifiez si la clé  is_enabled  existe dans la recette et si sa valeur est égale à vrai (  true  ).
+
+3. Si la recette est activée (  is_enabled  à vrai), affichez le titre, la recette et l'auteur de la recette dans des balises 
+        HTML appropriées.
+
+4. Testez votre page web : vérifiez que l’affichage est identique à l’image en dessous :
+
+Vous pouvez retrouver la solution dans le dossier P2C4 du GitHub.
+
+En résumé
