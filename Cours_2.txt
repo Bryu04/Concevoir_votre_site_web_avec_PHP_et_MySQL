@@ -1,0 +1,394 @@
+                                    Réalisez un site web dynamique avec PHP
+
+Décrivez les éléments de votre projet à l'aide de variables
+
+Bienvenue dans la partie 2 de ce cours, nous passons aux choses sérieuses ! Nous démarrons le projet fil rouge pour développer notre site web dynamique : un site de partage de recettes de cuisine. Et ça commence par une notion fondamentale : les variables.
+
+Les variables sont indispensables à tout langage de programmation, et en PHP on n'y échappe pas.
+
+Pour pouvoir développer notre projet de partage, nous allons avoir besoin de structurer votre application autour d'objets qui la composent. C'est ce qu'on appelle des objets "métiers".
+
+Pour un site de partage de recettes de cuisine, c'est simple :
+
+  - Des utilisateurs se connectent : ils ont un nom, un e-mail, un mot de passe, un âge...
+
+  - Ils consultent ou créent des recettes : elles ont un titre, un corps (la recette), un statut d'activation...
+
+  - Et ainsi de suite pour chacun des objets qui constituent votre projet.
+
+OK je vois, mais concrètement, qu'est-ce que c'est, une "variable" ?
+
+J'y arrive…
+
+Comprenez ce qu'est une variable
+
+Rien qu'avec leur nom, vous devez vous dire que c'est quelque chose qui change tout le temps.
+
+En effet, le propre d'une variable c'est de pouvoir varier.
+
+Une variable, c'est une petite information stockée en mémoire temporairement.
+
+En PHP, la variable (l'information) existe tant que la page est en cours de génération. Dès que la page PHP est générée, toutes les variables sont supprimées de la mémoire car elles ne servent plus à rien.
+
+Ce n'est donc pas un fichier qui reste stocké sur le disque dur, mais une petite information temporaire présente en mémoire vive.
+
+C'est à vous de créer des variables. Vous en créez quand vous en avez besoin pour retenir des informations.
+
+Donnez toujours un nom et une valeur aux variables
+
+Une variable est toujours constituée de deux éléments :
+
+  - son nom : pour pouvoir la reconnaître, vous devez donner un nom à votre variable. Par exemple age  ;
+
+  - sa valeur : c'est l'information qu'elle contient, et qui peut changer. Par exemple :  17  .
+
+Ici, je vous ai donné l'exemple d'une variable appelée age  qui a pour valeur  17  .
+
+On peut modifier quand on veut la valeur de cette variable, faire des opérations dessus, etc. Et quand on en a besoin, on l'appelle (par son nom), et elle nous dit gentiment la valeur qu'elle contient.
+
+Maintenant que vous comprenez ça, allons plus loin : il existe différents types de variables.
+
+Découvrez les différents types de variables
+
+Les variables sont capables de stocker différents types d'informations. On parle de types de données. Voici les principaux types à connaître.
+
+  - Les chaînes de caractères (string) : c'est le nom informatique qu'on donne au texte. 
+
+  - Les nombres entiers (int) : ce sont les nombres du type 1, 2, 3, 4, etc. On compte aussi parmi eux les 
+    entiers relatifs : -1, -2, -3…
+
+  - Les nombres décimaux (float ) : ce sont les nombres à virgule, comme 14,738. Attention, les nombres 
+    doivent être écrits avec un point au lieu de la virgule (c'est la notation anglaise).
+
+  - Les booléens (bool ) : c'est un type très important qui permet de stocker soit vrai soit faux. 
+
+  - Rien (NULL ) : aussi bizarre que cela puisse paraître, on a parfois besoin de dire qu'une variable ne 
+    contient rien. Ce n'est pas vraiment un type de données, mais plutôt l'absence de type.
+
+Cela devrait vous donner une idée de tout ce que PHP est capable de stocker en mémoire. Ces types suffiront pour la création de notre site !
+
+Maintenant, allons-y !
+
+OK mais comment créer une variable et comment afficher ce qu'elle contient ?
+
+C'est justement ce que j'allais vous expliquer. 😎
+
+Affectez une valeur à une variable
+
+Regardez ce code d'exemple :
+
+<?php
+$userAge = 17;
+?>
+
+Avec ce code PHP, on vient en fait de créer une variable :
+
+  - son nom est userAge  ;
+
+  - sa valeur est 17  .
+
+Notez qu'on ne peut pas mettre d'espace dans un nom de variable. On utilise donc une majuscule pour "détacher" visuellement les mots et les rendre plus lisibles.
+
+C'est ce que l'on appelle la convention camelCase (cela fait référence aux bosses d'un chameau).
+
+Quand vous nommez des variables, évitez les accents, les cédilles et tout autre symbole : PHP ne les apprécie pas trop…
+
+C'est pour cela que j'ai écrit age et non  âge  .
+
+Analysons dans le détail le code qu'on vient de voir.
+
+  - D'abord, on écrit le symbole "dollar" ($) : il précède toujours le nom d'une variable. C'est comme un 
+    signe de reconnaissance, si vous préférez : ça permet de dire à PHP "J'utilise une variable". 
+
+  - Ensuite, il y a le signe "égal" (= ) : celui-là, c'est logique, c'est pour dire que  $userAge  est égal à…
+
+  - À la suite, il y a la valeur de la variable, ici 17.
+
+  - Enfin, il y a l'incontournable point-virgule ( ;) qui permet de terminer l'instruction.
+
+OK super, mais concrètement, qu'est-ce que le code précédent afficherait ?
+
+Rien du tout !
+
+Rien ne s'affiche tant que vous n'utilisez pas  echo  .
+
+Là, le serveur a juste créé la variable temporairement en mémoire, mais il n'a rien fait d'autre.
+
+Supposons maintenant que l'on écrive ceci :
+
+<?php
+$userAge = 17; // La variable est créée et vaut 17
+$userAge = 23; // La variable est modifiée et vaut 23
+$userAge = 55; // La variable est modifiée et vaut 55
+?>
+
+Que se passera-t-il ?
+
+La variable $userAge  va être créée et prendre pour valeur, dans l'ordre : 17, 23, puis 55.
+
+Tout cela va très vite : l'ordinateur étant très rapide, vous n'aurez pas le temps de dire « ouf » que tout ce code PHP aura été exécuté.
+
+Comme tout à l'heure, rien ne s'affiche. Seulement, quelque part dans la mémoire de l'ordinateur, une petite zone nommée userAge vient de prendre la valeur 17, puis 23, puis 55.
+
+Utilisez les types de données
+
+Vous vous souvenez des types de données dont je vous ai parlé il y a quelques minutes ? Lesstring , int , float ...
+
+Voici un exemple de variable pour chacun de ces types.
+
+Le type string  (chaîne de caractères)
+Ce type permet de stocker du texte.
+
+Pour cela, vous devez entourer votre texte de :
+
+  - guillemets doubles  ""  ;
+
+  - ou de guillemets simples ''  (attention, ce sont des apostrophes).
+
+Par exemple, pour conserver en mémoire les noms et mails de nos utilisateurs :
+
+<?php
+$fullname = "Mathieu Nebra";
+$email = 'mathieu.nebra@exemple.com';
+?>
+
+Attention, petit piège : si vous voulez insérer un guillemet simple alors que le texte est entouré de guillemets simples, il faut l'échapper en insérant un antislash devant. Il en va de même pour les guillemets doubles.
+
+Voici un exemple pour bien comprendre :
+
+<?php
+$variable = "Mon \"nom\" est Mathieu";
+$variable = 'Je m\'appelle Mathieu';
+?>
+
+En effet, si vous oubliez de mettre un antislash, PHP va croire que c'est la fin de la chaîne et il ne comprendra pas le texte qui suivra (et vous aurez en fait un message Parse error).
+
+Vous pouvez en revanche insérer sans problème des guillemets simples au milieu de guillemets doubles, et inversement :
+
+<?php
+$variable = 'Mon "nom" est Mathieu';
+$variable = "Je m'appelle Mathieu";
+?>
+
+La différence est subtile, faites attention. Il y a d'ailleurs une différence plus importante entre les deux types de guillemets, dont nous parlerons plus loin.
+
+Le type int  (nombre entier)
+
+Il suffit tout simplement d'écrire le nombre que vous voulez stocker, sans guillemets :
+
+<?php
+$userAge = 17;
+?>
+
+Le type float  (nombre décimal)
+
+Vous devez écrire votre nombre avec un point au lieu d'une virgule. C'est la notation anglaise.
+
+<?php
+$price = 57.3;
+?>
+
+Le type bool  (booléen)
+
+Pour dire si une variable vaut vrai ou faux, vous devez écrire le mot true  ou false  sans guillemets autour (ce n'est pas une chaîne de caractères !) :
+
+<?php
+$isAuthor = true;
+$isAdministrator = false;
+?>
+
+Une variable vide avec NULL
+
+Si vous voulez créer une variable qui ne contient rien, vous devez lui passer le mot-clé NULL  (vous pouvez aussi l'écrire en minuscules :  null  ).
+
+<?php
+$noValue = NULL;
+?>
+
+Cela sert simplement à indiquer que la variable ne contient rien, tout du moins pour le moment.
+
+Bon, nous avons appris à créer des variables et à stocker des informations à l'intérieur. Mais pour le moment, aucun de nos codes sources n'affiche quoi que ce soit.
+
+Voyons donc comment faire.
+
+Affichez le contenu d'une variable
+
+Vous vous souvenez que l'on peut afficher du texte avec echo  ?
+
+On peut aussi s'en servir pour afficher la valeur d'une variable !
+
+<?php
+$fullname = 'Mathieu Nebra';
+echo $fullname;
+?>
+
+Comme vous le voyez, il suffit d'écrire le nom de la variable que vous voulez afficher.
+
+Au fait, on ne doit pas mettre de guillemets après le echo, comme tu nous as appris ?
+
+Non, quand il s'agit d'une variable, on ne met pas de guillemets autour.
+
+Créez un fichier PHP avec ce code source pour le tester. Inutile de mettre tout le code HTML autour, ce n'est pas grave, ce ne sera pas une « vraie » page HTML valide ; mais c'est bien suffisant pour nos tests.
+
+Le contenu qui se trouve à l'intérieur de la variable s'affiche dans la page (ici, Mathieu Nebra).
+
+Concaténez une variable
+
+Non, ce n'est pas une insulte. Cela signifie assemblage. ;-)
+
+En fait, écrire "Mathieu Nebra" tout seul comme on l'a fait n'est pas très parlant. On aimerait écrire du texte autour pour dire : « Bienvenue Mathieu Nebra ». La concaténation est justement un moyen d'assembler du texte et des variables.
+
+Comment faire cela ?
+
+Les petits malins auront l'idée d'écrire trois instructions echo  :
+
+<?php
+$fullname = "Mathieu Nebra";
+echo "Bonjour ";
+echo $fullname;
+echo " et bienvenue sur le site !";
+?>
+
+Vous pouvez tester et vérifier dans votre navigateur que ça fonctionne.
+
+Mais il y a plus malin : on peut tout faire sur une ligne.
+
+Pour cela, il y a deux méthodes :
+
+Avec des guillemets simples.
+
+Ou avec guillemets doubles.
+
+Et c'est là qu'on va voir, qu'entre les deux, il y a une différence !
+
+Effectuez l'interpolation avec des guillemets doubles 
+Attendez, on parlait de concaténation, mais qu'est-ce que c'est que cette interpolation et pourquoi devrais-je m'en soucier en PHP ?
+
+Eh bien, l'interpolation en PHP vous permet d'inclure directement des variables dans une chaîne de caractères sans avoir à les concaténer séparément, ce qui rend votre code plus lisible et concis.
+
+Concrètement, essayez ce code :
+
+<?php
+    $fullname = "Mathieu Nebra";
+    echo "Bonjour {$fullname} et bienvenue sur le site !";
+?>
+
+Ça affiche :  Bonjour Mathieu Nebra et bienvenue sur le site !
+
+Attention à ne pas oublier d'entourer la variable d'accolades pour éviter les erreurs.
+
+Dans cet exemple,  echo "Bonjour, $fullname123!";  nous aurons un message d'erreur indiquant que la variable  $fullname123  n'est pas définie. Maintenant, si nous ajoutons les accolades  echo "Bonjour, {$fullname}123!";  alors la variable est interprétée correctement et nous aurons "Bonjour, Mathieu Nebra123!".
+
+En effet, lorsque vous utilisez des guillemets doubles, les variables qui se trouvent à l'intérieur sont analysées et remplacées par leur vraie valeur.
+
+Pratique, non?
+
+Concaténez avec des guillemets simples
+Si vous écrivez le code précédent entre guillemets simples, vous allez avoir une drôle de surprise :
+
+<?php
+    $fullname = 'Mathieu Nebra';
+    echo 'Bonjour {$fullname} et bienvenue sur le site !'; // ERREUR !
+?>
+
+Ça affiche :   Bonjour {$fullname} et bienvenue sur le site !  .
+
+Miséricorde ! On ne peut pas concaténer du texte avec des guillemets simples ?
+
+Eh bien, si ! Mais cette fois, il va falloir écrire la variable en dehors des guillemets et séparer les éléments les uns des autres à l'aide d'un point. Regardez :
+
+<?php
+    $fullname = 'Mathieu Nebra';
+    echo 'Bonjour ' . $fullname . ' et bienvenue sur le site !'; // OK
+?>
+
+Cette fois, ça affiche bien comme on voulait.
+
+OK, j'ai vu comment concaténer avec des guillemets simples, mais dans quels cas devrais-je utiliser l'interpolation ou la concaténation ?
+
+En règle générale, on utilise l'interpolation lorsqu'on a besoin d'incorporer des variables directement dans une chaîne de caractères de manière propre et concise. C'est idéal pour rendre le code plus lisible.
+
+En revanche, s'il y a des expressions complexes, des conditions ou des opérations à effectuer pendant la concaténation, alors la concaténation traditionnelle avec des guillemets simples reste une option solide. L'essentiel est de choisir l'approche qui rend le code le plus clair et le plus maintenable en fonction du contexte du projet.
+
+Faites des calculs simples
+
+On va maintenant faire travailler votre ordinateur, et vous allez voir qu'il encaisse les calculs sans broncher. Eh oui, PHP sait aussi faire des calculs !
+Oh je vous rassure : on ne va pas faire des calculs tordus, juste des additions, des soustractions, des multiplications et des divisions. C'est du niveau de tout le monde, non ? 😬😄
+
+Ici, comme vous vous en doutez, on ne va travailler que sur des variables qui contiennent des nombres.
+
+Les opérations de base : addition, soustraction…
+Les signes à connaître pour faire les quatre opérations de base (vous les trouverez sur votre pavé numérique, à droite du clavier, en principe) sont représentés par le tableau suivant. En complément vous avez l'opération modulo, c'est-à-dire le reste d'une division euclidienne.
+
+Après, pour vous en servir, ça coule de source. Voici quelques exemples :
+
+<?php
+$number = 2 + 4; // $number prend la valeur 6
+$number = 5 - 1; // $number prend la valeur 4
+$number = 3 * 5; // $number prend la valeur 15
+$number = 10 / 2; // $number prend la valeur 5
+
+// Allez on rajoute un peu de difficulté
+$number = 3 * 5 + 1; // $number prend la valeur 16
+$number = (1 + 2) * 2; // $number prend la valeur 6
+?>
+
+Allez quoi, boudez pas, un peu de calcul mental ça n'a jamais fait de mal à personne.
+Vérifiez mes calculs : comme vous pouvez le voir il n'y a rien de bien compliqué dans tout ça.
+
+Seulement, il ne faut pas avoir peur de « jongler » avec les variables.
+Voici des calculs avec plusieurs variables :
+
+<?php
+$number = 10;
+$result = ($number + 5) * $number; // $result prend la valeur 150
+?>
+
+C'est de la pure logique, je ne peux rien vous dire de plus.
+Si vous avez compris ces bouts de code, vous avez tout compris.
+
+Le modulo
+Il est possible de faire un autre type d'opération un peu moins connu : le modulo. Cela représente le reste de la division entière.
+
+Par exemple, 6 / 3 = 2 et il n'y a pas de reste. En revanche, 7 / 3 = 2 (car le nombre 3 « rentre » 2 fois dans le nombre 7) et il reste 1. Vous avez fait ce type de calculs à l'école primaire, souvenez-vous !
+
+Le modulo permet justement de récupérer ce reste :
+
+<?php
+$number = 10 % 5; // $number prend la valeur 0 car la division tombe juste
+$number = 10 % 3; // $number prend la valeur 1 car il reste 1
+?>
+OK génial, et les autres opérations ?
+
+Je passe sous silence les opérations plus complexes telles que :
+
+ - la racine carrée ;
+
+ - l'exponentielle ;
+
+ - la factorielle ;
+
+ - etc.
+
+Toutes ces opérations peuvent être réalisées en PHP mais il faudra passer par ce qu'on appelle des fonctions, une notion que l'on découvrira plus tard. Les opérations basiques que l'on vient de voir sont amplement suffisantes pour la programmation PHP de tous les jours.
+
+En résumé
+
+- Une variable est une petite information qui reste stockée en mémoire le temps de la génération de la page 
+  PHP. Elle a un nom et une valeur.
+
+- Il existe plusieurs types de variables qui permettent de stocker différents types d'informations : du texte 
+  ( string  ), des nombres entiers ( int  ), des nombres décimaux (float), des booléens pour stocker vrai ou 
+  faux ( bool  ), etc.
+
+- En PHP, un nom de variable commence par le symbole dollar : $age  , par exemple.
+
+- La valeur d'une variable peut être affichée avec l'instruction echo  .
+
+- Il est possible de faire des calculs mathématiques entre plusieurs variables : addition, soustraction, 
+  multiplication…
+
+Maintenant que vous savez comment on travaille avec les variables, nous allons nous pencher sur un autre concept important : les conditions.
+
+##############################################################################################################
+
