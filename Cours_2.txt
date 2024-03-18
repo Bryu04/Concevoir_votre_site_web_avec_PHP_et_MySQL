@@ -906,3 +906,369 @@ Que de notions importantes dans cette partie de mise en pratique ! Nous allons m
 
 ##############################################################################################################
 
+Affichez une liste de recettes à l'aide des boucles
+
+Dans notre site de partage de recettes de cuisine, vous aurez sûrement envie de donner la possibilité à vos utilisateurs de commenter les recettes.
+
+Pour cela, nous allons utiliser des tableaux.
+
+Quoi ? Je croyais qu'on allait parler des boucles dans ce chapitre…
+
+Les tableaux sont des structures capables de conserver en mémoire plusieurs éléments. Et c'est ensuite grâce aux boucles que nous allons pouvoir :
+
+  1. Parcourir les différentes recettes.
+
+  2. Les afficher à l'aide du langage HTML.
+
+Nous reviendrons sur les tableaux en détail dans le chapitre suivant, c'est l'un des éléments les plus utiles de PHP et je n'ai pas souvenir d'une seule de mes applications qui n'ait pas eu besoin de tableau.
+
+À la fin de ce chapitre, non seulement vous saurez parcourir une liste d'éléments, mais vous aurez également commencé à construire pour de bon votre application.
+
+Utilisez un tableau pour lister des éléments
+
+Reprenons notre projet là où nous l'avions laissé au chapitre précédent.
+
+Nous avons :
+
+des utilisateurs ;
+
+des recettes ;
+
+et peut-être des commentaires.
+
+Avec les connaissances que vous avez pour le moment, voici comment vous pourriez définir deux utilisateurs :
+
+<?php
+
+// Premier utilisateur
+$userName1 = 'Mickaël Andrieu';
+$userEmail1 = 'mickael.andrieu@exemple.com';
+$userPassword1 = 'S3cr3t';
+$userAge1 = 34;
+
+// Deuxième utilisatrice
+$userName2 = 'Laurène Castor';
+$userEmail2 = 'laurene.castor@exemple.com';
+$userPassword2 = 'P4ssW0rD';
+$userAge2 = 28;
+
+// ... et ainsi de suite pour les autres utilisateurs.
+
+Pour afficher ces utilisateurs (ou même des recettes), je vais devoir créer des variables pour chacun des éléments qui constituent mes objets ?
+
+Non, heureusement !
+
+En PHP, il existe un type de structure appelée "tableau". Elle permet de gérer des objets ayant plusieurs propriétés qui ont besoin d'être rassemblées entre elles.
+
+Par exemple, voici un premier tableau :
+
+<?php
+
+$user1 = ['Mickaël Andrieu', 'email', 'S3cr3t', 34];
+
+echo $user1[0]; // "Mickaël Andrieu"
+echo $user1[1]; // "email"
+echo $user1[3]; // 34
+
+Notez pour le moment que :
+
+  - un tableau se déclare entre crochets : [ ] ;
+
+  - il possède des indices : 0, 1, 2, … ;
+
+  - on peut accéder à un élément du tableau à partir de ces clés.
+
+Les indices d'un tableau commencent à 0, et pas à 1.
+
+Mais la puissance des tableaux ne s'arrête pas là !
+
+Vous pouvez construire des tableaux de tableaux :
+
+<?php
+
+$mickael = ['Mickaël Andrieu', 'mickael.andrieu@exemple.com', 'S3cr3t', 34];
+$mathieu = ['Mathieu Nebra', 'mathieu.nebra@exemple.com', 'devine', 33];
+$laurene = ['Laurène Castor', 'laurene.castor@exemple.com', 'P4ssw0rD', 28];
+
+$users = [$mickael, $mathieu, $laurene];
+
+echo $users[1][1]; // "mathieu.nebra@exemple.com"
+
+Maintenant, comment boucler sur cette liste d'utilisateurs (ou de recettes) pour afficher les recettes ?
+
+C'est exactement ce que nous allons voir maintenant !
+
+Utilisez une boucle simple :  while
+
+Attendez mais on n'a même pas vu ce qu'était une boucle, à quoi ça sert ?
+
+C'est une structure qui fonctionne sur le même principe qu'une condition  if… else  .
+
+D'ailleurs, vous allez voir qu'il y a beaucoup de similitudes avec le chapitre sur les conditions.
+
+Concrètement, une boucle permet de répéter des instructions plusieurs fois. En clair : c'est un gain de temps, c'est très pratique, et bien souvent indispensable.
+
+On peut, si vous voulez, présenter le principe avec le schéma suivant :
+
+Voilà ce qui se passe dans une boucle :
+
+  1. Comme d'habitude, les instructions sont d'abord exécutées dans l'ordre, de haut en bas.
+
+  2. À la fin des instructions, on retourne à la première.
+
+  3. On recommence à lire les instructions dans l'ordre.
+
+  4. Et on retourne à la première, etc.
+
+Le seul hic dans ce schéma, c'est que ça ne s'arrête jamais ! Les instructions seraient réexécutées à l'infini !
+C'est pour cela que, quel que soit le type de boucle, while  ou for, il faut indiquer une condition.
+
+Tant que la condition est remplie, les instructions sont réexécutées.
+
+Dès que la condition n'est plus remplie, on sort enfin de la boucle. Ouf !
+
+Voici comment faire avec une boucle simple :  while  . 
+
+<?php
+while ($isValid) {
+    // instructions à exécuter dans la boucle
+}
+?>
+while  peut se traduire par « tant que ».
+
+Ici, on demande à PHP :
+
+TANT QUE $isValid est vrai, exécuter ces instructions.
+
+Les instructions qui sont répétées en boucle se trouvent entre les accolades {  et  }  .
+
+Mais bon, là je ne vous apprends rien, vous commencez à avoir l'habitude de voir des accolades partout. 🤓
+
+Et voilà, il n'y a guère plus de choses à savoir. Cependant, je vais quand même vous montrer un ou deux exemples d'utilisation de boucles, pour que vous voyiez à quoi ça peut servir.
+
+Pour notre premier exemple, on va supposer que vous avez été puni et que vous devez recopier 100 fois :
+
+« Je ne dois pas regarder les mouches voler quand j'apprends le PHP ».
+
+Avant, il fallait prendre son mal en patience et ça prenait des heures… Avec PHP, on va faire ça en un clin d'œil !
+
+Regardez ce code :
+
+<?php
+$lines = 1;
+
+while ($lines <= 100) {
+    echo 'Je ne dois pas regarder les mouches voler quand j\'apprends le PHP.<br />';
+    $lines++; // $lines = $lines + 1
+}
+?>
+
+Ce qui affiche... un grand nombre de lignes :
+
+La boucle pose la condition :
+
+TANT QUE $lines est inférieur ou égal à 100.
+
+Dans cette boucle, il y a deux instructions :
+
+  1. echo permet d'afficher du texte en PHP. À noter qu'il y a une balise HTML <br />  à la fin : cela permet d'aller à la 
+             ligne (vu que vous connaissez le HTML, ça n'a rien de surprenant : chaque phrase sera écrite sur une seule ligne).
+
+  2. $lines++; est une façon plus courte d'ajouter 1 à la variable. On appelle cela l'incrémentation (ce nom barbare 
+              signifie tout simplement que l'on a ajouté 1 à la variable).
+
+Chaque fois qu'on fait une boucle, la valeur de la variable augmente : 1, 2, 3, 4… 99, 100…
+
+Dès que la variable atteint 101, on arrête la boucle.
+
+Et voilà, on a écrit 100 lignes en un clin d'œil.
+
+Si la punition avait été plus grosse, pas de problème ! Il aurait suffi de changer la condition, par exemple : mettre « TANT QUE c'est inférieur ou égal à 500 » pour l'écrire 500 fois.
+
+Il faut toujours s'assurer que la condition sera fausse au moins une fois. Si elle ne l'est jamais, alors la boucle s'exécutera à l'infini !
+
+PHP refuse normalement de travailler plus d'une quinzaine de secondes. Il s'arrêtera tout seul s'il voit que son travail dure trop longtemps, et affichera un message d'erreur.
+
+Nous venons donc de voir comment afficher une phrase plusieurs centaines de fois sans effort.
+
+Mais est-ce vraiment utile ? On n'a pas besoin de faire ça sur un site web, si ?
+
+Pas vraiment, mais nous apprenons ici des techniques de base que l'on va pouvoir réutiliser plus tard dans ce cours. Imaginez à la fin que ce système de boucle va vous permettre de demander à PHP d'afficher d'une seule traite tous les messages de votre forum. Bien sûr, il vous faudra d'autres connaissances pour y parvenir, mais sans les boucles vous n'auriez rien pu faire !
+
+Je vous demande pour le moment de pratiquer et de comprendre comment ça marche.
+
+Bon, un autre exemple pour le plaisir ?
+
+On peut écrire de la même manière une centaine de lignes, mais chacune peut être différente : on n'est pas obligé d'écrire la même chose à chaque fois.
+
+Cet exemple devrait vous montrer que la valeur de la variable augmente à chaque passage dans la boucle :
+
+<?php
+$lines = 1;
+
+while ($lines <= 100)
+{
+    echo 'Ceci est la ligne n°' . $lines . '<br />';
+    $lines++;
+}
+?>
+
+<!--
+
+Ceci est la ligne n°1
+Ceci est la ligne n°2
+...
+-->
+
+Voilà, c'est tout bête, et cet exemple ressemble beaucoup au précédent.
+
+La particularité, là, c'est qu'on affiche à chaque fois la valeur de  $lines  .
+
+Cela vous permet de voir que sa valeur augmente petit à petit.
+
+Pour information, l'astuce que je vous avais donnée dans le chapitre sur les conditions marche aussi ici :
+
+  1. Vous pouvez fermer la balise PHP  ?>  .
+
+  2. Écrire du texte en HTML.
+
+  3. Puis rouvrir la balise PHP  <?php  .
+
+Cela vous évite d'utiliser une ou plusieurs instructions echo au milieu.
+
+On aura l'occasion d'utiliser cette astuce de nombreuses fois dans la suite du cours.
+
+D'accord, mais pour un tableau de tableaux : comment on fait alors ?
+
+On va l'aborder en détail dans le chapitre suivant ; en attendant, voici le code fonctionnel :
+
+<?php
+$users = [
+    [
+        'full_name' => 'Mickaël Andrieu',
+        'email' => 'mickael.andrieu@exemple.com',
+        'age' => 34,
+    ],
+    [
+        'full_name' => 'Mathieu Nebra',
+        'email' => 'mathieu.nebra@exemple.com',
+        'age' => 34,
+    ],
+    [
+        'full_name' => 'Laurène Castor',
+        'email' => 'laurene.castor@exemple.com',
+        'age' => 28,
+    ],
+];
+$lines = 3; // nombre d'utilisateurs dans le tableau
+$counter = 0;
+while ($counter < $lines) {
+    echo $users[$counter]['full_name'] . ' ' . $users[$counter]['email'] . '<br />';
+    $counter++;
+}
+
+Découvrez une boucle plus complexe :  for
+
+Mais non, n'ayez pas peur, voyons.
+Il ne vous arrivera rien de mal : ici le mot « complexe » ne veut pas dire « compliqué ».
+
+for est un autre type de boucle qui a une forme un peu plus condensée et plus commode à écrire. Elle est donc fréquemment utilisée.
+
+Cependant, sachez que for  et while  donnent le même résultat et servent à la même chose : répéter des instructions en boucle.
+
+L'une peut paraître plus adaptée que l'autre dans certains cas ; cela dépend aussi des goûts.
+
+Alors, comment ça marche un for ?
+
+Ça ressemble beaucoup au while mais c'est la première ligne qui est un peu particulière.
+
+Pour voir la différence avec le while , reprenons l'exemple précédent, cette fois avec un for :
+
+<?php
+for ($lines = 0; $lines <= 2; $lines++)
+{
+    echo $users[$lines][0] . ' ' . $users[$lines][1] . '<br />';
+}
+?>
+
+Que de choses dans une même ligne !
+
+Bon, vous vous en doutez : je vais vous analyser la ligne du for uniquement (le reste n'a pas changé).
+
+Après le mot for  , il y a des parenthèses qui contiennent trois éléments, séparés par des points-virgules ;  :
+
+  1. Le premier sert à l'initialisation. C'est la valeur que l'on donne au départ à la variable (ici, elle vaut 0).
+
+  2. Le second, c'est la condition. Comme pour le while : tant que la condition est remplie, la boucle est réexécutée. Dès que 
+             la condition ne l'est plus, on en sort.
+
+  3. Enfin, le troisième c'est l'incrémentation. Cela permet d'ajouter 1 à la variable à chaque tour de boucle.
+
+Les deux derniers codes donnent donc exactement le même résultat :
+
+  - le for fait la même chose que le  while  ;
+
+  - … mais il rassemble sur une seule ligne tout ce qu'il faut savoir sur le fonctionnement de la boucle.
+
+Comment savoir lequel choisir ? while  ou for ?
+
+while  est plus simple et plus flexible : on peut faire tous les types de boucles avec, mais on peut oublier de faire certaines étapes, comme l'incrémentation de la variable.
+
+for  est bien adapté quand on doit compter le nombre de fois que l'on répète les instructions, et il permet de ne pas oublier de faire l'incrémentation pour augmenter la valeur de la variable !
+
+Si vous hésitez entre les deux, il suffit simplement de vous poser la question suivante : « Est-ce que je sais d'avance combien de fois je veux que mes instructions soient répétées ? ».
+
+Si la réponse est oui, alors la boucle for  est tout indiquée.
+
+Sinon, alors il vaut mieux utiliser la boucle while .
+
+Affichez des recettes
+
+Reprenons ce que nous avions dit sur les recettes.
+
+Une recette, c'est :
+
+  - un titre ;
+
+  - un auteur ;
+
+  - un statut activé ;
+
+  - et des instructions (la recette à suivre).
+
+Le code de votre application à ce stade pourrait être le suivant (avec des recettes d'exemple, bien sûr) :
+
+<?php
+
+// Déclaration du tableau des recettes
+$recipes = [
+    ['Cassoulet','[...]','mickael.andrieu@exemple.com',true,],
+    ['Couscous','[...]','mickael.andrieu@exemple.com',false,],
+];
+
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Affichage des recettes</title>
+</head>
+<body>
+    <ul>
+        <?php for ($lines = 0; $lines <= 1; $lines++): ?>
+            <li><?php echo $recipes[$lines][0] . ' (' . $recipes[$lines][2] . ')'; ?></li>
+        <?php endfor; ?>
+    </ul>
+</body>
+</html>
+
+Ah ! En HTML, on peut utiliser la boucle  for  comme une boucle  if  : je reconnais l'astuce avec  endif;  et  endfor;  , c'est bien ça ?
+
+Tout à fait, comme vous pouvez le voir, c'est assez pratique !
+
+On peut combiner les boucles et les conditions ? Au final, on a affiché aussi la recette "Couscous" alors que le statut d'affichage est à "faux"… 
+
+Oui, mais nous verrons cela dans le prochain chapitre !
+
+Exercez-vous
+
