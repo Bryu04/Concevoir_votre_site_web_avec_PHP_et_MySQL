@@ -1306,3 +1306,558 @@ Ce chapitre était important et il vous a été utile pour faire afficher des in
 
 ##############################################################################################################
 
+Organisez vos données à l'aide des tableaux
+
+Nous allons détailler ici l'une des fonctionnalités introduites dans le chapitre précédent : les tableaux (ou « arrays », en anglais).
+
+Il s'agit en fait de variables « composées », que l'on peut imaginer sous la forme de tableaux.
+
+On peut faire énormément de choses avec les tableaux, et leur utilisation n'est pas toujours très facile. Cependant, ils vont très rapidement nous devenir indispensables et vous devez bien comprendre leur fonctionnement pour la suite du cours, qui s'annonce concrète et passionnante.
+
+Mais restez concentré sur votre projet : nous allons profiter de ce chapitre pour réaliser l'affichage de la liste des recettes.
+
+Un tableau est une variable. Mais une variable un peu spéciale.
+
+Reprenons : jusqu'ici vous avez travaillé avec des variables simples : elles ont un nom et une valeur. Par exemple :
+
+<?php
+$recipeTitle = 'Cassoulet';
+echo "La recette du " . $recipeTitle;
+// Cela affichera : La recette du Cassoulet
+?>
+
+Ce qui peut se matérialiser sous la forme :
+
+Nom                   Valeur
+
+$recipeTitle          Cassoulet
+
+
+Ici, nous allons voir qu'il est possible d'enregistrer de nombreuses informations dans une seule variable grâce aux tableaux. On en distingue deux types :
+
+   1. Les tableaux numérotés.
+
+   2. Et les tableaux associatifs.
+
+Familiarisez-vous avec les tableaux numérotés
+
+Ces tableaux sont très simples à imaginer. Regardez par exemple celui-ci, contenu de la variable$recipes :
+
+Clé       Valeur
+
+0         Cassoulet
+
+1         Couscous
+
+2         Escalope milanaise
+
+3         Salade César
+
+4         Bo bun
+
+…         …
+
+
+$recipesest un array : c'est ce qu'on appelle une variable « tableau ». Elle n'a pas qu'une valeur, mais plusieurs (vous pouvez d'ailleurs en mettre autant que vous voulez).
+
+Dans un array, les valeurs sont rangées dans des « cases » différentes.
+
+Ici, nous travaillons sur un array numéroté, c'est-à-dire que chaque case est identifiée par un numéro. Ce numéro est appelé clé.
+
+Attention ! Un array numéroté commence toujours à la case n° 0 ! Ne l'oubliez jamais, ou vous risquez de faire des erreurs par la suite…
+
+Construisez un tableau numéroté
+
+Pour créer un tableau numéroté en PHP, on liste ses valeurs entre crochets[]  .
+
+Cet exemple vous montre comment créer l'array $recipes :
+
+<?php
+
+$recipes = ['Cassoulet', 'Couscous', 'Escalope Milanaise', 'Salade César',];
+
+// La fonction array permet aussi de créer un array
+$recipes = array('Cassoulet', 'Couscous', 'Escalope Milanaise');
+?>
+
+L'ordre a beaucoup d'importance :
+
+  1. Le premier élément (« Cassoulet») aura le n° 0.
+
+  2. Ensuite Couscous le n° 1.
+
+  3. Etc.
+
+Vous pouvez aussi créer manuellement le tableau, case par case :
+
+<?php
+$recipes[0] = 'Cassoulet';
+$recipes[1] = 'Couscous';
+$recipes[2] = 'Escalope Milanaise';
+?>
+
+Si vous ne voulez pas avoir à écrire vous-même le numéro de la case que vous créez, vous pouvez laisser PHP le sélectionner automatiquement en laissant les crochets vides :
+
+<?php
+$recipes[] = 'Cassoulet'; // Créera $recipes[0]
+$recipes[] = 'Couscous'; // Créera $recipes[1]
+$recipes[] = 'Escalope Milanaise'; // Créera $recipes[2]
+?>
+
+Affichez un tableau numéroté
+
+Pour afficher un élément, il faut donner sa position entre crochets après  $recipes    .
+
+Cela revient à dire à PHP :
+
+« Affiche-moi le contenu de la case n° 1 de $recipes »
+
+Pour faire cela en PHP, il faut écrire le nom de la variable, suivi du numéro entre crochets.
+
+Pour afficher « Couscous », on doit donc écrire :
+
+<?php
+echo $recipes[1]; // Cela affichera : Couscous
+?>
+
+C'est tout bête : du moment que vous n'oubliez pas que Couscous est en seconde position et donc qu'il a le numéro 1 (étant donné qu'on commence à compter à partir de 0).
+
+Si vous oubliez de mettre les crochets, ça ne marchera pas : cela affichera juste « Array ».
+
+Dès que vous travaillez sur des tableaux, vous êtes obligé d'utiliser les crochets pour indiquer dans quelle « case » on doit aller chercher l'information ; sinon PHP ne sait pas quoi récupérer.
+
+Familiarisez-vous avec les tableaux associatifs
+
+Les tableaux associatifs fonctionnent sur le même principe, sauf qu'au lieu de numéroter les cases, on va les étiqueter en leur donnant à chacune un nom différent.
+
+Notre objectif ici est d'utiliser un tableau pour décrire une recette, comme nous l'avions fait dans le chapitre précédent.
+
+Si le tableau est numéroté, comment savoir que le n° 0 est le titre ? Que le n° 1 désigne la recette ? Que le n° 2 correspond à l'auteur ?
+
+C'est là que les tableaux associatifs deviennent utiles.
+
+Construisez un tableau associatif
+
+Pour mieux décrire notre recette sous forme de tableau, nous pouvons stocker une recette sous la forme d'un tableau associatif, dans lequel chaque clé est une propriété de la recette :
+
+<?php
+// Une bien meilleure façon de stocker une recette !
+$recipe = [
+    'title' => 'Cassoulet',
+    'recipe' => 'Etape 1 : des flageolets, Etape 2 : ...',
+    'author' => 'john.doe@exemple.com',
+    'enabled' => true,
+];
+
+?>
+
+Note importante : il n'y a ici qu'une seule instruction (un seul point-virgule). J'aurais pu tout mettre sur la même ligne, mais rien ne m'empêche de séparer ça sur plusieurs lignes pour que ce soit plus facile à lire.
+
+Vous remarquez qu'on écrit une flèche ( =>  ) pour dire « associé à ».
+
+Par exemple, on dit que la propriété « title » du tableau$recipe a pour valeur « Cassoulet ».
+
+Nous avons créé un tableau qui ressemble à la structure suivante :
+
+Clé        Valeur
+
+title      Cassoulet
+
+recipe     Étape 1 : des flageolets, Étape 2 : ...
+
+author     john.doe@exemple.com
+
+enabled    true
+
+Il est aussi possible de créer le tableau case par case, comme ceci :
+
+<?php
+$recipe['title'] = 'Cassoulet';
+$recipe['recipe'] = 'Etape 1 : des flageolets, Etape 2 : ...';
+$recipe['author'] = 'john.doe@exemple.com';
+$recipe['enable'] = true;
+?>
+
+Affichez un tableau associatif
+
+Pour afficher un élément, il suffit d'indiquer le nom de cet élément entre crochets, ainsi qu'entre guillemets ou apostrophes, puisque l'étiquette du tableau associatif est un texte.
+
+Par exemple, pour extraire le titre de la recette, on devra taper :
+
+<?php
+echo $recipe['title'];
+?>
+
+Ce code affiche : « Cassoulet ».
+
+Quand utiliser un tableau numéroté et quand utiliser un tableau associatif ?
+
+Comme vous l'avez vu dans mes exemples, ils ne servent pas à stocker la même chose…
+
+  1. Les tableaux numérotés permettent de stocker une série d'éléments du même type, comme des prénoms. Chaque élément du 
+             tableau contiendra alors un prénom.
+
+  2. Les tableaux associatifs permettent de découper une donnée en plusieurs sous-éléments. Par exemple, une adresse peut 
+              être découpée en nom, prénom, nom de rue, ville…
+
+Dans le chapitre précédent, nous avons pourtant utilisé un array numéroté alors qu'il aurait fallu utiliser un tableau associatif, non ?
+
+Oui, tout à fait !
+
+Mais il fallait introduire rapidement les tableaux car qui dit "liste d'éléments", dit "boucle" !
+
+D'ailleurs, nous allons profiter de ce chapitre pour aborder un nouveau type de boucle, comme ça, la boucle est... bouclée !
+
+Parcourez un tableau
+
+Lorsqu'un tableau a été créé, on a souvent besoin de le parcourir pour savoir ce qu'il contient. Nous allons voir trois moyens d'explorer un tableau :
+
+   1. La boucle  for  .
+
+   2. La boucle  foreach  .
+
+   3. La fonction print_r (utilisée principalement pour le déboggage).
+
+Avec la boucle for
+
+Il est très simple de parcourir un tableau numéroté avec une boucle  for  .
+
+Nous l'avions abordé rapidement dans le chapitre précédent avec un tableau de tableaux.
+
+Pour rappel :
+
+<?php
+
+/**
+ * Déclaration du tableau des recettes
+ * Chaque élément du tableau est un tableau numéroté (une recette)
+ */
+$recipes = [
+    ['Cassoulet','[...]','mickael.andrieu@exemple.com',true,],
+    ['Couscous','[...]','mickael.andrieu@exemple.com',false,],
+];
+
+for ($lines = 0; $lines <= 1; $lines++) {
+    echo $recipes[$lines][0];
+}
+
+Quand on écrit $recipes[$lines], la variable $lines est d'abord remplacée par sa valeur.
+
+Exemple :
+
+Si $lines vaut 1, cela signifie qu'on cherche ce que contient $recipes[1][0] , c'est-à-dire : Couscous.
+
+Bravo, vous avez compris !
+
+Avec la boucle foreach
+
+La boucle for  a beau fonctionner, on peut utiliser un autre type de boucle – plus adapté aux tableaux – qu'on n'a pas encore vu jusqu'ici :  foreach  .
+
+foreach passe en revue chaque ligne du tableau. Lors de chaque passage, elle met la valeur de cette ligne dans une variable temporaire (par exemple $element  ).
+
+Je parle chinois ? Regardez plutôt :
+
+<?php
+
+// Déclaration du tableau des recettes
+$recipes = [
+    ['Cassoulet','[...]','mickael.andrieu@exemple.com',true,],
+    ['Couscous','[...]','mickael.andrieu@exemple.com',false,],
+];
+
+foreach ($recipes as $recipe) {
+    echo $recipe[0]; // Affichera Cassoulet, puis Couscous
+}
+
+C'est le même code que tout à l'heure, mais cette fois basé sur une boucle  foreach  .
+
+À chaque tour de boucle, la valeur de l'élément suivant est mise dans la variable  $recipe  .
+
+On peut donc utiliser $recipe uniquement à l'intérieur de la boucle, pour afficher l'élément en cours.
+
+L'avantage de foreach , c'est qu'il permet aussi de parcourir les tableaux associatifs.
+
+<?php
+$recipe = [
+    'title' => 'Cassoulet',
+    'recipe' => 'Etape 1 : des flageolets, Etape 2 : ...',
+    'author' => 'mickael.andrieu@exemple.com',
+    'enabled' => true,
+];
+
+foreach ($recipe as $value) {
+    echo $value;
+}
+
+/**
+ * AFFICHE
+ * CassouletEtape 1 : des flageolets, Etape 2 : ...mickael.andrieu@exemple.com1
+ */
+
+foreach va mettre tour à tour dans la variable $value  :
+
+  - le titre de la recette ;
+
+  - les étapes de la recette ;
+
+  - l'auteur ;
+
+  - et la réponse à "enabled"...
+
+… contenus dans le tableau $recipe 
+
+On met donc entre parenthèses :
+
+  1. D'abord le nom du tableau, ici $recipe  .
+
+  2. Ensuite le mot-clé as  (qui signifie « en tant que »).
+
+  3. Enfin, le nom d'une variable que vous choisissez, et qui va contenir tour à tour chacune des valeurs du tableau, ici 
+             $value  .
+
+Entre les accolades, on n'utilise donc que la variable  $recipe  .
+
+La boucle s'arrête lorsqu'on a parcouru tous les éléments de l'array.
+
+L'intérêt devient encore plus flagrant quand nous utilisons un tableau de tableaux :
+
+<?php
+
+$recipes = [
+    [
+        'title' => 'Cassoulet',
+        'recipe' => '',
+        'author' => 'mickael.andrieu@exemple.com',
+        'is_enabled' => true,
+    ],
+    [
+        'title' => 'Couscous',
+        'recipe' => '',
+        'author' => 'mickael.andrieu@exemple.com',
+        'is_enabled' => false,
+    ],
+    [
+        'title' => 'Escalope milanaise',
+        'recipe' => '',
+        'author' => 'mathieu.nebra@exemple.com',
+        'is_enabled' => true,
+    ],
+    [
+        'title' => 'Salade Romaine',
+        'recipe' => '',
+        'author' => 'laurene.castor@exemple.com',
+        'is_enabled' => false,
+    ],
+];
+
+foreach($recipes as $recipe) {
+    echo $recipe['title'] . ' contribué(e) par : ' . $recipe['author'] . PHP_EOL; 
+}
+
+Qui produit le résultat suivant :
+
+$ php exemple.php 
+Cassoulet contribué(e) par : mickael.andrieu@exemple.com
+Couscous contribué(e) par : mickael.andrieu@exemple.com
+Escalope milanaise contribué(e) par : mathieu.nebra@exemple.com
+Salade Romaine contribué(e) par : laurene.castor@exemple.com
+
+Nous n'en avions pas tellement parlé jusque-là puisque nous nous concentrons sur la réalisation d'un site web dans ce cours… Mais PHP est capable d'exécuter des scripts en ligne de commande, un peu sur le même modèle que le démarrage du serveur web interne.
+
+Pratique quand vous souhaitez tester rapidement les exemples de ce cours, n'est-ce pas ?
+
+Toutefois, avec cet exemple, on ne récupère que la valeur. Or, on peut aussi récupérer la clé de l'élément. On doit dans ce cas écrire foreach  , comme ceci :
+
+<?php foreach($recipe as $property => $propertyValue) ?>
+
+À chaque tour de boucle, on disposera non pas d'une, mais de deux variables :
+
+$property qui contiendra la clé de l'élément en cours d'analyse (« title », « author », etc.).
+
+$propertyValue qui contiendra la valeur de l'élément en cours (« Cassoulet », « laurene.castor@exemple.com », etc.).
+
+Testons le fonctionnement avec un exemple :
+
+<?php
+$recipe = [
+    'title' => 'Salade Romaine',
+    'recipe' => 'Etape 1 : Lavez la salade ; Etape 2 : euh ...',
+    'author' => 'laurene.castor@exemple.com',
+];
+
+foreach($recipe as $property => $propertyValue)
+{
+    echo '[' . $property . '] vaut ' . $propertyValue . PHP_EOL;
+}
+
+Qui aura le résultat suivant :
+
+$ php exemple.php 
+[title] vaut Salade Romaine
+[recipe] vaut Etape 1 : Lavez la salade ; Etape 2 : euh ...
+[author] vaut laurene.castor@exemple.com
+Avec cette façon de procéder, vous avez maintenant dans la boucle la clé ET la valeur.
+
+Et croyez-moi, foreach est une boucle vraiment pratique : on s'en sert régulièrement !
+
+Affichez rapidement un tableau avec print_r
+
+Parfois, en codant votre site en PHP, vous aurez sur les bras un tableau et vous voudrez savoir ce qu'il contient, juste pour votre information.
+
+Vous pourriez utiliser une boucle for  ou mieux, une boucle  foreach  .
+
+Mais si vous n'avez pas besoin d'une mise en forme spéciale et que vous voulez juste savoir ce que contient le tableau, vous pouvez faire appel à la fonction print_r  . C'est une sorte de echo  spécialisé dans les tableaux.
+
+Cette commande a toutefois un défaut : elle ne renvoie pas de code HTML comme <br /> pour les retours à la ligne. Pour bien les voir, il faut donc utiliser la balise HTML <pre>  qui nous permet d'avoir un affichage plus correct.
+
+<?php
+
+$recipes = [
+    [
+        'title' => 'Cassoulet',
+        'recipe' => '',
+        'author' => 'mickael.andrieu@exemple.com',
+        'is_enabled' => true,
+    ],
+    [
+        'title' => 'Couscous',
+        'recipe' => '',
+        'author' => 'mickael.andrieu@exemple.com',
+        'is_enabled' => false,
+    ],
+];
+
+echo '<pre>';
+print_r($recipes);
+echo '</pre>';
+
+Voilà, c'est facile à utiliser : du moment qu'on n'oublie pas la balise <pre>  pour avoir un affichage correct.
+
+Bien entendu, vous n'afficherez jamais des choses comme ça à vos visiteurs. On peut en revanche s'en servir pour le déboggage, pendant la création du site, afin de voir rapidement ce que contient le tableau.
+
+Recherchez dans un tableau
+
+Nous allons maintenant faire des recherches dans des tableaux. Cela sera très utile quand vous voudrez savoir si votre tableau contient ou non certaines informations.
+
+Nous allons voir trois types de recherches, basées sur des fonctions PHP :
+
+  1. array_key_exists pour vérifier si une clé existe dans le tableau.
+
+  2. in_array pour vérifier si une valeur existe dans le tableau.
+
+  3. array_search pour récupérer la clé d'une valeur dans le tableau.
+
+Vérifiez si une clé existe dans un tableau avec array_key_exists
+
+Voici notre problème : on a un array, mais on ne sait pas si la clé qu'on cherche s'y trouve.
+Pour vérifier ça, on va utiliser la fonction array_key_exists qui va parcourir le tableau pour nous, et nous dire s'il contient cette clé.
+
+On doit lui donner :
+
+  1. Le nom de la clé à rechercher.
+
+  2. Puis le nom du tableau dans lequel on fait la recherche :
+
+<?php array_key_exists('cle', $array); ?>
+
+La fonction renvoie un booléen : 
+
+  - true (vrai) si la clé est dans le tableau ;
+
+  - false (faux) si la clé ne s'y trouve pas.
+
+Ça nous permet de faire un test facilement avec un if :
+
+<?php
+$recipe = [
+    'title' => 'Salade Romaine',
+    'recipe' => 'Etape 1 : Lavez la salade ; Etape 2 : euh ...',
+    'author' => 'laurene.castor@exemple.com',
+];
+
+if (array_key_exists('title', $recipe))
+{
+    echo 'La clé "title" se trouve dans la recette !';
+}
+
+if (array_key_exists('commentaires', $recipe))
+{
+    echo 'La clé "commentaires" se trouve dans la recette !';
+}
+
+$ php exemple.php 
+La clé "title" se trouve dans la recette !
+
+On ne trouvera que « title », et pas « commentaires ». C'est logique : seule la première condition sera donc exécutée.
+
+Vérifiez si une valeur existe dans un tableau avec in_array
+
+Le principe est le même que array_key_exists mais cette fois on recherche dans les valeurs. 
+
+in_array renvoie : 
+
+  - true si la valeur se trouve dans le tableau ;
+
+  - false si elle ne s'y trouve pas.
+
+Pour changer un peu de notre tableau $recipes  , je vais créer un tableau qui contient le nom des utilisateurs du site :
+
+<?php
+$users = [
+    'Mathieu Nebra',
+    'Mickaël Andrieu',
+    'Laurène Castor',
+];
+
+if (in_array('Mathieu Nebra', $users))
+{
+    echo 'Mathieu fait bien partie des utilisateurs enregistrés !';
+}
+
+if (in_array('Arlette Chabot', $users))
+{
+    echo 'Arlette fait bien partie des utilisateurs enregistrés !';
+}
+
+$ php exemple.php 
+Mathieu fait bien partie des utilisateurs enregistrés !
+
+On ne voit que le message pour Mathieu, car Arlette ne fait pas partie des utilisateurs enregistrés.
+
+Récupérez la clé d'une valeur dans un tableau avec array_search
+
+array_search fonctionne comme in_array : il travaille sur les valeurs d'un tableau.
+
+Voici ce que renvoie la fonction :
+
+  - Si elle a trouvé la valeur, array_search renvoie la clé correspondante (dans le cas d'un tableau numéroté, la clé sera 
+           un numéro ; dans le cas d'un tableau associatif, la clé sera un nom).
+
+  - Si elle n'a pas trouvé la valeur, array_search renvoie false  .
+
+On reprend le tableau numéroté :
+
+<?php
+$users = [
+    'Mathieu Nebra',
+    'Mickaël Andrieu',
+    'Laurène Castor',
+];
+
+$positionMathieu = array_search('Mathieu Nebra', $users);
+echo '"Mathieu" se trouve en position ' . $positionMathieu . PHP_EOL;
+
+$positionLaurène = array_search('Laurène Castor', $users);
+echo '"Laurène" se trouve en position ' . $positionLaurène . PHP_EOL;
+
+Je sais que je me répète, mais n'oubliez pas qu'un tableau numéroté commence à 0 !
+
+Cela explique donc pourquoi on nous répond que Mathieu se trouve en position 0 :
+
+$ php exemple.php 
+"Mathieu" se trouve en position 0
+"Laurène" se trouve en position 2
+
+Voilà les fonctions qu'il fallait connaître pour faire une recherche dans un tableau. Il y en a d'autres, mais vous connaissez maintenant les principales.
+
+Exercez-vous 
