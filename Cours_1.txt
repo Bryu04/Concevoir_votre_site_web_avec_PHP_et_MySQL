@@ -950,3 +950,140 @@ C'est la fin de cette première partie, maintenant testez vos connaissances avec
 
 ##############################################################################################################
 
+!!!!!!!!!!!!!!!!!!!! QUIZ : Faire ses premiers pas en PHP !!!!!!!!!!!!!!!!!!!!!!
+
+Compétences évaluées
+
+Installer les outils propres à PHP (serveur web, logiciel de gestion de base de données)
+
+Question 1
+
+Quel élément est indispensable au bon fonctionnement d'un site web écrit avec PHP afin qu'il s'affiche correctement dans un navigateur ?
+
+- Un serveur web (Apache, Nginx…) (o) (B)
+
+- Un IDE
+
+- Un terminal (ligne de commande)
+
+"""""""" Réponse"""""""""
+L'IDE est l'éditeur de texte vous permettant de développer/coder. Cela n'impacte pas la génération de la page.
+
+Le terminal (ligne de commande) ne rentre pas en jeu lors de la génération de la page web.
+
+"""""""""""""""""""""""""
+
+Question 2
+
+PHP permet de créer des sites...
+
+- statiques
+
+- dynamiques (o) (B)
+
+"""""""" Réponse"""""""""
+Les sites dynamiques peuvent changer à chaque visite. Au lieu d'afficher tout le temps la même information, ils peuvent être mis à jour automatiquement et par les visiteurs.
+
+"""""""""""""""""""""""""
+
+Question 3
+
+MySQL permet...
+
+- d'afficher des sites
+
+- de créer des sites dynamiques
+
+- de stocker de l'information structurée (o) (B)
+
+"""""""" Réponse"""""""""
+MySQL est ce qu'on appelle un SGBD (système de gestion de bases de données). Son rôle est d'enregistrer des données de manière organisée afin de vous aider à les retrouver facilement plus tard. 
+
+"""""""""""""""""""""""""
+
+Question 4
+
+Sélectionnez des éditeurs de texte dans lesquels on peut écrire du code PHP :
+
+Attention, plusieurs réponses sont possibles.
+
+- Apache
+
+- Visual Studio Code (o) (B)
+
+- PHPStorm (o) (B)
+
+- Google Chrome
+
+"""""""" Réponse"""""""""
+Visual Studio Code et PHPStorm sont deux éditeurs connus pour permettre d'écrire du code en PHP, notamment. Apache sert à faire tourner PHP, tandis que Google Chrome est un navigateur web qui sert à afficher les pages web.
+
+"""""""""""""""""""""""""
+
+Question 5
+
+À quoi ressemble une balise PHP ?
+
+- <?/ ?>
+
+- <php ?>
+
+- <?php ?> (o) (B)
+
+"""""""" Réponse"""""""""
+Il y a plusieurs façons de créer une balise PHP, mais la plus recommandée et la plus utilisée est <?php ?>
+
+"""""""""""""""""""""""""
+
+Question 6
+
+Pourquoi faut-il configurer PHP pour afficher des erreurs sur sa machine ?
+
+- Pour comprendre nos erreurs et les résoudre plus vite. (o) (B)
+
+- Pour accélérer le temps d'affichage d'une page.
+
+- Pour éviter un bug de PHP qui empêche les pages de s'afficher correctement.
+
+"""""""" Réponse"""""""""
+Sans erreur détaillée, impossible de comprendre pourquoi nous avons fait une erreur ! Configurez bien PHP pour afficher les erreurs, ça va vous être indispensable très vite !
+
+"""""""""""""""""""""""""
+
+Question 7
+
+Comment s'appelle le fichier de configuration de PHP ?
+
+- php.conf
+
+- php.ini (o) (B)
+
+- php_conf.ini
+
+- php_ini.conf
+
+"""""""" Réponse"""""""""
+Le fichier  php.ini  contient la configuration du langage PHP, c'est dans ce fichier qu'il vous sera possible – par exemple – d'activer le mode de débogage.
+
+"""""""""""""""""""""""""
+
+Question 8
+
+Quelles propriétés de la configuration PHP devez-vous modifier pour activer l'affichage des erreurs PHP ?
+
+Attention, plusieurs réponses sont possibles.
+
+- debug
+
+- error_reporting (o) (B)
+
+- profiler
+
+- display_errors (o) (B)
+
+"""""""" Réponse"""""""""
+Les propriétés  error_reporting  et  display_errors  sont à modifier pour autoriser l'affichage des erreurs et le type d'erreur que PHP affichera à l'utilisateur.
+
+"""""""""""""""""""""""""
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
