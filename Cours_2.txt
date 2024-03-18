@@ -1272,3 +1272,22 @@ Oui, mais nous verrons cela dans le prochain chapitre !
 
 Exercez-vous
 
+Félicitations pour avoir atteint la fin de notre chapitre sur les boucles en PHP ! C'est maintenant le moment tant attendu de mettre en pratique ce que vous avez appris au travers de notre projet fil rouge.
+
+Vous allez créer une page web qui affiche différentes recettes en utilisant les boucles en PHP pour générer le contenu HTML.
+
+ 1. Créez le fichier index.php.
+
+ 2. Définissez un tableau en PHP contenant quatre recettes. Chaque recette devrait avoir un titre et l'auteur de la 
+     recette.
+
+ 3. Utilisez une boucle pour parcourir le tableau de recettes.
+
+ 4. Pour chaque recette, affichez le titre et l'auteur dans des balises HTML appropriées.
+
+ 5. Testez votre page web : vérifiez que les quatre recettes s’affichent avec le titre et l’auteur.
+
+Vous pouvez retrouver la solution dans le dossier P2C3 du GitHub.
+
+En résumé
+
