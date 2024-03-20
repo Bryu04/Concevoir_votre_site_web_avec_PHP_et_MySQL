@@ -112,24 +112,25 @@ function displayAuthor(string $authorEmail, array $users) : string
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Affichage des recettes</title>
+    <title>Recettes de cuisine</title>
     <link
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
             rel="stylesheet"
     >
 </head>
 <body>
-    <h1>Affichage des recettes</h1>
+    <div class="container">
+    <h1>Liste des recettes de cuisine</h1>
     <?php
-    foreach ($recipes as $recipe) {
-        if (array_key_exists('is_enabled', $recipe) && 
-            $recipe['is_enabled']) {
-            echo '<h2>'.$recipe['title'].'</h2>';
-            echo $recipe['recipe'].'<br/>';
-            echo '<i>'.$recipe['author'].'</i>';
-        }
-        
+    $valid_recipes = getRecipes($recipes);
+    
+    foreach ($valid_recipes as $recipe) {
+        echo '<h2>'.$recipe['title'].'</h2>';
+        echo $recipe['recipe'].'<br/>';
+        echo '<i>'.displayAuthor($recipe['author'], $users).'</i>';
     }
+
     ?>
+    </div>
 </body>
 </html>
