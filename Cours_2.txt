@@ -3368,3 +3368,13 @@ Rien d'extraordinaire, voici la page de contact à ce stade du projet :
 Pour un résultat visuel incroyable !
 
 Exercez-vous
+
+Testez le code de notre projet fil rouge !
+
+- Vérifiez si la page d’accueil s’affiche avec les deux recettes.
+
+- En cliquant sur le lien 'Contact' dans le menu, vous devriez voir le formulaire s'afficher.
+
+Récupérez dans le dossier P2C7 du GitHub la version complète du projet construit !
+
+En résumé
