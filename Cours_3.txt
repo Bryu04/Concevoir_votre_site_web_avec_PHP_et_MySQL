@@ -1,0 +1,296 @@
+                                   Transmettez des données de page en page
+
+Écoutez la requête de vos utilisateurs grâce aux URL
+
+Grâce aux URL et à PHP, nous allons rendre le formulaire de contact dynamique en retournant une page de prise en compte de la demande à chaque personne qui soumettra le formulaire.
+
+Je crois savoir ce qu'est une URL ; mais j'ai besoin d'en savoir plus pour lire ce chapitre ?
+
+Un petit peu.
+
+URL signifie Uniform Resource Locator. C'est en fait une adresse sur le Web.
+
+Toutes les adresses que vous voyez en haut de votre navigateur, comme : https://www.openclassrooms.com sont des URL.
+
+Lorsque vous faites une recherche sur Google pour trouver le site d'OpenClassrooms en tapant le mot "OpenClassrooms", la barre d'adresse contient une URL un peu longue qui ressemble à ceci :
+
+http://www.google.fr/search?rlz=1C1GFR343&q=openclassrooms
+
+Pourquoi ? Qu'est-ce que ça veut dire ?
+
+Les informations après le point d'interrogation ? sont en réalité des données que l'on fait transiter d'une page à une autre. Nous allons découvrir dans ce chapitre comment cela fonctionne.
+
+Envoyez des paramètres dans l'URL
+
+Les URL permettent de transmettre des informations. Comment est-ce que ça fonctionne, exactement ? J'y viens !
+
+Formez une URL pour envoyer des paramètres
+Imaginons :
+
+  - votre site s'appelle  monsite.com  ;
+
+  - et possède une page PHP de contact :    contact.php  .
+
+Pour accéder à la page de contact, vous devez aller à l'URL suivante :
+
+http://www.monsite.com/contact.php
+
+Jusque-là, rien de bien nouveau. Ce que je vous propose d'apprendre à faire, c'est d'envoyer des informations à la page  contact.php  .
+
+Ces informations vont figurer à la fin de l'URL, comme ceci :
+
+http://www.monsite.com/contact.php?nom=Dupont&prenom=Jean
+
+Ce que vous voyez après le point d'interrogation, ce sont des paramètres que l'on envoie à la page PHP. Celle-ci peut récupérer ces informations dans des variables.
+
+Voici comment on peut découper cette URL :
+
+Le point d'interrogation sépare le nom de la page PHP des paramètres.
+
+Les paramètres s'enchaînent selon la forme nom=valeur et sont séparés les uns des autres par le symbole   &  .
+
+On peut écrire autant de paramètres que l'on veut ?
+
+En théorie, oui.
+
+Il suffit de les séparer par des & comme je l'ai fait. On peut donc voir une URL de la forme : 
+
+page.php?param1=valeur1&param2=valeur2&param3=valeur3&param4=valeur4…
+
+La seule limite est la longueur de l'URL. En général, il n'est pas conseillé de dépasser les 256 caractères, mais les navigateurs arrivent parfois à gérer des URL plus longues.
+
+Créez un lien avec des paramètres
+
+Maintenant que nous savons cela, nous pouvons créer des liens en HTML, qui transmettent des paramètres d'une page vers une autre.
+
+Imaginons que vous ayez deux fichiers sur votre site :
+
+  - index.php  (l'accueil) ;
+
+  - bonjour.php .
+
+Nous voulons faire un lien de index.php  à bonjour.php  pour transmettre des informations dans l'URL :
+
+Pour cela, ouvrez index.php  (puisque c'est lui qui contiendra le lien) et insérez-y par exemple le code suivant :
+
+<a href="bonjour.php?nom=Dupont&amp;prenom=Jean">Dis-moi bonjour !</a>
+Comme vous le voyez, le &  dans le code a été remplacé par &amp;  dans le lien.
+
+Ça n'a rien à voir avec PHP : simplement, en HTML, on demande à ce que les &  soient écrits &amp;  dans le code source.
+
+Si vous ne le faites pas, le code ne passera pas la validation W3C.
+
+Ce lien appelle la page bonjour.php et lui envoie deux paramètres :
+
+  - nom : Dupont ;
+
+  - prenom : Jean.
+
+Créez un formulaire avec la méthode HTTP GET
+
+Ce chapitre suppose que vous êtes capable de créer des formulaires à l'aide du langage HTML. Si vous ne vous sentez pas prêt, pas de panique : il suffit de lire le chapitre sur les formulaires du cours HTML & CSS. 
+
+La deuxième solution pour faire passer des informations dans l'URL, c'est de proposer à l'utilisateur de soumettre un formulaire avec la méthode HTTP GET.
+
+Nous pouvons faire cela avec une balise form qui a pour attribut method la valeur GET.
+
+<form action="contact.php" method="GET">
+    <!-- données à faire passer à l'aide d'inputs -->
+    <input name="nom">
+    <input name="prenom">
+</form>
+
+Les données soumises à l'aide du formulaire se retrouveront dans l'URL, comme pour un lien.
+
+Comment faire dans la page contact.php ou dans bonjour.php pour récupérer ces informations ?
+
+C'est ce que nous allons voir maintenant !
+
+Récupérez les paramètres en PHP
+
+Nous savons maintenant comment faire pour envoyer des paramètres vers une autre page.
+
+Intéressons-nous maintenant à la page qui réceptionne les paramètres.
+
+Pour notre besoin, nous avons un formulaire de contact – contact.php  – que nous allons soumettre sur une autre page, et qui affichera un message de bonne réception :submit_contact.php
+
+Pour rappel, voici le formulaire de contact (simplifié) que nous avions dans le chapitre précédent :
+
+<form action="submit_contact.php" method="GET">
+    <div>
+        <label for="email">Email</label>
+        <input type="email" name="email">
+    </div>
+    <div>
+        <label for="message">Votre message</label>
+        <textarea placeholder="Exprimez vous" name="message"></textarea>
+    </div>
+    <button type="submit">Envoyer</button>
+</form>
+
+Par exemple, si l'utilisateur complète le formulaire de contact avec pour e-mail utilisateur@exemple.com et comme message "Bonjour".
+
+Le formulaire va alors être converti en lien vers :submit_contact.php?email=utilisateur%40exemple.com&message=Bonjour 
+
+Et ces informations pourront être récupérées par PHP dans le fichier submit_contact.php .
+
+Lors de la soumission, une variable superglobale appelée $_GET  va contenir les données envoyées. Il s'agit d'un tableau associatif dont les clés correspondent aux noms des paramètres envoyés dans l'URL :
+
+Nom                Valeur
+
+$_GET['email']     utilisateur@exemple.com
+
+$_GET['message']   Bonjour
+
+
+On peut donc :
+
+  - récupérer ces informations ;
+
+  - les traiter ;
+
+  - les afficher ;
+
+  - bref, faire ce que l'on veut avec.
+
+Pour l'exemple, créez un nouveau fichier PHP submit_contact.php et placez-y le code suivant :
+
+<h1>Message bien reçu !</h1>
+        
+<div class="card">
+    
+    <div class="card-body">
+        <h5 class="card-title">Rappel de vos informations</h5>
+        <p class="card-text"><b>Email</b> : <?php echo $_GET['email']; ?></p>
+        <p class="card-text"><b>Message</b> : <?php echo $_GET['message']; ?></p>
+    </div>
+</div>
+
+Vous obtiendrez le résultat suivant :
+
+Ne faites jamais confiance aux données reçues !
+
+Il ne faut JAMAIS faire confiance aux variables qui transitent de page en page, comme $_GET  que nous étudions ici.
+
+Oui je suis alarmiste, et oui je veux que vous ayez – un peu – peur !
+
+Mais rassurez-vous : je vais vous expliquer tout ce qu'il faut savoir pour que ça se passe bien et que vous ne risquiez rien.
+
+Tous les visiteurs peuvent trafiquer les URL
+Si vous faites les tests des codes précédents chez vous, vous devriez tomber sur une URL de la forme :
+
+http://localhost/submit_contact.php?email=utilisateur%40exemple.com&message=Bonjour
+
+Mais si vous êtes un peu bricoleur, vous pouvez vous amuser à changer les paramètres directement dans la barre d'adresse, comme ici :
+
+Essayez par exemple de modifier l'adresse pour :
+
+http://localhost/submit_contact.php?email=utilisateur%40exemple.com&message=Mouahah
+
+Comme vous le voyez, ça marche ! N'importe qui peut facilement modifier les URL et y mettre ce qu'il veut : il suffit simplement de changer l'URL dans la barre d'adresse de votre navigateur.
+
+Et alors, quel est le problème ? C'est pas plus mal, si le visiteur veut adapter l'URL pour modifier le message ou l'e-mail qu'il nous a envoyé ?
+
+Peut-être, mais cela montre une chose : on ne peut pas avoir confiance dans les données qu'on reçoit. N'importe quel visiteur peut les changer. 
+
+Testez la présence d'un paramètre
+
+Allons plus loin. Qu'est-ce qui empêche le visiteur de supprimer tous les paramètres de l'URL ? Par exemple, il peut très bien tenter d'accéder à :
+
+http://localhost/submit_contact.php
+
+Que va afficher la page submit_contact.php  ?
+
+Faites le test ! Elle va afficher quelque chose comme :
+
+Notice: Undefined index: email in submit_contact.php on line 15
+
+OU
+
+Warning: Undefined array key "email" in submit_contact.php on line 15
+
+Que s'est-il passé ?
+
+On a essayé d'afficher la valeur de $_GET['email']  et celle de  $_GET['message']  .
+
+Mais comme on vient de les supprimer de l'URL, ces variables n'ont pas été créées, et donc elles n'existent pas ! PHP nous avertit qu'on essaie d'utiliser des variables qui n'existent pas, d'où les « Undefined index ».
+
+Pour résoudre ce problème, on peut faire appel à une fonction un peu spéciale :  isset()  .
+
+La fonction isset() teste si une variable existe.
+
+Nous allons nous en servir pour afficher un message spécifique, dans le cas où le nom ou le prénom serait absent.
+
+<?php
+$getData = $_GET;
+
+if (!isset($getData['email']) || !isset($getData['message']))
+{
+    echo('Il faut un email et un message pour soumettre le formulaire.');
+    // Arrête l'exécution de ce fichier par PHP
+    return;
+}
+?>
+Que fait ce code ?
+
+Il teste si les variables $getData['email']  et $getData['message']  existent.
+
+  1. Si elles existent, on affiche la confirmation de prise en compte du message.
+
+  2. S'il nous manque une des variables (ou les deux), on affiche un message d'erreur : "Il faut un e-mail et 
+     un message pour soumettre le formulaire", et on arrête l'exécution de la page.
+
+Essayez maintenant d'accéder à la page submit_contact.php sans les paramètres.
+
+Vous allez voir qu'on gère bien le cas où le visiteur aurait retiré les paramètres de l'URL :
+
+Est-ce que c'est vraiment la peine de gérer ce cas ? C'est vrai quoi, moi je ne m'amuse jamais à modifier mes URL, et mes visiteurs non plus, je pense !
+
+Oui, oui, trois fois oui : il faut que vous pensiez à gérer le cas où des paramètres que vous attendiez viendraient à manquer.
+
+Vous vous souvenez de ce que je vous ai dit ? Il ne faut jamais faire confiance à l'utilisateur.
+
+Tôt ou tard vous tomberez sur un utilisateur mal intentionné qui essaiera de trafiquer l'URL pour mettre n'importe quoi dans les paramètres. Il faut que votre site soit prêt à gérer le cas.
+
+Dans notre exemple, si on ne gérait pas le cas, ça ne faisait rien de bien grave (ça affichait juste des messages d'erreur). Mais lorsque votre site web deviendra plus complexe, cela pourrait avoir des conséquences plus ennuyeuses.
+
+Contrôlez la valeur des paramètres
+
+Une fois les valeurs soumises et correctement récupérées, il faut vérifier qu'elles correspondent à ce qui est attendu !
+
+Imaginez par exemple que l'utilisateur se soit trompé et que l'e-mail envoyé ne soit pas valide : vous ne pourrez donc pas le recontacter pour répondre à son besoin !
+
+Il va donc falloir :
+
+  - contrôler si l'e-mail passé est bien valide, à l'aide de la fonction filter_var ;
+
+  - et vérifier que le message n'est pas vide, à l'aide de la fonction empty.
+
+Voici donc le code final sécurisé, qui prévoit tous les cas pour éviter d'être pris au dépourvu par un utilisateur mal intentionné :
+
+<?php
+$getData = $_GET;
+
+if (
+    !isset($getData['email'])
+    || !filter_var($getData['email'], FILTER_VALIDATE_EMAIL)
+    || empty($getData['message'])
+    || trim($getData['message']) === ''
+) {
+    echo('Il faut un email et un message valides pour soumettre le formulaire.');
+    return;
+}
+
+Cela fait beaucoup de conditions pour quelque chose qui était à la base assez simple, mais c'était nécessaire. Vous devrez toujours faire très attention et prévoir tous les cas les plus tordus, comme nous venons de le faire :
+
+  - vérifier que tous les paramètres que vous attendiez sont bien là ;
+
+  - vérifier qu'ils contiennent des valeurs correctes, comprises dans des intervalles raisonnables.
+
+Si vous gardez cela en tête, vous n'aurez pas de problèmes !
+
+Nous n'avons pas détaillé le fonctionnement des fonctions filter_var ,  trim  et  empty .
+
+N'hésitez pas à consulter tous les exemples de la documentation PHP pour bien comprendre son fonctionnement.
+
+Exercez-vous
