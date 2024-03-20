@@ -2966,3 +2966,405 @@ Nous approchons de la fin de cette partie du cours, mais avant, un dernier point
 
 ##############################################################################################################
 
+Organisez les pages de votre site en blocs fonctionnels
+
+Jusque-là, nous avions travaillé sur la page d'accueil de notre site, qui contient la liste des articles.
+
+Mais notre projet va contenir plusieurs pages :
+
+  - Une page "recettes".
+
+  - Une page d'édition et de création de recette.
+
+  - Une page avec un formulaire de contact.
+
+Et pour pouvoir accéder à ces pages, il faudra nécessairement quelques liens HTML regroupés dans un menu principal.
+
+Vous est-il déjà arrivé de vouloir modifier le menu de votre site et de devoir pour cela corriger le code HTML de chacune de vos pages web ?
+
+Le menu d'une page web apparaît en effet sur chacune des pages, et vous avez très certainement dû le recopier sur chacune d'elles. Ça marche, mais ce n'est pas très pratique…
+
+Une des fonctionnalités les plus simples et les plus utiles de PHP est l'inclusion de pages.
+
+On peut très facilement inclure toute une page, ou un bout de page à l'intérieur d'une autre. Cela vous évitera d'avoir à copier le même code HTML plusieurs fois.
+
+Au fil de ce chapitre, vous allez découvrir un des multiples avantages que vous donne le PHP lors de la création de votre site. C'est d'ailleurs ce qui m'a fait instantanément aimer ce langage lorsque je l'ai découvert, alors que je venais comme vous seulement d'apprendre le HTML et le CSS. 😉
+
+Visualisez le découpage d'une page web
+
+La plupart des sites web sont généralement découpés selon le schéma suivant.
+
+Jusqu'ici, vous étiez condamné à copier sur chaque page à l'identique :
+
+  - l'en-tête ;
+
+  - le menu ;
+
+  - le pied de page.
+
+Cela donnait du code lourd et répétitif sur toutes les pages !
+
+Regardez le code d'exemple ci-dessous qui représente une page web avec un en-tête, un menu et un pied de page. Appelons cette page :  index.php  .
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Mon super site</title>
+    </head>
+ 
+    <body>
+ 
+    <!-- L'en-tête -->
+    
+    <header>
+        <!-- Le menu -->
+    
+        <nav id="menu">        
+            <div class="element_menu">
+                <h3>Titre menu</h3>
+                <ul>
+                    <li><a href="page1.html">Lien</a></li>
+                    <li><a href="page2.html">Lien</a></li>
+                    <li><a href="page3.html">Lien</a></li>
+                </ul>
+            </div>    
+        </nav>
+       
+    </header>
+    
+    <!-- Le corps -->
+    
+    <div id="corps">
+        <h1>Mon super site</h1>
+        
+        <p>
+            Bienvenue sur mon super site !<br />
+            Vous allez adorer ici, c'est un site génial qui va parler de... euh... Je cherche encore un peu le thème de mon site. :-D
+        </p>
+    </div>
+    
+    <!-- Le pied de page -->
+    
+    <footer id="pied_de_page">
+        <p>Copyright moi, tous droits réservés</p>
+    </footer>
+    
+    </body>
+</html>
+
+D'une page à l'autre, ce site contiendra à chaque fois le même code pour l'en-tête, le menu et le pied de page ! En effet, seul le contenu du corps change, en temps normal.
+
+Pensez votre contenu web en blocs fonctionnels
+
+En PHP, nous pouvons facilement insérer d'autres pages. Mais on peut aussi insérer des morceaux de pages, à l'intérieur d'une page.
+
+Le principe de fonctionnement des inclusions en PHP est plutôt simple à comprendre. Vous avez un site web composé de, disons, vingt pages. Sur chaque page, il y a un menu, toujours le même. Pourquoi ne pas écrire ce menu (et seulement lui) une seule fois dans une page header.php  ?
+
+En PHP, vous allez pouvoir inclure votre menu sur toutes vos pages.
+
+Lorsque vous voudrez modifier votre menu, vous n'aurez qu'à modifier header.php  , et l'ensemble des pages de votre site web sera automatiquement mis à jour !
+
+Maintenant, imaginez que vous ayez besoin de fonctions ou de variables sur toutes les pages du site.
+
+Créons un nouveau fichier PHP : nous allons insérer uniquement le code HTML correspondant à votre menu, comme ceci :
+
+<nav id="menu">        
+    <div class="element_menu">
+        <h3>Titre menu</h3>
+        <ul>
+            <li><a href="page1.html">Lien</a></li>
+            <li><a href="page2.html">Lien</a></li>
+            <li><a href="page3.html">Lien</a></li>
+        </ul>
+    </div>    
+</nav>
+
+Faites de même pour la page pied_de_page.php et toute autre page utile, en fonction des besoins de votre site.
+
+Mais… la page headers.php ne contient pas le moindre code PHP… c'est normal ?
+
+Une page dont l'extension est .php  peut très bien ne contenir aucune balise PHP (même si c'est plutôt rare). Dans ce cas, cela redevient une page HTML classique qui n'est pas modifiée avant l'envoi.
+
+En théorie, vous pourriez très bien enregistrer votre page avec l'extension .html  :  header.html  .
+
+Néanmoins, afin d'éviter de mélanger des pages .php  et .html  sur votre site, je vous recommande de travailler uniquement avec l'extension .php  à partir de maintenant.
+
+Maintenant que vos « morceaux de pages » sont prêts :
+
+  1. Reprenez les pages de votre site, par exemple la page d'accueil nommée index.php  .
+
+  2. Remplacez le menu par le code PHP suivant :
+
+<?php require_once(__DIR__ . '/header.php'); ?>
+
+Cette instruction ordonne à l'ordinateur :
+
+« Insère ici le contenu de la page header.php ».
+
+__DIR__ est une constante magique en PHP qui renvoie le chemin absolu du répertoire du fichier courant. Son utilisation, comme dans  require_once(__DIR__ . '/header.php');  , est recommandée pour assurer la portabilité, éviter les problèmes de chemins relatifs et renforcer la sécurité de votre code en PHP en spécifiant un chemin absolu pour les inclusions de fichiers. Vous trouverez plus d’informations sur les constantes magiques de PHP sur la documentation officielle.
+
+Si nous reprenons le code que nous avons vu tout à l'heure et que nous remplaçons chaque code répétitif par un require_once(__DIR__ . '/header.php'); (lignes 10, 12 et 27), cela donne le code source suivant :
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Mon super site</title>
+    </head>
+ 
+    <body>
+ 
+    <?php require_once(__DIR__ . 'header.php'); ?>
+
+    <!-- Le corps -->
+    
+    <div id="corps">
+        <h1>Mon super site</h1>
+        
+        <p>
+            Bienvenue sur mon super site !<br />
+            Vous allez adorer ici, c'est un site génial qui va parler de... euh... Je cherche encore un peu le thème de mon site. :-D
+        </p>
+    </div>
+    
+    <!-- Le pied de page -->
+    
+    <?php require_once(__DIR__ . 'footer.php'); ?>
+    
+    </body>
+</html>
+
+Ce code suppose que votre page index.php  et celles qui sont incluses (comme header.php  ) sont dans le même dossier.
+
+Si le menu était dans un sous-dossier appelé includes , il aurait fallu écrire :
+
+<?php require_once(__DIR__ . 'includes/header.php'); ?>
+
+C'est le même principe que pour les liens relatifs, que vous connaissez déjà dans le langage HTML.
+
+Nous avons vu que la page PHP était générée ; donc la question que vous devez vous poser est : que reçoit le visiteur ? Eh bien, il reçoit exactement le même code qu'avant !
+
+La page finale que reçoit le visiteur est identique à celle que je vous ai montrée au début du chapitre… mais vous, vous avez énormément gagné en flexibilité, puisque votre code n'est plus recopié 150 fois inutilement.
+
+Le nombre de  require_once  par page n'est pas limité ; par conséquent, vous pouvez découper votre code en autant de sous-parties que vous le souhaitez !
+
+Réorganisez votre site de recettes
+
+Bon, appliquons ce que nous venons d'apprendre à notre projet, maintenant !
+
+Nous avons besoin de fonctions et de variables pour afficher la liste de nos articles, et puisque nous aurons peut être besoin de les réutiliser (surtout les fonctions), nous allons également extraire ces concepts dans leurs propres fichiers.
+
+Nous aurons donc deux fichiers, variables.php et functions.php  , qui contiendront respectivement les variables et les fonctions de notre projet :
+
+<?php
+$users = [
+    [
+        'full_name' => 'Mickaël Andrieu',
+        'email' => 'mickael.andrieu@exemple.com',
+        'age' => 34,
+    ],
+    [
+        'full_name' => 'Mathieu Nebra',
+        'email' => 'mathieu.nebra@exemple.com',
+        'age' => 34,
+    ],
+    [
+        'full_name' => 'Laurène Castor',
+        'email' => 'laurene.castor@exemple.com',
+        'age' => 28,
+    ],
+];
+
+$recipes = [
+    [
+        'title' => 'Cassoulet',
+        'recipe' => 'Etape 1 : des flageolets !',
+        'author' => 'mickael.andrieu@exemple.com',
+        'is_enabled' => true,
+    ],
+    [
+        'title' => 'Couscous',
+        'recipe' => 'Etape 1 : de la semoule',
+        'author' => 'mickael.andrieu@exemple.com',
+        'is_enabled' => false,
+    ],
+    [
+        'title' => 'Escalope milanaise',
+        'recipe' => 'Etape 1 : prenez une belle escalope',
+        'author' => 'mathieu.nebra@exemple.com',
+        'is_enabled' => true,
+    ],
+    [
+        'title' => 'Salade Romaine',
+        'recipe' => 'Etape 1 : prenez une belle salade',
+        'author' => 'laurene.castor@exemple.com',
+        'is_enabled' => false,
+    ],
+];
+
+<?php
+function displayAuthor(string $authorEmail, array $users): string
+{
+    foreach ($users as $user) {
+        if ($authorEmail === $user['email']) {
+            return $user['full_name'] . '(' . $user['age'] . ' ans)';
+        }
+    }
+    return 'Auteur inconnu';
+}
+function isValidRecipe(array $recipe): bool
+{
+    if (array_key_exists('is_enabled', $recipe)) {
+        $isEnabled = $recipe['is_enabled'];
+    } else {
+        $isEnabled = false;
+    }
+
+
+    return $isEnabled;
+}
+
+
+function getRecipes(array $recipes): array
+{
+    $valid_recipes = [];
+    foreach ($recipes as $recipe) {
+        if (isValidRecipe($recipe)) {
+            $valid_recipes[] = $recipe;
+        }
+    }
+    return $valid_recipes;
+}
+
+Codez l'en-tête du site
+
+Ensuite, nous aurons évidemment un en-tête de site avec un menu et un titre :
+
+<!-- header.php -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="index.php">Site de recettes</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="index.php">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="contact.php">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+Le menu est basique pour l'instant, mais il vous permet de passer de la page d'accueil à la page de contact, par exemple.
+
+Il est un peu compliqué à comprendre, ton code HTML, non ?
+
+Oui, la partie visuelle est assurée par le framework CSS Bootstrap 5 : il n'est pas nécessaire de le connaître pour suivre ce cours. Gardez juste en tête que chacune des classes ajoutées va permettre de concevoir la page correctement. Mais si cela vous ennuie, supprimez toutes les classes et le projet restera fonctionnel, c'est promis !
+
+Codez le pied de page du site
+
+Cette partie du site reste "ferrée" en bas de page, et contient quelques liens et surtout les conditions d'utilisation du site (les fameux "copyrights") :
+
+<footer class="bg-light text-center text-lg-start mt-auto">
+    <div class="text-center p-3">
+        © 2021 Copyright:
+        <a class="text-dark" href="https://openclassrooms.com/">OpenClassrooms</a>
+    </div>
+</footer>
+
+Codez le corps de la page d'accueil du site
+
+Maintenant, nous pouvons reprendre ce que nous avions construit ensemble dans les chapitres précédents. Nous allons avoir besoin d'inclure nos variables et nos fonctions :
+
+<?php
+require_once(__DIR__ . '/variables.php');
+require_once(__DIR__ . '/functions.php');
+?>
+<!DOCTYPE html>
+<html>
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site de recettes - Page d'accueil</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+
+<body class="d-flex flex-column min-vh-100">
+    <div class="container">
+        <!-- inclusion de l'entête du site -->
+        <?php require_once(__DIR__ . '/header.php'); ?>
+        <h1>Site de recettes</h1>
+        <?php foreach (getRecipes($recipes) as $recipe) : ?>
+            <article>
+                <h3><?php echo $recipe['title']; ?></h3>
+                <div><?php echo $recipe['recipe']; ?></div>
+                <i><?php echo displayAuthor($recipe['author'], $users); ?></i>
+            </article>
+        <?php endforeach ?>
+    </div>
+    <!-- inclusion du bas de page du site -->
+    <?php require_once(__DIR__ . '/footer.php'); ?>
+</body>
+
+
+</html>
+
+Pressé(e) de voir le résultat ?
+
+Codez le corps de la page de contact du site
+En bonus, nous pourrions ajouter un simple formulaire HTML.
+
+Nous verrons dans les prochains chapitres comment les traiter avec PHP de manière à avoir une navigation fonctionnelle.
+
+Rien d'extraordinaire, voici la page de contact à ce stade du projet :
+
+<!DOCTYPE html>
+<html>
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site de Recettes - Page d'accueil</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+
+<body class="d-flex flex-column min-vh-100">
+    <div class="container">
+        <?php require_once(__DIR__ . '/header.php'); ?>
+        <h1>Contactez nous</h1>
+        <form>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" aria-describedby="email-help">
+                <div id="email-help" class="form-text">Nous ne revendrons pas votre email.</div>
+            </div>
+            <div class="mb-3">
+                <label for="message" class="form-label">Votre message</label>
+                <textarea class="form-control" placeholder="Exprimez vous" id="message" name="message"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Envoyer</button>
+        </form>
+        <br />
+    </div>
+    <?php require_once(__DIR__ . '/footer.php'); ?>
+</body>
+
+
+</html>
+
+Pour un résultat visuel incroyable !
+
+Exercez-vous
