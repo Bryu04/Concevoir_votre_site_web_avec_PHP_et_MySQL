@@ -2866,3 +2866,103 @@ Pour rappel :
   2. Il faut avoir activé le déboggage et configuré la propriété display_error.
 
   3. Il y a plusieurs erreurs à corriger : allez-y par étape, sans paniquer.
+
+Alors, avez-vous fait des erreurs en corrigeant des erreurs ? 🤣
+
+La première erreur affichée par PHP est la suivante :
+
+Parse error: syntax error, unexpected single-quoted string "age", expecting "]" in index.php on line 7
+Il y a donc une erreur à la ligne 7, ou autour... vous aurez peut être remarqué qu'il manque une virgule en ligne 6 juste après l'assignation de la propriété email :
+
+<?php
+// avant
+[
+    'title' => 'Salade Romaine',
+    'recipe' => '',
+    'author' => 'laurene.castor@exemple.com',
+    'is_enablad' => true, // OUPS
+]
+
+// après
+[
+    'title' => 'Salade Romaine',
+    'recipe' => '',
+    'author' => 'laurene.castor@exemple.com',
+    'is_enabled' => false,
+]
+
+La deuxième erreur est plus discrète puisque le site a l'air de s'afficher correctement sous vos yeux, mais il y a pourtant un message d'erreur sous le titre principal :
+
+Warning: Undefined array key "is_enabled" in index.php on line 59
+L'index ou la clé pour le tableau $recipe ne semblent pas définis (bug qui ne serait jamais arrivé si on avait utilisé la fonction array_key_exists, d'ailleurs ! 🤓
+
+Il va nous falloir vérifier le tableau des recettes et compléter ou corriger :
+
+<?php
+// avant
+[
+    'title' => 'Salade Romaine',
+    'recipe' => '',
+    'author' => 'lorene.castor@exemple.com',
+    'is_enablad' => true, // OUPS
+]
+
+// après
+[
+    'title' => 'Salade Romaine',
+    'recipe' => '',
+    'author' => 'lorene.castor@exemple.com',
+    'is_enabled' => true,
+]
+
+Il y avait une toute petite coquille : is_enabled avait été remplacé par  is_enablad  .
+
+La troisième erreur et dernière erreur est beaucoup plus bavarde :
+
+Fatal error: Uncaught TypeError: displayAuthor(): Return value must be of type string, none returned in index.php:55 Stack trace: index.php(92): displayAuthor('lorene.castor@e...', Array) #1 {main} thrown in index.php
+Cette fois, l'erreur provient du retour de la fonction displayAuthor qui doit retourner une chaîne de caractères (le nom de l'utilisateur) et retourne... rien (None).
+
+Que s'est-il passé ?
+
+<?php
+function displayAuthor(string $authorEmail, array $users): string
+{
+    foreach ($users as $user) {
+        if ($authorEmail === $user['email']) {
+            return $user['full_name'] . '(' . $user['age'] . ' ans)';
+        }
+    }
+}
+
+Si l'on considère le code de la fonction, on peut noter que si l'e-mail est trouvé, alors le nom et l'âge de l'utilisateur sont retournés.
+
+Mais si l'e-mail n'est pas trouvé ? 
+
+Eh bien, il ne se passe rien car le cas n'a pas été prévu. Le plus simple est de retourner une chaîne de caractère même si l’email n’a pas été trouvé (“Auteur inconnu”) :
+
+<?php
+function displayAuthor(string $authorEmail, array $users): string
+{
+    foreach ($users as $user) {
+        if ($authorEmail === $user['email']) {
+            return $user['full_name'] . '(' . $user['age'] . ' ans)';
+        }
+    }
+    return 'Auteur inconnu';
+}
+
+Vous pouvez retrouver le code corrigé dans le dossier FixedVersion du GitHub et on se retrouve au prochain chapitre !
+
+En résumé
+
+- Vous rencontrerez des bugs dans vos projets, c'est inéluctable.
+
+- Ne paniquez pas, lisez et essayez de comprendre le message d'erreur.
+
+- Vous pouvez aussi copier le message d'erreur et le rechercher sur Internet : il y a de fortes chances que d'autres 
+     personnes aient déjà rencontré ce problème. 
+
+Nous approchons de la fin de cette partie du cours, mais avant, un dernier point important : nous allons voir comment faire pour organiser les pages de votre site en blocs fonctionnels.
+
+##############################################################################################################
+
