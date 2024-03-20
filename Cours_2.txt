@@ -3378,3 +3378,17 @@ Testez le code de notre projet fil rouge !
 Récupérez dans le dossier P2C7 du GitHub la version complète du projet construit !
 
 En résumé
+
+- Une page PHP peut inclure une autre page (ou un morceau de page) grâce à l'instruction  require_once  .
+
+- L'instruction require_once sera remplacée par le contenu de la page demandée.
+
+- Cette technique, très simple à mettre en place, permet par exemple de placer les menus de son site dans un fichier 
+     header.php que l'on inclura dans toutes les pages. Cela permet de centraliser le code des menus, alors qu'on était 
+     auparavant obligés de le copier dans chaque page sur nos sites statiques en HTML et CSS.
+
+C'est la fin de cette partie du cours, ouf ! Avant de passer à la suite, testez vos connaissances avec le quiz.
+
+##############################################################################################################
+
+
