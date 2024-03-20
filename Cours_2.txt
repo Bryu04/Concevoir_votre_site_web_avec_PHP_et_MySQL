@@ -2501,3 +2501,20 @@ $users = [
 Vous pouvez retrouver la solution dans le dossier P2C5 du GitHub.
 
 En résumé
+
+- Les fonctions sont des blocs de code qui exécutent des instructions selon certains paramètres.
+
+- Les fonctions ont généralement une entrée et une sortie, et peuvent avoir un type (string, int, bool, array...).
+
+- PHP propose des centaines de fonctions prêtes à l'emploi pour tout type de tâches : envoyer un e-mail, récupérer l'heure, 
+     chiffrer des mots de passe, etc.
+
+- Si PHP ne propose pas la fonction dont on a besoin, il est possible de la créer avec le mot-clé function : on définira alors 
+     le type des paramètres et du retour de la fonction.
+
+OK c'était bien tout ça, mais qu'est-ce que je fais si mon script plante ?
+
+C'est justement ce que l'on va voir dans le prochain chapitre. Allez, suivez-moi !
+
+##############################################################################################################
+
