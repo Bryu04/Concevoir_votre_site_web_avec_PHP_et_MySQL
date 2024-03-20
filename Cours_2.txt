@@ -2464,3 +2464,40 @@ Je vous propose de consulter la vidéo ci-dessous pour apprendre comment l'utili
 
 Exercez-vous
 
+Ajoutons les fonctions dans notre projet fil rouge.
+
+1. Utilisez le tableau fourni  $users  qui contient plusieurs utilisateurs. Chaque utilisateur possède des clés telles que  full_name  , email  et age. 
+
+<?php
+
+$users = [
+    [
+        'full_name' => 'Mickaël Andrieu',
+        'email' => 'mickael.andrieu@exemple.com',
+        'age' => 34,
+    ],
+    [
+        'full_name' => 'Mathieu Nebra',
+        'email' => 'mathieu.nebra@exemple.com',
+        'age' => 34,
+    ],
+    [
+        'full_name' => 'Laurène Castor',
+        'email' => 'laurene.castor@exemple.com',
+        'age' => 28,
+    ],
+];
+
+2. Ajoutez les fonctions  isValidRecipe ,  getRecipes  et displayAuthor.
+
+3. Retirez le test pour savoir si une recette est activée.
+
+4. Modifiez la boucle pour utiliser la fonction  getRecipes à la place du tableau des recettes.
+
+5. Utilisez la fonction  displayAuthor  pour afficher l'auteur.
+
+6. Testez votre page web : assurez-vous que votre page affiche les recettes avec l'auteur et son âge.
+
+Vous pouvez retrouver la solution dans le dossier P2C5 du GitHub.
+
+En résumé
