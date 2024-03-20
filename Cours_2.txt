@@ -3391,4 +3391,152 @@ C'est la fin de cette partie du cours, ouf ! Avant de passer à la suite, testez
 
 ##############################################################################################################
 
+!!!!!!!!!!!!!!!! QUIZ : Réaliser un site web dynamique avec PHP !!!!!!!!!!!!!!!!!!!!!
 
+Compétences évaluées
+Écrire des instructions en PHP
+Programmer des fonctions
+Respecter les conventions d’écriture de code
+
+Question 1
+
+Un navigateur web peut exécuter et lire du code PHP.
+
+- Vrai (o) (M)
+- Faux (B)
+
+""""""" Réponse """""""""
+Il faut installer au minimum Apache (le serveur web) et PHP pour que notre ordinateur puisse comprendre les pages web écrites en PHP. Le navigateur web ne comprend pas PHP, il ne connaît que HTML et CSS.
+
+"""""""""""""""""""""""""
+
+Question 2
+
+Quelle instruction est utilisée pour afficher du texte dans PHP ?
+
+- show_text()
+- echo() (o) (B)
+- display()
+- print_text()
+- output()
+
+""""""" Réponse """""""""
+L'instruction  echo  permet d'afficher du texte.
+
+"""""""""""""""""""""""""
+
+Question 3
+
+Les lignes de code PHP sont appelées des instructions. Par quel symbole se terminent-elles ?
+
+- Un point : .
+- Un point-virgule : ; (o) (B)
+- Un dièse : #
+- Il n'y a aucun symbole particulier.
+
+""""""" Réponse """""""""
+Comme dans d'autres langages de programmation (C, Java...), les instructions PHP se terminent par un point-virgule.
+
+"""""""""""""""""""""""""
+
+Question 4
+
+Quels logiciels sont inclus dans XAMPP ?
+
+- Apache, PHP, Winamp
+- PHP, Apache, Chrome
+- PHP, Apache, MySQL (o) (B)
+- Comanche, Tango, Vaudou
+
+""""""" Réponse """""""""
+XAMPP signifie "Cross-plateform Apache MySQL PHP Perl". Il est donc facile de retenir les logiciels qu'il contient !
+
+"""""""""""""""""""""""""
+
+Question 5
+
+Une même page peut-elle être incluse dans plusieurs pages différentes d'un site web grâce à PHP ?
+
+- Oui, grâce à require_once() (o) (B)
+- Oui, c'est automatique si les fichiers sont dans le même dossier
+- Non, c'est impossible
+
+""""""" Réponse """""""""
+L'instruction  require_once()  en PHP permet d'inclure le contenu d'une page au sein d'une autre page. Une même page peut être réutilisée plusieurs fois dans plusieurs fichiers différents !
+
+"""""""""""""""""""""""""
+
+Question 6
+
+Laquelle de ces valeurs est un booléen ?
+
+- 13
+- "Bonjour"
+- false (o) (B)
+- 0.5
+
+""""""" Réponse """""""""
+true  et  false  (vrai et faux) sont les deux valeurs possibles des variables booléennes. Leur rôle : retenir si une information est vraie ou fausse, tout simplement !
+
+"""""""""""""""""""""""""
+
+Question 7
+
+Lequel de ces mots-clés indique à l'ordinateur de répéter des instructions ?
+
+- for (o) (B)
+- if
+- select
+- switch
+
+""""""" Réponse """""""""
+La boucle for permet d'exécuter des instructions plusieurs fois. Il est aussi possible d'utiliser la boucle while dont la syntaxe est un peu différente.
+
+"""""""""""""""""""""""""
+
+Question 8
+
+Que renvoie la fonction strlen de PHP ?
+
+- La longueur d'un texte (o) (B)
+- Une version mélangée d'un texte
+- Les premiers mots d'un texte
+
+""""""" Réponse """""""""
+strlen (string length) renvoie la longueur d'une chaîne de caractères, autrement dit d'un texte !
+
+"""""""""""""""""""""""""
+
+Question 9
+
+Les tableaux PHP sont par défaut numérotés à partir de...
+
+- La case 0 (o) (B)
+- La case 1
+- La case 2
+
+""""""" Réponse """""""""
+Attention ! Les tableaux commencent à l'indice 0 (la première case est donc 0, la deuxième case est 1, etc.).
+
+"""""""""""""""""""""""""
+
+Question 10
+
+Laquelle de ces conditions dit : "Si le prix est strictement supérieur à 10" ?
+
+- if ($prix = 10)
+
+- if ($prix < 10)
+
+- if ($prix >= 10)
+
+- if ($prix > 10) (o) (B)
+
+""""""" Réponse """""""""
+"Strictement supérieur" s'écrit  >
+
+"Supérieur ou égal" s'écrit  >=
+
+"""""""""""""""""""""""""
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
