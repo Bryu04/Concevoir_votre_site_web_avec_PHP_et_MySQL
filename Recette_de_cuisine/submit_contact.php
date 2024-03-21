@@ -1,11 +1,11 @@
 <?php
-$getData = $_GET;
+$postData = $_POST;
 
 if (
-    !isset($getData['email'])
-    || !filter_var($getData['email'], FILTER_VALIDATE_EMAIL)
-    || empty($getData['message'])
-    || trim($getData['message']) === ''
+    !isset($postData['email'])
+    || !filter_var($postData['email'], FILTER_VALIDATE_EMAIL)
+    || empty($postData['message'])
+    || trim($postData['message']) === ''
 ) {
     echo('Il faut un email et un message valides pour soumettre le formulaire.');
     return;
@@ -32,8 +32,8 @@ if (
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">Rappel de vos informations</h5>
-                <p class="card-text"><b>Email</b> : <?php echo $_GET['email']; ?></p>
-                <p class="card-text"><b>Message</b> : <?php echo $_GET['message']; ?></p>
+                <p class="card-text"><b>Email</b> : <?php echo($postData['email']); ?></p>
+                <p class="card-text"><b>Message</b> : <?php echo(strip_tags($postData['message'])); ?></p>
             </div>
         </div>
     </div>
