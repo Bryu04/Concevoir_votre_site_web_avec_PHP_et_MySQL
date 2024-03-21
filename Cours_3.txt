@@ -320,3 +320,216 @@ Dans le prochain chapitre, nous allons voir comment administrer des formulaires 
 
 ##############################################################################################################
 
+Administrez des formulaires de façon sécurisée
+
+Les formulaires constituent le principal moyen pour vos visiteurs d'entrer des informations sur votre site. Dans le chapitre précédent, nous avions d'ailleurs abordé un premier formulaire de contact assez basique pour envoyer une URL avec des paramètres.
+
+Dans ce chapitre, vous allez apprendre à faire des formulaires plus sécurisés.
+
+Ce chapitre est particulièrement important ; nous réutiliserons ce que nous avons appris ici dans toute la suite du cours. Soyez attentif !
+
+Ce chapitre suppose que vous êtes capable de créer des formulaires à l'aide du langage HTML. Si vous ne vous sentez pas prêt, pas de panique : il suffit de lire le chapitre sur les formulaires du cours HTML & CSS.
+
+Rappelez-vous : la base du formulaire
+
+En HTML, pour insérer un formulaire, on se sert de la balise  <form>  .
+
+On l'utilise de la manière suivante :
+
+<!-- index.php -->
+<form method="post" action="submit_form.php">
+ 
+<p>
+    On insèrera ici les éléments de notre formulaire.
+</p>
+ 
+</form>
+Il y a deux attributs très importants à connaître pour la balise <form>  :
+
+  1. La méthode :  method  .
+
+  2. Et la cible :  action  . 
+
+Il est impératif que vous compreniez à quoi ils servent.
+
+Privilégiez la méthode post pour envoyer les données du formulaire
+
+Il faut savoir qu'il existe plusieurs moyens d'envoyer les données du formulaire (plusieurs « méthodes »).
+
+Vous pouvez en employer deux :
+
+  1. get : les données transiteront par l'URL, comme on l'a appris précédemment. On pourra les récupérer grâce 
+     au tableau (array) $_GET  . Cette méthode est assez peu utilisée car on ne peut pas envoyer beaucoup 
+     d'informations dans l'URL (je vous disais dans le chapitre précédent qu'il était préférable de ne pas 
+     dépasser 256 caractères).
+
+  2. post : les données ne transiteront pas par l'URL, l'utilisateur ne les verra donc pas passer dans la 
+     barre d'adresse. Cette méthode permet d'envoyer autant de données que l'on veut, ce qui fait qu'on la 
+     privilégie le plus souvent. Néanmoins, les données ne sont pas plus sécurisées qu'avec la méthode GET  , 
+     et il faudra toujours vérifier si tous les paramètres sont bien présents et valides, comme on l'a fait 
+     dans le chapitre précédent. On ne doit pas plus faire confiance aux formulaires qu'aux URL.
+
+La bonne pratique consiste généralement à privilégier la méthode post pour les formulaires.
+
+Choisissez la page appelée par le formulaire en définissant la cible
+
+L'attribut action  sert à définir la page appelée par le formulaire. C'est cette page qui recevra les données du formulaire, et qui sera chargée de les traiter.
+
+Selon la méthode utilisée, ce ne sera pas la même variable spéciale qui aura accès aux données :
+
+  - Si la méthode est  GET  (comme dans le chapitre précédent), alors c'est la supervariable  $_GET qui aura 
+    les données ;
+
+  - Si la méthode est  POST  (bonne pratique), alors c'est la supervariable  $_POST  qui recevra les données.
+
+Retenez donc bien que vous travaillez normalement sur deux pages différentes :
+
+  1. La page qui contient le formulaire ( form.php  dans notre exemple) ;
+
+  2. Et celle qui reçoit les données du formulaire pour les traiter ( submit_form.php  ).
+
+Ajoutez un ou plusieurs champs input avec un attribut name
+
+La variable  $_GET  sera complétée avec la valeur de l'attribut  name  en tant que clé, et aura pour valeur ce qui aura été soumis par l'utilisateur :
+
+<input type="text" name="nom" value="Mateo21" />
+
+<?php
+
+// Après soumission du formulaire
+echo $_GET['nom']; // "Mateo21"
+
+// OU
+
+echo $_POST['nom']; // "Mateo21"
+
+Il y aura autant de clés dans le tableau $_GET que de champs avec un attribut name dans le formulaire soumis.
+
+Faites attention avec les champs cachés
+
+Les champs cachés constituent un type de champ à part.
+
+En quoi ça consiste ?
+
+C'est un code dans votre formulaire qui n'apparaîtra pas aux yeux du visiteur, mais qui va quand même créer une variable avec une valeur. On peut s'en servir pour transmettre des informations fixes.
+
+Je m'explique : supposons que vous ayez besoin de « retenir » que le pseudo du visiteur est « Mateo21 ». Vous allez taper ce code :
+
+<input type="hidden" name="pseudo" value="Mateo21" />
+
+À l'écran, sur la page web on ne verra rien. Mais dans la page cible, une variable $_POST['pseudo'] sera créée, et elle aura la valeur « Mateo21 » !
+
+C'est apparemment inutile, mais vous verrez que vous en aurez parfois besoin.
+
+On croit par erreur que, parce que ces champs sont cachés, le visiteur ne peut pas les voir. C'est faux ! En effet, n'importe quel visiteur peut afficher le code source de la page pour voir et modifier les champs cachés en lisant le code HTML.
+
+Ne faites jamais confiance aux données reçues : la faille XSS
+
+Vous vous souvenez des mises en garde que j'avais faites dans le chapitre précédent ? Elles ne concernaient pas que les paramètres qui transitent par l'URL : tout cela vaut aussi pour les formulaires !
+
+Je vois comment on peut modifier l'URL, mais comment peut faire un visiteur pour modifier le formulaire de mon site et trafiquer les données ?
+
+J'y viens…
+
+La faille XSS : attention au code HTML que vous recevez !
+
+La sécurité des applications web est un sujet très important à maîtriser lors de votre apprentissage. Si vous souhaitez en savoir plus sur le sujet, consultez le cours "Sécurisez vos applications web avec l'OWASP".
+
+La faille XSS (pour cross-site scripting) est vieille comme le monde (euh, comme le Web) et on la trouve encore sur de nombreux sites web, même professionnels ! C'est une technique qui consiste à injecter du code HTML contenant du JavaScript dans vos pages, pour le faire exécuter à vos visiteurs.
+
+Reprenons la page de récapitulatif qui affiche l'e-mail et le message qu'on a soumis dans le chapitre précédent :
+
+<h5>Rappel de vos informations</h5>
+<p><b>Email</b> : <?php echo $_POST['email']; ?></p>
+<p><b>Message</b> : <?php echo $_POST['message']; ?></p>
+
+Si le visiteur décide d'écrire du code HTML dans la zone de message, cela fonctionnera très bien !
+
+Par exemple, imaginons qu'il écrive dans le champ « Votre message » le code :<strong>Badaboum</strong>
+
+Le code source HTML qui sera généré par PHP sera le suivant :
+
+<p><b>Message</b> : <strong>Badaboum</strong></p>
+
+Et alors ? S'il veut mettre son message en gras, c'est son problème, non ?
+
+Outre le fait qu'il peut insérer n'importe quel code HTML (et rendre votre page invalide), ce qui n'est pas le plus grave, il peut aussi ouvrir des balises de type <script> pour faire exécuter du code JavaScript au visiteur qui visualisera la page !
+
+<p><b>Message</b> : <script>alert('Badaboum')</script></p>
+
+Tous les visiteurs qui arriveront sur cette page verront une boîte de dialogue JavaScript s'afficher. Plutôt gênant. Voyez la figure suivante.
+
+Sécurisez votre code en bloquant l'exécution de code JavaScript
+
+Pour ignorer le code HTML, il suffit d'utiliser la fonction  htmlspecialchars  .
+
+On dira dans ce cas qu'on "échappe" le code HTML, c'est-à-dire que la fonction JavaScript alert() n'en tiendra pas compte.
+
+Elle va transformer les chevrons des balises HTML  <  et  >  en &lt;  et &gt;  respectivement.
+
+Cela provoquera l'affichage de la balise plutôt que son exécution.
+
+<p><b>Message</b> : <?php echo htmlspecialchars($_POST['message']); ?></p>
+
+Le code HTML qui en résultera sera propre et protégé, car les balises HTML insérées par le visiteur auront été échappées :
+
+<p><b>Message</b> : &lt;strong&gt;Badaboum&lt;/strong&gt; ?></p>
+
+Il faut penser à utiliser cette fonction sur tous les textes envoyés par l'utilisateur qui sont susceptibles d'être affichés sur une page web.
+
+Bref, tout ce qui est affiché et qui vient, à la base, d'un visiteur, vous devez penser à le protéger avec  htmlspecialchars  .
+
+Si vous préférez retirer les balises HTML que le visiteur a tenté d'envoyer plutôt que de les afficher, utilisez la fonction  strip_tags  .
+
+Voici donc une nouvelle version du code de réception du formulaire (avec method="POST"  ) sécurisée, qui prévoit tous les cas pour éviter d'être pris au dépourvu par un utilisateur mal intentionné :
+
+<?php
+/**
+* On ne traite pas les super globales provenant de l'utilisateur directement,
+* ces données doivent être testées et vérifiées.
+*/
+$postData = $_POST;
+
+if (
+    !isset($postData['email'])
+    || !filter_var($postData['email'], FILTER_VALIDATE_EMAIL)
+    || empty($postData['message'])
+    || trim($postData['message']) === ''
+) {
+    echo('Il faut un email et un message valides pour soumettre le formulaire.');
+    return;
+}
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site de Recettes - Contact reçu</title>
+    <link
+href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+rel="stylesheet"
+>
+</head>
+
+<body>
+    <div class="container">
+        <?php require_once(__DIR__ . '/header.php'); ?>
+        <h1>Message bien reçu !</h1>
+        <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Rappel de vos informations</h5>
+            <p class="card-text"><b>Email</b> : <?php echo($postData['email']); ?></p>
+            <p class="card-text"><b>Message</b> : <?php echo(strip_tags($postData['message'])); ?></p>
+        </div>
+    </div>
+</body>
+</html>
+
+Exercez-vous
+
+Il est temps de refaire les modifications par vous-même et d'utiliser  POST  à la place de  GET .
+
+Vous pouvez retrouver le code modifié dans le dossier P3C2 du GitHub.
