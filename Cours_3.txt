@@ -533,3 +533,25 @@ Exercez-vous
 Il est temps de refaire les modifications par vous-même et d'utiliser  POST  à la place de  GET .
 
 Vous pouvez retrouver le code modifié dans le dossier P3C2 du GitHub.
+
+En résumé
+
+- Les formulaires sont le moyen le plus pratique pour le visiteur de transmettre des informations à votre 
+  site. PHP est capable de récupérer les données saisies par vos visiteurs et de les traiter.
+
+- Les données envoyées via un formulaire se retrouvent dans un tableau (array)  $_POST  .
+
+- De la même manière que pour les URL, il ne faut pas donner sa confiance absolue aux données que vous envoie 
+  l'utilisateur. Traitez les données reçues avec vigilance.
+
+- Que ce soit pour des données issues de l'URL ( $_GET  ) ou d'un formulaire ( $_POST  ), il faut s'assurer 
+  qu'aucun texte qui vous est envoyé ne contient du HTML si celui-ci est destiné à être affiché sur une page. 
+  Sinon, vous ouvrez une faille appelée XSS qui peut être néfaste pour la sécurité de votre site.
+
+- Pour éviter la faille XSS, il suffit d'appliquer la fonction htmlspecialchars  ou  strip_tags sur tous les 
+  textes envoyés par vos visiteurs que vous afficherez.
+
+Dans le prochain chapitre, nous allons voir comment permettre aux utilisateurs de votre site de partager et d'envoyer des fichiers. On y va !
+
+##############################################################################################################
+
