@@ -300,3 +300,23 @@ C'est à vous maintenant de valider les données du formulaire de contact (e-mai
 Vous pouvez retrouver le code modifié dans le dossier P3C1 du GitHub.
 
 En résumé
+
+- Une URL représente l'adresse d'une page web, commençant généralement par http://   .
+
+- Lorsqu'on fait un lien vers une page, il est possible d'ajouter des paramètres sous la forme 
+  bonjour.php?nom=Dupont&prenom=Jean qui seront transmis à la page.
+
+- La page de réception recevra ces paramètres dans un tableau (array) nommé  $_GET  .
+
+- Cette technique est très pratique pour transmettre des valeurs à une page, mais il faut prendre garde au 
+  fait que le visiteur peut les modifier très facilement.
+
+- La fonction isset() permet de vérifier si une variable est définie ou non.
+
+- D'autres fonctions comme filter_var() ,  trim()  ou empty() peuvent être utilisées pour la validation des 
+  champs.
+
+Dans le prochain chapitre, nous allons voir comment administrer des formulaires de manière sécurisée. C'est parti !
+
+##############################################################################################################
+
