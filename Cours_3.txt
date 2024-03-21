@@ -294,3 +294,9 @@ Nous n'avons pas détaillé le fonctionnement des fonctions filter_var ,  trim  
 N'hésitez pas à consulter tous les exemples de la documentation PHP pour bien comprendre son fonctionnement.
 
 Exercez-vous
+
+C'est à vous maintenant de valider les données du formulaire de contact (e-mail et message) dans notre projet fil rouge !
+
+Vous pouvez retrouver le code modifié dans le dossier P3C1 du GitHub.
+
+En résumé
