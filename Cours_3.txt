@@ -555,3 +555,273 @@ Dans le prochain chapitre, nous allons voir comment permettre aux utilisateurs d
 
 ##############################################################################################################
 
+Activez le partage de fichiers
+
+Imaginez qu'une personne essaie de vous contacter car elle est victime d'un bug d'utilisation sur votre site : elle souhaiterait peut-être vous partager une capture d'écran, ce qui faciliterait beaucoup votre travail de déboggage.
+
+Pour cela, vous allez devoir proposer la soumission de fichiers dans votre formulaire de contact !
+
+Vous aviez découvert les superglobales  $_GET  et  $_POST  dans les chapitres précédents, c'est maintenant au tour de la supervariable  $_FILES  de faire son entrée dans votre projet !
+
+Donnez la possibilité d'envoyer des fichiers
+
+Vous saviez qu'on pouvait aussi envoyer des fichiers grâce aux formulaires ?
+
+Là encore, ça se passe en deux temps.
+
+  1. Le visiteur arrive sur votre formulaire et le remplit (en indiquant le fichier à envoyer). Une simple 
+     page HTML suffit pour créer le formulaire.
+
+  2. PHP réceptionne les données du formulaire et, s'il y a des fichiers dedans, il les « enregistre » dans un 
+     des dossiers du serveur.
+
+Attention : l'envoi du fichier peut être un peu long si celui-ci est gros. Il faudra dire au visiteur de ne pas s'impatienter pendant l'envoi.
+
+Vous allez devoir adapter votre formulaire de contact pour autoriser l'envoi et la soumission.
+
+Paramétrez le formulaire d'envoi de fichier
+Dès l'instant où votre formulaire propose aux visiteurs d'envoyer un fichier, il faut ajouter l'attribut enctype="multipart/form-data" à la balise  <form>  .
+
+<form action="submit_contact.php" method="POST" enctype="multipart/form-data">
+    <!-- champs de formulaire -->
+</form>
+
+Grâce à enctype , le navigateur du visiteur sait qu'il s'apprête à envoyer des fichiers.
+
+Maintenant que c'est fait, nous pouvons ajouter à l'intérieur du formulaire une balise permettant d'envoyer un fichier.
+
+C'est une balise très simple de type   <input type="file" />  .
+
+Il faut donner un nom à ce champ de formulaire (grâce à l'attribut name ) pour que PHP puisse reconnaître le champ par la suite.
+
+<form action="submit_contact.php" method="POST" enctype="multipart/form-data">
+    <!-- Ajout des champs email et message -->
+    [...]
+    <!-- Ajout champ d'upload ! -->
+    <div class="mb-3">
+        <label for="screenshot" class="form-label">Votre capture d'écran</label>
+        <input type="file" class="form-control" id="screenshot" name="screenshot" />
+    </div>
+    <!-- Fin ajout du champ -->
+    <button type="submit" class="btn btn-primary">Envoyer</button>
+</form>
+
+Voilà, c'est suffisant.
+
+Traitez l'envoi en PHP
+
+C'est maintenant que ça devient important. Il faut que l'on ajoute du code dans la page submit_contact.php pour traiter l'envoi du fichier.
+
+« Traiter l'envoi du fichier » ? C'est-à-dire ? Si le fichier a été envoyé sur le serveur, c'est bon, non ? Qu'est-ce que PHP aurait besoin de faire ?
+
+En fait, au moment où la page PHP s'exécute, le fichier a été envoyé sur le serveur mais il est stocké dans un dossier temporaire.
+
+C'est à vous de décider si vous acceptez définitivement le fichier ou non.
+
+Vous pouvez par exemple vérifier si le fichier a la bonne extension (si vous demandez une image et qu'on vous envoie un « .txt », vous devrez refuser le fichier).
+
+Si le fichier est bon, vous l'accepterez grâce à la fonction move_uploaded_file et ce, d'une manière définitive.
+
+Mais comment je sais si « le fichier est bon » ?
+
+Pour chaque fichier envoyé, une variable $_FILES['nom_du_champ'] est créée.
+
+Dans notre cas, la variable s'appellera $_FILES['screenshot'] 
+
+Cette variable est un tableau qui contient plusieurs informations sur le fichier :
+
+
+Variable                               Signification
+
+$_FILES['screenshot']['name']          Contient le nom du fichier envoyé par le visiteur.
+
+$_FILES['screenshot']['type']          Indique le type du fichier envoyé. Si c'est une image gif par exemple, 
+                                       le type sera image/gif
+
+$_FILES['screenshot']['size']          Indique la taille du fichier envoyé.
+
+                                       Attention : cette taille est en octets. Il faut environ 1 000 octets 
+                                       pour faire 1 Ko, et 1 000 000 d'octets pour faire 1 Mo.
+                                       La taille de l'envoi est limitée par PHP. Par défaut, impossible 
+                                       d'uploader des fichiers de plus de 8 Mo.
+
+$_FILES['screenshot']['tmp_name']      Juste après l'envoi, le fichier est placé dans un répertoire temporaire 
+                                       sur le serveur en attendant que votre script PHP décide si oui ou non 
+                                       il accepte de le stocker pour de bon. Cette variable contient 
+                                       l'emplacement temporaire du fichier (c'est PHP qui gère ça).
+
+$_FILES['screenshot']['error']         Contient un code d'erreur permettant de savoir si l'envoi s'est bien 
+                                       effectué ou s'il y a eu un problème et si oui, lequel. La variable vaut 
+                                       0 s'il n'y a pas eu d'erreur.
+
+
+
+Si vous avez mis un second champ d'envoi de fichier dans votre formulaire, il y aura une seconde variable $_FILES['nom_de_votre_autre_champ'] découpée de la même manière que le tableau qu'on vient de voir ici.
+
+$_FILES['nom_de_votre_autre_champ']['size'] contiendra donc la taille du second fichier, et ainsi de suite.
+
+Je vous propose de faire les vérifications suivantes pour décider si l'on accepte le fichier ou non.
+
+  1. Vérifier tout d'abord si le visiteur a bien envoyé un fichier, en testant la variable 
+     $_FILES['screenshot'] avec isset() et s'il n'y a pas eu d'erreur d'envoi, grâce à 
+     $_FILES['screenshot']['error'] .
+
+  2. Vérifier si la taille du fichier ne dépasse pas 1 Mo par exemple (environ 1 000 000 d'octets), grâce à 
+     $_FILES['screenshot']['size']  .
+
+  3. Vérifier si l'extension du fichier est autorisée (il faut interdire à tout prix que les gens puissent 
+     envoyer des fichiers PHP, sinon ils pourraient exécuter des scripts sur votre serveur). Dans notre cas, 
+     nous autoriserons seulement les images (fichiers .png, .jpg, .jpeg et .gif).
+     Nous analyserons pour cela la variable $_FILES['screenshot']['name'] .
+
+Nous allons donc faire une série de tests dans notre page submit_contact.php .
+
+1/ Testez si le fichier a bien été envoyé
+On commence par vérifier qu'un fichier a été envoyé.
+
+Pour cela, on va tester si la variable $_FILES['screenshot']  existe avec  isset()  .
+
+On vérifie dans le même temps s'il n'y a pas d'erreur d'envoi.
+
+<?php
+// Testons si le fichier a bien été envoyé et s'il n'y a pas d'erreur
+if (isset($_FILES['screenshot']) && $_FILES['screenshot']['error'] == 0)
+{
+ 
+}
+?>
+
+2/ Vérifiez la taille du fichier
+On veut interdire que le fichier dépasse 1 Mo, soit environ 1 000 000 d'octets (j'arrondis pour simplifier). On doit donc tester $_FILES['screenshot']['size'] :
+
+<?php
+// Testons si le fichier a bien été envoyé et s'il n'y a pas des erreurs
+if (isset($_FILES['screenshot']) && $_FILES['screenshot']['error'] === 0) {
+    
+    // Testons, si le fichier est trop volumineux
+    if ($_FILES['screenshot']['size'] > 1000000) {
+        echo "L'envoi n'a pas pu être effectué, erreur ou image trop volumineuse";
+        return;
+    }
+}
+
+3/ Vérifiez l'extension du fichier
+On peut récupérer l'extension du fichier dans une variable grâce à ce code :
+
+<?php
+$fileInfo = pathinfo($_FILES['screenshot']['name']);
+$extension = $fileInfo['extension'];
+?>
+
+La fonction pathinfo renvoie un tableau (array) contenant entre autres l'extension du fichier dans  $fileInfo['extension']  .
+
+On stocke ça dans une variable  $extension  .
+
+Une fois l'extension récupérée, on peut la comparer à un tableau d'extensions autorisées, et vérifier si l'extension récupérée fait bien partie des extensions autorisées à l'aide de la fonction in_array() .
+
+Ouf ! On obtient ce code :
+
+<?php
+// Testons si le fichier a bien été envoyé et s'il n'y a pas des erreurs
+if (isset($_FILES['screenshot']) && $_FILES['screenshot']['error'] === 0) {
+    
+    // Testons, si le fichier est trop volumineux
+    if ($_FILES['screenshot']['size'] > 1000000) {
+        echo "L'envoi n'a pas pu être effectué, erreur ou image trop volumineuse";
+        return;
+    }
+    
+    // Testons, si l'extension n'est pas autorisée
+    $fileInfo = pathinfo($_FILES['screenshot']['name']);
+    $extension = $fileInfo['extension'];
+    $allowedExtensions = ['jpg', 'jpeg', 'gif', 'png'];
+    if (!in_array($extension, $allowedExtensions)) {
+        echo "L'envoi n'a pas pu être effectué, l'extension {$extension} n'est pas autorisée";
+        return;
+    }
+}
+
+4/ Vérifiez si le dossier pour stocker les images existe
+Je propose de placer le fichier dans un sous-dossier « uploads ». Pour vérifier si notre dossier uploads existe, nous allons utiliser la fonction  is_dir()  . Il nous suffit de lui fournir le chemin du dossier que nous souhaitons tester. La fonction renvoie true si le dossier existe et false dans le cas contraire.
+
+<?php
+// Testons si le fichier a bien été envoyé et s'il n'y a pas des erreurs
+if (isset($_FILES['screenshot']) && $_FILES['screenshot']['error'] === 0) {
+    
+    // Testons, si le fichier est trop volumineux
+    if ($_FILES['screenshot']['size'] > 1000000) {
+        echo "L'envoi n'a pas pu être effectué, erreur ou image trop volumineuse";
+        return;
+    }
+
+    // Testons, si l'extension n'est pas autorisée
+    $fileInfo = pathinfo($_FILES['screenshot']['name']);
+    $extension = $fileInfo['extension'];
+    $allowedExtensions = ['jpg', 'jpeg', 'gif', 'png'];
+    if (!in_array($extension, $allowedExtensions)) {
+        echo "L'envoi n'a pas pu être effectué, l'extension {$extension} n'est pas autorisée";
+        return;
+    }
+
+    // Testons, si le dossier uploads est manquant
+    $path = __DIR__ . '/uploads/';
+    if (!is_dir($path)) {
+        echo "L'envoi n'a pas pu être effectué, le dossier uploads est manquant";
+        return;
+    }
+}
+
+5/ Validez l'upload du fichier
+Si tout est bon, on accepte le fichier en appelant   move_uploaded_file()  .
+
+Cette fonction prend deux paramètres :
+
+  1. Le nom temporaire du fichier (on l'a avec  $_FILES['screenshot']['tmp_name']  ).
+
+  2. Le chemin qui est le nom sous lequel sera stocké le fichier de façon définitive. On peut utiliser le nom 
+     d'origine du fichier  $_FILES['screenshot']['name']  ou générer un nom au hasard.
+
+On gardera le même nom de fichier que celui d'origine.
+
+Comme  $_FILES['screenshot']['name']  contient le chemin entier vers le fichier d'origine (  C:\dossier\fichier.png  , par exemple), il nous faudra extraire le nom du fichier.
+
+On peut utiliser pour cela la fonction  basename  qui renverra juste « fichier.png ».
+
+<?php
+// Testons si le fichier a bien été envoyé et s'il n'y a pas des erreurs
+if (isset($_FILES['screenshot']) && $_FILES['screenshot']['error'] === 0) {
+    // Testons, si le fichier est trop volumineux
+    if ($_FILES['screenshot']['size'] > 1000000) {
+        echo "L'envoi n'a pas pu être effectué, erreur ou image trop volumineuse";
+        return;
+    }
+    // Testons, si l'extension n'est pas autorisée
+    $fileInfo = pathinfo($_FILES['screenshot']['name']);
+    $extension = $fileInfo['extension'];
+    $allowedExtensions = ['jpg', 'jpeg', 'gif', 'png'];
+    if (!in_array($extension, $allowedExtensions)) {
+        echo "L'envoi n'a pas pu être effectué, l'extension {$extension} n'est pas autorisée";
+        return;
+    }
+    // Testons, si le dossier uploads est manquant
+    $path = __DIR__ . '/uploads/';
+    if (!is_dir($path)) {
+        echo "L'envoi n'a pas pu être effectué, le dossier uploads est manquant";
+        return;
+    }
+    // On peut valider le fichier et le stocker définitivement
+    move_uploaded_file($_FILES['screenshot']['tmp_name'], $path . basename($_FILES['screenshot']['name']));
+}
+
+Lorsque vous mettrez le script sur Internet à l'aide d'un logiciel FTP, vérifiez que le dossier « Uploads » sur le serveur existe, et qu'il a les droits d'écriture. Pour ce faire, sous FileZilla par exemple, faites un clic droit sur le dossier et choisissez « Attributs du fichier ».
+Cela vous permettra d'éditer les droits du dossier (on parle de CHMOD). Mettez les droits à 733, ainsi PHP pourra placer les fichiers téléversés dans ce dossier.
+
+Ce script est un début, mais en pratique il vous faudra sûrement encore l'améliorer.
+
+Par exemple, si le nom du fichier contient des espaces ou des accents, ça posera un problème une fois envoyé sur le Web. D'autre part, si quelqu'un envoie un fichier qui a le même nom que celui d'une autre personne, l'ancien sera écrasé !
+
+La solution consiste en général à « choisir » nous-mêmes le nom du fichier stocké sur le serveur, plutôt que de nous servir du nom d'origine. Vous pouvez faire un compteur qui s'incrémente : 1.png, 2.png, 3.jpg, etc.
+
+Soyez toujours très vigilant sur la sécurité ; vous devez éviter que quelqu'un puisse envoyer des fichiers PHP sur votre serveur.
+
+Exercez-vous
