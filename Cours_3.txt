@@ -834,3 +834,19 @@ Vous pouvez retrouver le code modifié dans le dossier P3C3 du GitHub.
 
 En résumé
 
+- Les formulaires permettent d'envoyer des fichiers. On retrouve les informations sur les fichiers envoyés 
+  dans un array $_FILES . Leur traitement est cependant plus complexe.
+
+- Il faudra toujours contrôler les fichiers reçus : leur existence et leur taille qui est soumise à limitation 
+  par la configuration de PHP.
+
+- Il faudra vérifier leur extension (à l'aide de la fonction pathinfo) et surtout refuser tout fichier PHP qui 
+  pourrait par la suite s'exécuter sur votre serveur.
+
+- À l'aide de la fonction move_uploaded_file, vous pouvez conserver le fichier téléversé sur votre serveur, 
+  mais vérifiez bien que vous avez les droits d'écrire des fichiers d'abord.
+
+Dans le prochain chapitre, nous allons voir comment implémenter un système de connexion pour vos utilisateurs. 
+
+##############################################################################################################
+
