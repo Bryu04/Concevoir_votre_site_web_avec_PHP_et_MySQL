@@ -825,3 +825,12 @@ La solution consiste en général à « choisir » nous-mêmes le nom du fichier
 Soyez toujours très vigilant sur la sécurité ; vous devez éviter que quelqu'un puisse envoyer des fichiers PHP sur votre serveur.
 
 Exercez-vous
+
+Il nous reste à apporter une modification supplémentaire pour que notre affichage prenne en compte le chargement du fichier.
+
+Étant donné que le champ d'image n'est pas obligatoire dans notre formulaire, nous afficherons le message suivant "L'envoi a bien été effectué !" uniquement si une image a été téléchargée.
+
+Vous pouvez retrouver le code modifié dans le dossier P3C3 du GitHub.
+
+En résumé
+
