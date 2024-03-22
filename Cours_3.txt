@@ -1086,3 +1086,8 @@ Eh bien, ce sera l'objet des prochains chapitres !
 
 Exercez-vous
 
+Il ne vous reste plus qu'à modifier le projet pour implémenter le système de connexion. C'est parti !
+
+Vous pouvez retrouver le code modifié dans le dossier P3C4 du GitHub.
+
+En résumé

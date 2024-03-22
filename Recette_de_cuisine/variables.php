@@ -4,6 +4,8 @@ $users = [
         'full_name' => 'Mickaël Andrieu',
         'email' => 'mickael.andrieu@exemple.com',
         'age' => 34,
+        // On ajoute un mdp pour le test 
+        'password' => 'arigatou12'
     ],
     [
         'full_name' => 'Mathieu Nebra',
