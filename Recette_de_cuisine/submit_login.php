@@ -22,14 +22,23 @@ if (isset($postData['email']) &&  isset($postData['password'])) {
             	$user['email'] === $postData['email'] &&
             	$user['password'] === $postData['password']
         	) {
-            	$_SESSION['LOGGED_USER'] = [
-                	'email' => $user['email'],
+                setcookie(
+                    'LOGGED_USER',
+                    $user['email'],
+                    [
+                        'expires' => time() + 300,
+                        'secure' => true,
+                        'httponly' => true,
+                    ]
+                );
+            	// $_COOKIE['LOGGED_USER'] = [
+                	// 'email' => $user['email'],
                     // 'user_id' => $user['user_id'],
-            	];
+            	// ];
         	}
     	}
 
-    	if (!isset($_SESSION['LOGGED_USER'])) {
+    	if (!isset($_COOKIE['LOGGED_USER'])) {
         	$_SESSION['LOGIN_ERROR_MESSAGE'] = sprintf(
             	'Les informations envoyées ne permettent pas de vous identifier : (%s/%s)',
             	$postData['email'],
