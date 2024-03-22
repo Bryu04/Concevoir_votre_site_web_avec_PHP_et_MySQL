@@ -4,6 +4,11 @@ session_start();
 require_once(__DIR__ .'/variables.php');
 require_once(__DIR__ .'/functions.php');
 
+// Si Cookie est expiré, on met fin à la session 
+// if (!isset($_COOKIE['LOGGED_USER'])) {
+//     redirectToUrl('logout.php');
+// }
+
 ?>
 
 <!DOCTYPE html>

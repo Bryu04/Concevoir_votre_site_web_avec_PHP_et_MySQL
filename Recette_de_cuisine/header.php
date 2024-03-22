@@ -13,6 +13,14 @@
                 <li class="nav-item">
                     <a class="nav-link" href="contact.php">Contact</a>
                 </li>
+
+                <?php
+                // Si utilisateur est connecté, afficher le button deconnection
+                if (isset($_SESSION['LOGGED_USER'])) {
+                    echo '<li class="nav-item"> <a class="nav-link" href="logout.php">Deconnexion</a>
+                    </li>';
+                }
+                ?>
             </ul>
         </div>
     </div>
