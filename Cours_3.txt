@@ -1534,3 +1534,160 @@ C'est la fin de cette partie du cours ! Et devinez quoi ? C'est le moment de ré
 
 ##############################################################################################################
 
+!!!!!!!!!!!!! QUIZ : Transmettre des données de page en page !!!!!!!!!!!!!!
+
+Compétences évaluées
+
+Transmettre des données
+Stocker des données dans les sessions et les cookies
+Enregistrer des données dans un fichier
+
+Description
+Il est temps de tester vos connaissances !
+
+Question 1
+
+Quel symbole sépare le nom de la page de ses paramètres dans l'URL ?
+
+- Un point : .
+
+- Un point d'interrogation : ? (o) (B)
+
+- Un point d'exclamation : !
+
+- Une esperluette : &
+
+"""""""""" Réponse """"""""""""""
+On retrouve un point d'interrogation à la fin du nom de la page, par exemple http://monsite.com/page.php?parametres
+
+"""""""""""""""""""""""""""""""""
+
+Question 2
+
+Quelle méthode d'envoi de données est la moins limitée ?
+
+- POST (B)
+
+- GET (o) (M)
+
+"""""""""" Réponse """"""""""""""
+Avec POST  , on peut transférer beaucoup de données entre les pages.
+
+Avec GET  , on est beaucoup plus limité par la taille de l'URL.
+
+"""""""""""""""""""""""""""""""""
+
+Question 3
+
+Il est possible de faire passer des nombres négatifs dans l'URL.
+
+- Vrai (o) (B)
+
+- Faux
+
+"""""""""" Réponse """"""""""""""
+On peut tout à fait le faire, il suffit d'écrire le tiret (symbole  -  ) au début de la valeur : http://monsite.com/page.php?valeur=-4.
+
+"""""""""""""""""""""""""""""""""
+
+Question 4
+
+Laquelle de ces méthodes d'envoi est plus sûre que l'autre ?
+
+- GET
+
+- POST
+
+- Aucune des deux. (o) (B)
+
+"""""""""" Réponse """"""""""""""
+Même s'il paraît plus facile de modifier des données en GET (elles sont dans la barre d'adresse) c'est tout à fait possible de manipuler des données POST .
+
+Par conséquent, ne faites JAMAIS confiance aux données que vous recevez du visiteur, quelle que soit la méthode.
+
+"""""""""""""""""""""""""""""""""
+
+Question 5
+
+Quelle fonction permet de vérifier qu'une variable existe dans la page ?
+
+- is_exists
+
+- isset() (o) (B)
+
+- is_available
+
+"""""""""" Réponse """"""""""""""
+La fonction isset() permet de vérifier si une variable existe. Servez-vous-en pour réagir si une variable que vous attendez n'a pas été transmise !
+
+"""""""""""""""""""""""""""""""""
+
+Question 6
+
+Que se passe-t-il quand on ne coche pas une case à cocher dans un formulaire ?
+
+- La variable est envoyée et contient la valeur off
+
+- La variable est envoyée et contient la valeur on
+
+- La variable est envoyée et contient la valeur disable
+
+- La variable n'est pas envoyée. (o) (B)
+
+"""""""""" Réponse """"""""""""""
+Lorsqu'une case n'est pas cochée, on ne voit aucune variable transmise. À vous donc de vérifier si la case est cochée en testant la présence de la variable avec... isset() !
+
+"""""""""""""""""""""""""""""""""
+
+Question 7
+
+Que faut-il veiller à faire avant d'appeler la fonction session_start() ?
+
+- Il faut qu'il n'y ait aucun caractère HTML avant l'appel de la fonction. (o) (B)
+
+- Il faut appeler la fonction session_init()
+
+- Il faut définir ses variables de session au préalable.
+
+- Il faut définir le numéro de session de l'utilisateur.
+
+"""""""""" Réponse """"""""""""""
+La fonction session_start() active les sessions.
+
+AUCUN caractère HTML ne doit être transmis au préalable. Elle doit donc se trouver tout en haut du fichier.
+
+"""""""""""""""""""""""""""""""""
+
+Question 8
+
+Combien de temps une variable de session est-elle mémorisée par le serveur ?
+
+- 1 heure.
+
+- 1 journée.
+
+- 1 an.
+
+- Pendant la durée de la visite du visiteur. (o) (B)
+
+"""""""""" Réponse """"""""""""""
+Une variable de session dure... pendant toute la visite (session) du visiteur. Elle est détruite dès qu'il quitte le site (en général après une vingtaine de minutes d'inactivité).
+
+"""""""""""""""""""""""""""""""""
+
+Question 9
+
+Que représente le nombre de secondes associé à notre cookie que l'on indique dans l'appel à la fonction setcookie ?
+
+- Le moment (timestamp) où le cookie est créé.
+
+- Le moment (timestamp) où le cookie doit être détruit. (B)
+
+- Le nombre de secondes que le cookie doit vivre avant d'être détruit. (o) (M)
+
+"""""""""" Réponse """"""""""""""
+C'est un moment représenté par le nombre de secondes écoulées depuis le 01/01/1970. Il représente la date de fin de vie du cookie : il sera donc supprimé à ce moment-là.
+
+"""""""""""""""""""""""""""""""""
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
