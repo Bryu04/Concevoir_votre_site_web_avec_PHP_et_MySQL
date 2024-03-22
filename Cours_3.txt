@@ -1515,3 +1515,22 @@ Je comprends, ce chapitre a été assez dense, et l'ajout de la fonction de déc
 Vous pouvez retrouver le code modifié dans le dossier P3C5 du GitHub.
 
 En résumé
+
+- Les variables superglobales sont des variables automatiquement créées par PHP. Elles se présentent sous la 
+  forme de tableaux (arrays) contenant différents types d'informations.
+
+- Dans les chapitres précédents, nous avons découvert deux superglobales essentielles :  $_GET (qui contient 
+  les données issues de l'URL) et $_POST (qui contient les données issues d'un formulaire).
+
+- La superglobale $_SESSION permet de stocker des informations qui seront automatiquement transmises de page 
+  en page pendant toute la durée de visite d'un internaute sur votre site. Il faut au préalable activer les 
+  sessions en appelant la fonction  session_start() .
+
+- La superglobale $_COOKIE représente le contenu de tous les cookies stockés par votre site sur l'ordinateur 
+  du visiteur. Les cookies sont de petits fichiers que l'on peut écrire sur la machine du visiteur pour 
+  retenir par exemple son nom. On crée un cookie avec la fonction  setcookie() .
+
+C'est la fin de cette partie du cours ! Et devinez quoi ? C'est le moment de répondre au quiz avant de passer à la suite et fin du cours.
+
+##############################################################################################################
+
