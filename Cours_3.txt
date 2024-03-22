@@ -1484,3 +1484,34 @@ Notez qu'alors le temps d'expiration du cookie est remis à zéro pour un an.
 
 Exercez-vous
 
+Et si nous ajoutions la fonctionnalité de déconnexion (logout) à votre site web !
+
+Ah là là, encore un truc à ajouter ! Le chapitre était déjà super long… Et maintenant, la déconnexion ? J'ai vraiment besoin d'un coup de main !
+
+Je comprends, ce chapitre a été assez dense, et l'ajout de la fonction de déconnexion peut sembler un peu intimidant. Mais ne vous inquiétez pas, pour rendre les choses plus simples, je vous suggère de diviser la tâche en étapes.
+
+1. Créez un nouveau fichier PHP et nommez-le logout.php.
+
+2. Dans ce fichier logout.php, programmez le code nécessaire pour déconnecter un utilisateur. Vous pouvez 
+   utiliser les connaissances que vous avez acquises jusqu'à présent dans ce cours pour gérer la session de 
+   l'utilisateur et supprimer ses données de connexion.
+
+3.Ensuite, redirigez l'utilisateur vers la page d'accueil (index.php) une fois la déconnexion effectuée.
+
+4.Dans le fichier header.php, ajoutez une condition pour afficher le lien vers logout.php uniquement si 
+  l'utilisateur est connecté. Cela permettra aux utilisateurs connectés d'accéder facilement à la déconnexion.
+
+5.Testez si la déconnexion fonctionne correctement sur le site web. Pour cela :
+
+    1. Connectez-vous en utilisant l'email : mathieu.nebra@exemple.com et le mot de passe MiamMiam
+
+    2. Une fois connecté, assurez-vous que le lien "Déconnexion" est visible.
+
+    3. Cliquez sur le lien Déconnexion. Vérifiez que les informations de l'utilisateur ainsi que le lien 
+       Déconnexion disparaissent.
+
+À vous de jouer !
+
+Vous pouvez retrouver le code modifié dans le dossier P3C5 du GitHub.
+
+En résumé
