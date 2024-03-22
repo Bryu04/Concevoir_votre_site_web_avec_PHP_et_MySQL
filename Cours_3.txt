@@ -1091,3 +1091,15 @@ Il ne vous reste plus qu'à modifier le projet pour implémenter le système de 
 Vous pouvez retrouver le code modifié dans le dossier P3C4 du GitHub.
 
 En résumé
+
+- Il est recommandé de passer des informations en POST lorsqu'on conçoit un formulaire de connexion.
+
+- Soit l'utilisateur est identifiable, c'est-à-dire que l'on retrouve une correspondance avec les identifiants 
+  fournis ; auquel cas, on autorise l'affichage du contenu.
+
+- Soit l'utilisateur n'est pas identifiable : alors, on affichera un message d'erreur !
+
+Dans le prochain chapitre, nous allons voir comment conserver les données grâce aux sessions et aux cookies. À tout de suite !
+
+##############################################################################################################
+
