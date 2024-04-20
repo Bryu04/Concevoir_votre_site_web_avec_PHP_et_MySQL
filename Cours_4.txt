@@ -252,3 +252,22 @@ Il est temps de créer la base de données pour notre projet fil rouge.
     que vous venez de télécharger.
 
 En résumé
+
+- phpMyAdmin est un outil qui nous permet de visualiser rapidement l'état de notre base de données et de la 
+  modifier, sans avoir à écrire de requêtes SQL.
+
+- On crée généralement un champ nommé id  qui sert à numéroter les entrées d'une table. Ce champ doit avoir un 
+  index PRIMARY (on dit qu'on crée une clé primaire) et l'option AUTO_INCREMENT qui permet de laisser MySQL 
+  gérer la numérotation.
+
+- MySQL gère différents types de données pour ses champs, à la manière de PHP. On trouve des types adaptés au 
+  stockage de nombres, de textes, de dates, etc.
+
+- phpMyAdmin possède un outil d'importation et d'exportation des tables qui nous permettra notamment d'envoyer 
+  notre base de données sur Internet ou d'en conserver une copie.
+
+Dans le prochain chapitre, nous allons voir comment accéder aux données en PHP avec PDO. C'est parti !
+
+##############################################################################################################
+
+
