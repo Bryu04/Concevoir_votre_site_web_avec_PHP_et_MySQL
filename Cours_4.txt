@@ -109,7 +109,7 @@ Ce tableau représente le contenu d'une table (c'est-à-dire le tiroir de l'armo
 
 Chaque ligne est une entrée. Ici, il y en a quatre, mais une table peut très bien contenir 100, 1 000, ou même 100 000 entrées.
 
-rès souvent, on crée un champ "Number", aussi appelé "ID" (identifiant).
+Très souvent, on crée un champ "Number", aussi appelé "ID" (identifiant).
 
 Comme nous le verrons plus tard, il est très pratique de numéroter ses entrées, même si ce n'est pas obligatoire.
 
@@ -170,4 +170,77 @@ En résumé
 Nous arrivons au cœur du sujet de cette dernière partie du cours : la mise en place d'une base de données avec phpMyAdmin.
 
 ##############################################################################################################
+
+Mettez en place une base de données avec phpMyAdmin
+
+Dans ce chapitre, vous allez créer et mettre en place la base de données pour votre site de partage de recettes.
+
+Pour communiquer avec MySQL, nous pouvons utiliser différents logiciels : de l'invite de commandes jusqu'à des logiciels accessibles par le navigateur. Ici, vous allez utiliser phpMyAdmin, l'un des outils les plus connus permettant de manipuler une base de données MySQL.
+
+phpMyAdmin est livré avec XAMPP ; vous allez donc pouvoir vous en servir tout de suite !
+
+Créez une table pour les recettes
+
+Pour créer une table qui correspond à une recette, nous allons devoir associer chacune des propriétés de nos recettes à un champ de la table, et lui associer un type de données.
+
+Ensuite, nous devons définir un champ qui servira d'identifiant unique (un peu comme un numéro de Sécurité sociale), de sorte à pouvoir retrouver chaque recette :
+
+Les types de champs MySQL
+
+Alors que PHP ne propose que quelques types de données que l'on connaît bien maintenant ( int  , string  , bool  …), MySQL propose une quantité très importante de types de données.
+
+Mais dans la pratique, vous n'aurez besoin de jongler qu'entre les quatre types de données suivants :
+
+  1. INT : nombre entier ;
+
+  2. VARCHAR : texte court (entre 1 et 255 caractères) ;
+
+  3. TEXT : long texte (on peut y stocker un roman sans problème) ;
+
+  4. DATE : date (jour, mois, année).
+
+Cela couvrira 99 % de vos besoins, et avec l'expérience vous apprendrez à optimiser vos bases de données, et l'intérêt des autres types de données de MySQL.
+
+Les clés primaires
+
+Toute table doit posséder un champ qui joue le rôle de clé primaire. La clé primaire permet d'identifier de manière unique une entrée dans la table. En général, on utilise le champ id comme clé primaire, comme on vient de le faire.
+
+Prenez le réflexe de créer à chaque fois ce champ « id » en lui donnant l'index PRIMARY  , ce qui aura pour effet d'en faire une clé primaire.
+
+Vous en profiterez en général pour cocher la case AUTO_INCREMENT pour que ce champ gère lui-même les nouvelles valeurs automatiquement (1, 2, 3, 4…).
+
+Modifiez une table
+
+Mais… je ne vais pas devoir passer par phpMyAdmin à chaque fois que je veux ajouter ou supprimer un élément, quand même ?
+
+Non, bien sûr que non.
+
+Vous allez apprendre à le faire en PHP dans les chapitres suivants.
+
+Il nous reste encore à découvrir deux des nombreuses fonctionnalités offertes par phpMyAdmin, et nous aurons terminé notre tour d'horizon de cet outil : l'import et l'export de base de données.
+
+Importez et exportez des données
+
+Vous allez ici vous intéresser à l'onglet "Import" de phpMyAdmin, dont le principal intérêt est de créer une base de données entière avec tables et données :
+
+Explorez maintenant l'onglet « Exporter » de phpMyAdmin.
+
+C'est ici que vous allez pouvoir récupérer votre base de données sur le disque dur, sous forme de fichier texte .sql  (qui contiendra des tonnes de requêtes SQL).
+
+Le fichier que vous allez obtenir grâce à « l'exportation » de phpMyAdmin, c'est un fichier qui dit à MySQL comment recréer votre base de données (avec des requêtes en langage SQL). Et ce fichier-là est tout à fait lisible.
+
+À quoi sert ce fichier ?
+
+On peut s'en servir pour deux choses :
+
+  1. Transmettre votre base de données sur Internet : pour le moment, votre base de données se trouve sur 
+     votre disque dur. Mais lorsque vous voudrez héberger votre site sur Internet, il faudra utiliser la base 
+     de données en ligne de votre hébergeur ! Le fichier .sql que vous allez générer vous permettra de 
+     reconstruire la base de données à l'identique.
+
+  2. Faire une copie de sauvegarde de la base de données : on ne sait jamais, si vous faites une bêtise ou si 
+     quelqu'un réussit à détruire toutes les informations sur votre site, vous serez bien content d'avoir une 
+     copie de secours sur votre disque dur !
+
+Exercez-vous
 
