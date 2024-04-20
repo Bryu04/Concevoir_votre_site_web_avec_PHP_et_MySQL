@@ -244,3 +244,11 @@ On peut s'en servir pour deux choses :
 
 Exercez-vous
 
+Il est temps de créer la base de données pour notre projet fil rouge.
+
+  - Téléchargez le fichier d'import de la base de données à partir du dossier P4C2 du GitHub. 
+
+  - Suivez les étapes que nous avons vues dans le cours en utilisant phpMyAdmin pour importer le fichier SQL 
+    que vous venez de télécharger.
+
+En résumé
