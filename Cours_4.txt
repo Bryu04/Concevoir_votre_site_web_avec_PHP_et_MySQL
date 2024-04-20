@@ -270,4 +270,316 @@ Dans le prochain chapitre, nous allons voir comment accéder aux données en PHP
 
 ##############################################################################################################
 
+Accédez aux données en PHP avec PDO
+
+Vous allez maintenant communiquer avec votre base de données de recettes via PHP.
+
+À la fin de ce chapitre, vous aurez obtenu une nouvelle version de la page d'accueil du site, cette fois créée à l'aide de PHP et de MySQL !
+
+Connectez-vous à la base de données en PHP
+Pour pouvoir travailler avec la base de données en PHP, il faut d'abord s'y connecter.
+
+Il va donc falloir que PHP s'authentifie : on dit qu'il établit une connexion avec MySQL.
+
+Une fois que la connexion sera établie, vous pourrez faire toutes les opérations que vous voudrez sur votre base de données !
+
+Pour se connecter à une base de données MySQL, vous allez devoir utiliser une extension PHP appelée PDO ("PHP Data Objects"). Cette extension est fournie avec PHP (en français, "les fonctions PDO sont à votre disposition"), mais parfois il vous faudra activer l'extension.
+
+Vérifiez que PDO est bien activé
+
+Je vous recommande de passer la ligne display_errors  sur "On" pour que les erreurs s'affichent ; ça va grandement nous aider :
+
+display_errors = On
+
+Si vous êtes sous Linux et que vous utilisez XAMPP, recherchez la ligne qui commence par pdo_mysql.default_socket  et complétez-la comme ceci :
+
+pdo_mysql.default_socket = /opt/lampp/var/mysql/mysql.sock
+
+Enregistrez le fichier puis redémarrez PHP. Il suffit pour cela de relancer votre logiciel favori (MAMP, XAMPP…).
+
+Connectez PHP à MySQL avec PDO
+
+Maintenant que nous sommes certains que PDO est activé, nous pouvons nous connecter à MySQL. Nous allons avoir besoin de quatre renseignements :
+
+  - Le nom de l'hôte : c'est l'adresse IP de l'ordinateur où MySQL est installé. Le plus souvent, MySQL est 
+    installé sur le même ordinateur que PHP : dans ce cas, mettez la valeur localhost . 
+
+  - La base : c'est le nom de la base de données à laquelle vous voulez vous connecter. Dans notre cas, la 
+    base s'appelle partage_de_recettes . Vous l'avez créée avec phpMyAdmin dans le chapitre précédent.
+
+  - L'identifiant et le mot de passe : ils permettent de vous identifier. Renseignez-vous auprès de votre 
+    hébergeur pour les connaître.
+
+Si vous utilisez MAMP, la valeur de l'identifiant et du mot de passe est la même : root.
+
+Voici donc l'instruction PDO pour vous connecter à votre base partage_de_recettes :
+
+<?php
+$mysqlClient = new PDO(
+	'mysql:host=localhost;dbname=partage_de_recettes;charset=utf8',
+	'root',
+	''
+);
+?>
+
+Je ne comprends rien à ce code, c'est normal ?
+
+Oui, il faut reconnaître qu'il contient quelques nouveautés.
+
+En effet, PDO est ce qu'on appelle une extension orientée objet. C'est une façon de programmer un peu différente des fonctions classiques que l'on a appris à utiliser jusqu'ici.
+
+Pour l'instant, je vous invite à réutiliser les codes que je vous propose en suivant mes exemples. Vous comprendrez les détails de leur mode de fonctionnement un peu plus tard.
+
+La ligne de code qu'on vient de voir crée une connexion à la base de données.
+
+En fait, on crée la connexion en indiquant dans l'ordre dans les paramètres :
+
+  - le nom d'hôte : localhost ;
+
+  - la base de données : partage_de_recettes ;
+
+  - l'identifiant (login) : root ;
+
+  - le mot de passe (Sous XAMPP, il n’y a pas de mot de passe par défaut. Pour cela, nous utiliserons la 
+    chaîne de caractères vide.).
+
+Lorsque votre site sera en ligne, vous aurez sûrement un nom d'hôte différent, ainsi qu'un identifiant et un mot de passe, comme ceci :
+
+<?php
+$mysqlClient = new PDO('mysql:host=sql.hebergeur.com;dbname=mabase;charset=utf8', 'pierre.durand', 's3cr3t');
+?>
+
+Il faudra donc penser à changer cette ligne pour l'adapter à votre hébergeur en modifiant les informations en conséquence, lorsque vous enverrez votre site sur le Web.
+
+Le premier paramètre (qui commence par mysql  ) s'appelle le DSN : Data Source Name. C'est généralement le seul qui change en fonction du type de base de données auquel on se connecte.
+
+Testez la présence d'erreurs
+
+Si vous avez renseigné les bonnes informations (nom de l'hôte, de la base, login et mot de passe), rien ne devrait s'afficher à l'écran.
+
+Toutefois, s'il y a une erreur (vous vous êtes trompé de mot de passe ou de nom de base de données, par exemple), PHP risque d'afficher toute la ligne qui pose l'erreur, ce qui inclut le mot de passe !
+
+Vous ne voudrez pas que vos visiteurs puissent voir le mot de passe si une erreur survient lorsque votre site est en ligne. Il est préférable de traiter l'erreur.
+
+En cas d'erreur, PDO renvoie ce qu'on appelle une exception, qui permet de « capturer » l'erreur.
+
+Voici comment je vous propose de faire :
+
+<?php
+try
+{
+    $mysqlClient = new PDO('mysql:host=localhost;dbname=partage_de_recettes;charset=utf8', 'root', '');
+}
+catch (Exception $e)
+{
+    die('Erreur : ' . $e->getMessage());
+}
+?>
+
+Voilà encore un code un peu nouveau pour nous : sans trop rentrer dans le détail, il faut savoir que PHP essaie d'exécuter les instructions à l'intérieur du bloc try  :
+
+  - S'il y a une erreur, il rentre dans le bloc catch et fait ce qu'on lui demande (ici, on arrête l'exécution 
+    de la page en affichant un message décrivant l'erreur).
+
+  - Si au contraire tout se passe bien, PHP poursuit l'exécution du code et ne lit pas ce qu'il y a dans le 
+    bloc catch  . Votre page PHP ne devrait donc rien afficher pour le moment.
+
+Ouh là ! Tout ça semble bien compliqué, je n'y comprends pas grand-chose ! C'est grave, docteur ?
+
+Non, pas du tout ! En fait, et j'insiste là-dessus, PDO nous fait utiliser des fonctionnalités de PHP que l'on n'a pas étudiées jusqu'à présent (programmation orientée objet, exceptions…). Contentez-vous pour le moment de réutiliser les codes que je vous propose et n'ayez crainte.
+
+Si vous souhaitez en savoir dès maintenant un peu plus sur la gestion des exceptions,  consultez le chapitre sur le sujet dans le cours sur la programmation orientée objet avec PHP.
+
+Effectuez une première requête SQL
+
+Maintenant, nous allons apprendre à lire des informations dans la base de données, puis nous verrons dans le chapitre suivant comment ajouter et modifier des données.
+
+L'objectif ici consiste à récupérer la liste des recettes qui étaient au départ dans une variable sous forme de tableau associatif, et qui sont maintenant stockées dans votre base de données.
+
+Arrive alors le grand moment que vous attendiez tous : on va parler à MySQL. Pour cela, on va faire ce qu'on appelle une requête, en demandant à MySQL de nous dire ce que contient la table  recipes. 
+
+Construisez votre première requête SQL
+
+Comme je vous l'ai dit, le SQL est un langage. C'est lui qui nous permet de communiquer avec MySQL.
+
+Voici la première requête SQL que nous allons utiliser :
+
+SELECT * FROM recipes
+
+Cela peut se traduire par :
+
+« Prendre tout ce qu'il y a dans la table recipes ».
+
+Analysons chaque terme de cette requête.
+
+  - SELECT : en langage SQL, le premier mot indique quel type d'opération doit effectuer MySQL. Dans ce 
+    chapitre, nous ne verrons que SELECT  . Ce mot-clé demande à MySQL d'afficher ce que contient une table.
+
+  - * : après le SELECT  , on doit indiquer quels champs MySQL doit récupérer dans la table. Si on n'est 
+    intéressé que par les champs « nom » et « possesseur », il faudra taper :
+    SELECT nom, possesseur FROM recipes
+
+    Si vous voulez prendre tous les champs, tapez *  . Cette petite étoile peut se traduire par « tout » : 
+    « Prendre tout ce qu'il y a… ».
+
+  - FROM : c'est un mot de liaison qui se traduit par « dans ». FROM  fait la liaison entre le nom des champs 
+    et le nom de la table.
+
+  - recipes : c'est le nom de la table dans laquelle il faut aller piocher.
+
+Effectuons la requête  à l'aide de l'objet PDO :
+
+<?php
+$recipesStatement = $mysqlClient->prepare('SELECT * FROM recipes');
+?>
+
+Affichez le résultat d'une requête SQL
+
+Le problème, c'est que $recipesStatement contient quelque chose d'inexploitable directement : un objet PDOStatement. Cet objet va contenir la requête SQL que nous devons exécuter, et par la suite, les informations récupérées en base de données.
+
+Pour récupérer les données, demandez à cet objet d'exécuter la requête SQL et de récupérer toutes les données dans un format "exploitable" pour vous, c'est-à-dire sous forme d'un tableau PHP.
+
+<?php
+$recipesStatement->execute();
+$recipes = $recipesStatement->fetchAll();
+?>
+
+"Fetch" en anglais signifie « va chercher ».
+
+Une fois qu'on a récupéré les données sous forme d'un tableau PHP, on en revient à ce que vous connaissez déjà ! Je vous propose de résumer tout ce que vous venez d'apprendre, de la connexion via PDO à l'affichage du résultat de la requête :
+
+<?php
+try {
+    // On se connecte à MySQL
+    $mysqlClient = new PDO('mysql:host=localhost;dbname=partage_de_recettes;charset=utf8', 'root', 'root');
+} catch (Exception $e) {
+    // En cas d'erreur, on affiche un message et on arrête tout
+    die('Erreur : ' . $e->getMessage());
+}
+// Si tout va bien, on peut continuer
+
+// On récupère tout le contenu de la table recipes
+$sqlQuery = 'SELECT * FROM recipes';
+$recipesStatement = $mysqlClient->prepare($sqlQuery);
+$recipesStatement->execute();
+$recipes = $recipesStatement->fetchAll();
+
+// On affiche chaque recette une à une
+foreach ($recipes as $recipe) {
+?>
+    <p><?php echo $recipe['author']; ?></p>
+<?php
+}
+?>
+
+Affichez seulement le contenu de quelques champs
+
+Avec ce que je vous ai appris, vous devriez être capable d'afficher ce que vous voulez.
+Personne ne vous oblige à afficher tous les champs !
+
+Par exemple, si j'avais juste voulu lister les noms des recettes et le nom de l'auteur, j'aurais utilisé la requête SQL suivante :
+
+<?php
+
+$sqlQuery = 'SELECT title, author FROM recipes';
+
+Et... c'est tout, vous récupèrerez seulement les informations dont vous avez besoin, ce qui est plus performant.
+
+Filtrez vos données
+
+Rappelez-vous votre objectif : on souhaite lister les recettes qui sont activées, c'est-à-dire celles dont le champ is_enabled vaut TRUE .
+
+Ça paraît compliqué à faire, non ?
+
+Pas en SQL !
+
+Vous allez voir qu'en modifiant vos requêtes SQL, il est possible de filtrer et trier très facilement vos données. Vous allez ici découvrir les mots-clés suivants du langage SQL :
+
+  - WHERE ;
+
+  - ORDER BY ;
+
+  - LIMIT  .
+
+Grâce au mot-clé WHERE , vous allez pouvoir trier vos données.
+
+Puisque l'on souhaite récupérer uniquement les recettes avec le champ is_enabled à  TRUE , alors la requête au début sera la même qu'avant, mais vous rajouterez  à la fin WHERE is_enabled = TRUE  .
+
+Cela vous donne la requête :
+
+<?php
+$sqlQuery = 'SELECT * FROM recipes WHERE is_enabled = TRUE';
+
+Traduction :
+
+« Sélectionner tous les champs de la table recipes lorsque le champ is_enabled est égal à vrai ».
+
+L'utilisation de l'instruction  ORDER BY  a un impact sur la colonne "title". Par exemple, en exécutant la requête  SELECT * FROM recipes ORDER BY title DESC  , les recettes seront correctement triées dans l'ordre décroissant en fonction du titre.
+
+La valeur 1 est équivalente à true et la valeur 0 est équivalente à false. Ainsi, les requêtes  SELECT * FROM recipes WHERE is_enabled = 1  et  SELECT * FROM recipes WHERE is_enabled = true  renverront les mêmes données.
+
+Je n'aborde ici que les bases de l'instruction  SELECT  . Pour en savoir plus, vous pouvez suivre ce cours sur MySQL en complément, voire en parallèle de la lecture de ce chapitre.
+
+Plus vous aurez de conditions et plus la requête devient complexe. Avant d'écrire le code PHP, vous pouvez déjà vérifier que la requête SQL est correcte en la testant dans l'onglet "SQL" de phpMyAdmin, comme je viens de vous le montrer.
+
+Il faut utiliser les mots-clés dans l'ordre que j'ai donné : WHERE  puis ORDER BY  puis LIMIT , sinon MySQL ne comprendra pas votre requête.
+
+Construisez des requêtes en fonction de variables
+Les requêtes que vous avez exécutées jusqu'ici étaient simples et effectuaient toujours la même opération. Or, les choses deviennent intéressantes quand on utilise des variables de PHP dans les requêtes.
+
+Identifiez vos variables à l'aide des marqueurs
+
+Les marqueurs sont des identifiants reconnus par PDO pour être remplacés lors de la préparation de la requête par les variables PHP :
+
+En guise d'exemple complet, voici la requête pour retrouver les recettes valides de Mathieu, écrite dans le respect des meilleures pratiques :
+
+<?php
+$sqlQuery = 'SELECT * FROM recipes WHERE author = :author AND is_enabled = :is_enabled';
+
+$recipesStatement = $mysqlClient->prepare($sqlQuery);
+$recipesStatement->execute([
+'author' => 'mathieu.nebra@exemple.com',
+'is_enabled' => true,
+]);
+$recipes = $recipesStatement->fetchAll();
+]);
+On ne concatène JAMAIS une requête SQL pour passer des variables, au risque de créer des injections SQL ! Le sujet des injections SQL est un peu trop complexe pour être détaillé ici. Si vous souhaitez en apprendre plus à ce sujet, je vous invite à consulter Wikipedia.
+
+Traquez les erreurs
+
+Lorsqu'une requête SQL « plante », bien souvent PHP vous dira qu'il y a eu une erreur à la ligne du fetchAll :
+
+Fatal error: Call to a member function fetchAll() on a non-object in index.php on line 13
+Ce n'est pas la ligne du fetchAll qui est en cause : c'est souvent vous qui avez mal écrit votre requête SQL quelques lignes plus haut. Pour afficher des détails sur l'erreur, il faut activer les erreurs lors de la connexion à la base de données via PDO.
+
+Il faut adapter la création de l'objet $mysqlClient pour activer la gestion des erreurs :
+
+<?php
+$mysqlClient = new PDO(
+    'mysql:host=localhost;dbname=partage_de_recettes;charset=utf8',
+    'root',
+    '',
+    [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION],
+);
+?>
+
+Désormais, toutes vos requêtes SQL qui comportent des erreurs les afficheront avec un message beaucoup plus clair.
+
+Supposons par exemple que j'écrive mal le nom du champ :
+
+SELECT titlee FROM recipes
+L'erreur suivante s'affichera alors :
+
+Unknown column 'titlee' in 'field list'
+Si on traduit, cela signifie :
+
+« La colonne titlee  est introuvable dans la liste des champs ».
+
+En effet, le champ s'appelle title .
+
+Lorsque vous avez un problème avec une requête et que vous voulez demander de l'aide, pensez toujours à activer les erreurs lors de la connexion à la base de données comme je viens de vous montrer, cela vous permettra d'avoir un message d'erreur détaillé.
+
+N'oubliez pas que personne ne peut vous aider si vous donnez juste le message par défaut Call to a member function fetchAll() on a non-object  !
+
+Exercez-vous
 
