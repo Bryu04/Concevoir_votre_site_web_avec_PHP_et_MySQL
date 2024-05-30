@@ -17,6 +17,8 @@
                 <?php
                 // Si utilisateur est connecté, afficher le button deconnection
                 if (isset($_SESSION['LOGGED_USER'])) {
+                    echo '<li class="nav-item"> <a class="nav-link" href="recipes_create.php">Ajoutez une recette !</a>
+                    </li>';
                     echo '<li class="nav-item"> <a class="nav-link" href="logout.php">Deconnexion</a>
                     </li>';
                 }

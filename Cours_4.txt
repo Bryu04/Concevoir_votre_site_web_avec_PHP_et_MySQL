@@ -798,3 +798,15 @@ Il vous suffira d'adapter la logique expliquée pour les recettes et les requêt
 
 Exercez-vous
 
+Ajoutez une fonctionnalité au projet fil rouge qui permettra aux utilisateurs de visualiser les détails d'une recette :
+
+  1. Sur la page d'index, ajoutez un lien sur le titre de chaque recette, permettant d'accéder au détail de cette recette.
+
+  2. Créez une nouvelle page, par exemple recipes_read.php, pour afficher les détails d'une recette.
+
+  3. Sur cette page, récupérez les informations de la recette sélectionnée à partir de la base de données.
+
+Vous pouvez retrouver le code modifié dans le dossier P4C4 du GitHub.
+
+En résumé
+
