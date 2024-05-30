@@ -583,3 +583,22 @@ N'oubliez pas que personne ne peut vous aider si vous donnez juste le message pa
 
 Exercez-vous
 
+Maintenant, nous allons appliquer les concepts que vous avez appris sur ce chapitre. Vous allez créer un fichier de configuration MySQL, établir une connexion à la base de données via PDO, et remplacer l'utilisation de tableaux statiques par des requêtes SQL dynamiques pour récupérer les utilisateurs et les recettes depuis la base de données :
+
+Étape 1 : Création du fichier mysql.php dans le dossier config
+
+Commencez par créer un fichier nommé mysql.php dans le dossier config. Ce fichier contiendra les informations nécessaires à la connexion à MySQL via PDO, telles que le nom d'hôte, le nom d'utilisateur, le mot de passe et le nom de la base de données.
+
+Étape 2 : Création du fichier databaseconnect.php
+
+Ensuite, créez un nouveau fichier nommé databaseconnect.php. Ce fichier facilitera la connexion à la base de données via PDO en utilisant les variables définies dans mysql.php.
+
+Étape 3 : Modification du fichier variables.php
+
+Enfin, modifiez le fichier variables.php pour remplacer les tableaux statiques $users et $recipes par l'utilisation de requêtes SQL. Cela permettra de récupérer dynamiquement les utilisateurs et les recettes depuis la base de données à l'aide de PDO.
+
+Vous pouvez retrouver le code modifié dans le dossier P4C3 du GitHub.
+
+En résumé
+
+
