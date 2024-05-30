@@ -620,3 +620,181 @@ Vous vous demandez comment ajouter, modifier et supprimer des recettes de notre 
 
 ##############################################################################################################
 
+Ajoutez, modifiez et supprimez des recettes !
+
+Vous avez appris dans le chapitre comment ajouter de nouvelles entrées en base sur phpMyAdmin, mais si vous voulez que des utilisateurs contribuent à votre site, il faudra leur proposer un formulaire de création et de modification !
+
+Pour cela, vous allez aborder de nouvelles requêtes SQL fondamentales et les appliquer avec PHP : INSERT  , UPDATE  et DELETE  .
+
+Pour faciliter la compréhension de ce chapitre, vous pouvez télécharger dès à présent une version  mise à jour du projet fil rouge. 
+
+Les ajouts effectués comprennent :
+
+  - l'intégration d'un lien dans notre menu permettant d'ajouter une recette (voir header.php).
+
+  - l'ajout d'un lien de modification et d'un lien de suppression pour chaque recette (voir index.php).
+
+  - la mise en place d'un test permettant de vérifier si l'utilisateur est connecté avant d'autoriser l'ajout, 
+    la modification et la suppression d'une recette (voir isConnect.php).
+
+Implémentez l'ajout de recettes
+
+Votre première mission – si vous l'acceptez – c'est l'ajout d'un formulaire de contribution de recettes.
+
+Pour cela, vous aurez besoin de trois choses :
+
+  1. Ajouter un formulaire PHP de création de recettes.
+
+  2. Vérifier les données soumises en PHP.
+
+  3. À l'aide de PDO, exécuter l'insertion de la nouvelle recette en base de données.
+
+Vous connaissez déjà les deux premières étapes, donc nous ne les détaillerons pas dans ce chapitre, mais vous retrouverez le code complet dans l'archive téléchargée.
+
+ Je vais vous parler des fondamentaux de l'insertion en base de données dans ce chapitre.
+
+Pour en savoir plus, consultez le chapitre "Insérez des données dans votre BDD" du cours MySQL.
+
+Ajoutez une recette avec l'instruction INSERT INTO
+Pour ajouter une entrée, vous aurez besoin de connaître la requête SQL. En voici une par exemple qui ajoute une recette :
+
+<?php
+$sqlQuery = 'INSERT INTO recipes(title, recipe, author, is_enabled) VALUES (:title, :recipe, :author, :is_enabled)';
+
+Étudions un peu cette requête.
+
+- D'abord, vous devez commencer par les mots-clés INSERT INTO  qui indiquent que vous voulez insérer une 
+  entrée.
+
+- Vous précisez ensuite le nom de la table (ici recipes  ), puis listez entre parenthèses les noms des champs 
+  dans lesquels vous souhaitez placer des informations.
+
+- Enfin – et c'est là qu'il ne faut pas se tromper – vous inscrivez VALUES  suivi des valeurs à insérer dans 
+  le même ordre que les champs que vous avez indiqués.
+
+Utilisez cette requête SQL au sein d'un script PHP  :
+
+<?php
+try
+{
+	$mysqlClient = new PDO('mysql:host=localhost;dbname=my_recipes;charset=utf8', 'root', 'root');
+}
+catch (Exception $e)
+{
+        die('Erreur : ' . $e->getMessage());
+}
+
+// Ecriture de la requête
+$sqlQuery = 'INSERT INTO recipes(title, recipe, author, is_enabled) VALUES (:title, :recipe, :author, :is_enabled)';
+
+// Préparation
+$insertRecipe = $mysqlClient->prepare($sqlQuery);
+
+// Exécution ! La recette est maintenant en base de données
+$insertRecipe->execute([
+    'title' => 'Cassoulet',
+    'recipe' => 'Etape 1 : Des flageolets ! Etape 2 : Euh ...',
+    'author' => 'contributeur@exemple.com',
+    'is_enabled' => 1, // 1 = true, 0 = false
+]);
+
+Vous remarquerez que je n'ai pas passé de valeur pour le champ  recipe_id .
+
+C'est normal ! Le champ a la propriété AUTO_INCREMENT  , MySQL lui attribuera une valeur automatiquement. 
+
+Et si j'ai passé une valeur booléenne pour le champ  is_enabled  , c'est parce que j'ai fait le choix de stocker cette information sous forme d'entier :
+
+  - 0 pour FAUX ;
+
+  - et 1 pour VRAI.
+
+Si vous voulez passer les valeurs PHP true ou false  , alors il faudra déclarer le champ  is_enabled avec le type MySQL BOOL .
+
+Généralement, on récupèrera des variables de $_POST  (issues d'un formulaire) pour insérer une entrée dans la base de données :
+
+Éditez une recette avec l'instruction UPDATE
+
+Vos utilisateurs souhaitent maintenant pouvoir modifier leurs recettes.
+
+Pour cela, vous aurez besoin de deux nouveaux mots-clés :  UPDATE  et  SET  .
+
+En imaginant qu'on fournit un formulaire d'édition et que l'on autorise les utilisateurs à éditer les champs title et recipe , voici la requête SQL correspondante :
+
+UPDATE recipes SET title = :title, recipe = :recipe WHERE recipe_id = :id
+
+Comment ça marche ?
+
+- Tout d'abord, le mot-clé UPDATE permet de dire qu'on va modifier une entrée.
+
+- Ensuite, le nom de la table ( recipes ).
+
+- Le mot-clé SET sépare le nom de la table de la liste des champs à modifier.
+
+- Viennent ensuite les champs qu'il faut modifier, séparés par des virgules. Ici, on modifie le champ title , 
+  puis on fait de même pour le champ recipe . Les autres champs ne seront pas modifiés.
+
+- Enfin, le mot-clé WHERE  est tout simplement indispensable. Il nous permet de dire à MySQL quelle entrée il 
+  doit modifier (sinon, toutes les entrées seraient affectées !). On se base très souvent sur le champ 
+  recipe_id pour indiquer quelle entrée doit être modifiée. 
+
+Et si je veux désactiver toutes les recettes d'un utilisateur, il va falloir faire les requêtes de mise à jour une à une ?
+
+Non ! Il n'est pas question de passer des heures à modifier chaque entrée une à une pour ça ! En réfléchissant environ 0,5 seconde, vous allez trouver tout seul la requête SQL qui permet de faire ce qu'on souhaite.
+
+C'est bon, vous avez trouvé ? Allez, je vous donne la réponse dans le mille :
+
+UPDATE recipes SET is_enabled = 0 WHERE author = 'mickael.andrieu@exemple.com'
+
+Traduction :
+
+« Dans la table recipes , modifier toutes les entrées dont le champ author  est égal à "mickael.andrieu@exemple.com", et passer ma valeur de is_enabled à 0 (false). »
+
+Qu'il y ait 1, 10, 100 ou 1 000 entrées, cette requête à elle seule suffit pour mettre à jour toute la table ! Si c'est pas beau, le SQL !
+
+Supprimez des données avec DELETE
+
+Enfin, voilà une dernière requête qui pourra se révéler utile : DELETE  .
+
+Rapide et simple à utiliser, elle est quand même un poil dangereuse : après suppression, il n'y a aucun moyen de récupérer les données, alors faites bien attention !
+
+Voici comment on supprime par exemple une recette à partir de son identifiant :
+
+DELETE FROM recipes WHERE recipe_id=:id
+
+Il n'y a rien de plus facile :
+
+  - DELETE FROM : pour dire « supprimer dans » ;
+
+  - recipes : le nom de la table ;
+
+  - WHERE : indispensable pour indiquer quelle(s) entrée(s) doi(ven)t être supprimée(s).
+
+Si vous oubliez le WHERE , toutes les entrées seront supprimées. Cela équivaut à vider la table.
+
+Je vous laisse exécuter par vous-même cette requête à l'aide de PHP !
+
+Traitez les erreurs SQL
+
+Comme vous le savez, le langage SQL est un langage à part entière dont on se sert en PHP. S'il peut y avoir des erreurs en PHP, il peut aussi y avoir des erreurs en SQL.
+Il se peut par exemple que votre requête soit mal écrite, que la table que vous voulez ouvrir n'existe pas, etc. Bref, les erreurs possibles sont là encore nombreuses.
+
+Repérez la requête qui selon vous plante, et forcez l'affichage de l'erreur s'il y en a une, comme ceci :
+
+<?php
+$deleteRecipeStatement = $mysqlClient->prepare('DELETE FROM recipes WHERE recipe_id = :id');
+$deleteRecipeStatement->execute([
+    'id' => $id,
+]) or die(print_r($mysqlClient->errorInfo()));
+
+Si la requête fonctionne, aucune erreur ne sera affichée. Si en revanche la requête plante, PHP arrêtera de générer la page et vous affichera l'erreur donnée par MySQL…
+
+À partir de là, il va falloir vous débrouiller tout seul, car les erreurs SQL sont assez nombreuses et je ne peux pas toutes les lister.
+
+En général, MySQL vous dit : « You have an error in your SQL syntax near 'XXX' ». À vous de bien relire votre requête SQL ; l'erreur se trouve généralement près de l'endroit où on vous l'indique.
+
+Sur le même modèle et pour améliorer votre application, pourquoi ne pas créer un formulaire de création de compte pour permettre à vos visiteurs de contribuer à de nouvelles recettes ?
+
+Il vous suffira d'adapter la logique expliquée pour les recettes et les requêtes SQL pour insérer de nouveaux comptes utilisateurs en base de données.
+
+Exercez-vous
+
