@@ -810,3 +810,23 @@ Vous pouvez retrouver le code modifié dans le dossier P4C4 du GitHub.
 
 En résumé
 
+- On utilise différents mots-clés en fonction du type de modification que l'on souhaite effectuer :
+
+       - INSERT INTO : ajout d'une entrée ;
+
+       - UPDATE : modification d'une ou plusieurs entrées ;
+
+       - DELETE : suppression d'une ou plusieurs entrées.
+
+- Comme pour la sélection de données, on utilise les requêtes préparées pour personnaliser nos requêtes en 
+  fonction de variables.
+
+- Lorsqu'on utilise UPDATE  ou DELETE , il faut penser à filtrer avec un WHERE , sinon toute la table sera 
+  affectée par l'opération !
+
+- PHP indique si une erreur avec MySQL est intervenue.
+
+Il est maintenant temps de voir comment nous pouvons permettre l'ajout de commentaires. Et nous allons le faire grâce aux jointures SQL !
+
+##############################################################################################################
+
