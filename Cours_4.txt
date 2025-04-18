@@ -830,3 +830,334 @@ Il est maintenant temps de voir comment nous pouvons permettre l'ajout de commen
 
 ##############################################################################################################
 
+Ajoutez des commentaires grâce aux jointures SQL
+
+Jusque-là, vous n'avez travaillé que sur une seule table à la fois. Dans la pratique, vous aurez certainement plusieurs tables dans votre base, dont la plupart seront interconnectées.
+
+Cela vous permettra :
+
+   - de mieux découper vos informations ;
+
+   - d'éviter des répétitions ;
+
+  - et de rendre ainsi vos données plus faciles à gérer.
+
+Par exemple, dans notre table recipes  , on répète à chaque fois l'e-mail du contributeur de la recette alors qu'il est déjà dans la table users .
+
+Et si on ajoute une gestion des commentaires sur la page d'une recette, alors il faudra lier le commentaire à un utilisateur et à une recette.
+
+Pour bien comprendre l'intérêt et la notion de jointure, c'est la fonctionnalité que vous allez mettre en place dans ce chapitre : suivez le guide !
+
+Modélisez une relation
+
+Si on considère une page qui affiche la recette avec la possibilité que les utilisateurs puissent commenter, voire évaluer la recette, alors un commentaire a les propriétés suivantes :
+
+- un identifiant unique ;
+
+- une recette ;
+
+- un auteur ;
+
+- une date de publication ;
+
+- une note (disons de 0 à 5).
+
+Si on se représente la table "comments", elle ressemblerait à ceci :
+
+id     recipe          author                        created_at            ranking      comment
+
+1      Cassoulet       mickael.andrieu@exemple.com   03-08-2021 18:00:00      2          Bof 😐
+
+2      Cassoulet       laurene.castor@exemple.com    01-08-2021 12:00:00      4          Super recette 😍
+
+3      Couscous        mathieu.nebra@exemple.com     30-08-2021 12:00:00      0          Pas bon du tout ! 🤢
+
+4      Couscous        mickael.andrieu@exemple.com      ...                  ...         ...
+
+
+
+Comme vous le voyez, l'auteur et le nom de la recette vont apparaître autant de fois qu'il y a de commentaires d'un auteur ou sur une recette en particulier ! Pourtant, vous aviez déjà centralisé les informations sur les utilisateurs dans la table users  :
+
+user_id      full_name            email                            password             age
+
+1            Mickaël Andrieu      mickael.andrieu@exemple.com      ...                  34
+
+2            Laurène Castor       laurene.castor@exemple.com       ...                  28
+
+3            Mathieu Nebra        ...                              ...                  ...
+
+
+
+À l'aide de MySQL et grâce au champ user_id, vous êtes déjà capable de récupérer toutes les informations sur un utilisateur sans avoir à les écrire dans une autre table.
+
+Pour rappel :
+
+  1.# Toutes les informations sur Laurène !
+  2.SELECT * from users WHERE user_id = 2
+
+Maintenant, il faut modifier la structure de la table comments pour faire référence aux données disponibles dans la table users  .
+
+Pour cela, le mieux est de créer un champ user_id dans la table comments  qui fait référence au champ user_id dans la table  users  :
+
+id    recipe       user_id       created_at             ranking          comment
+
+1     Cassoulet     1            03-08-2021 18:00:00     2                Bof 😐
+
+2     Cassoulet     2            01-08-2021 12:00:00     4                Super recette 😍
+
+3     Couscous      3            30-08-2021 12:00:00     0                Pas bon du tout ! 🤢
+
+4     Couscous      1            ...                     ...              ...
+
+
+
+MySQL sait donc que le user_id  de valeur 1 dans la table comments correspond à Mickaël ?
+
+Non, il ne le sait pas. Il ne voit que des nombres et il ne fait pas la relation entre les deux tables. Il va falloir lui expliquer cette relation dans une requête SQL : on va faire ce qu'on appelle une jointure entre les deux tables.
+
+Comprenez le principe de jointure
+
+Nous avons donc maintenant deux tables :
+
+   1. comments 
+
+   2. users  
+
+Les informations sont séparées dans des tables différentes, et c'est bien. Cela évite de dupliquer des informations sur le disque.
+
+Cependant, lorsqu'on récupère la liste des commentaires, si on souhaite obtenir le nom des auteurs, il faut adapter la requête pour récupérer aussi les informations issues de la table users  .
+
+Pour cela, on doit faire une jointure.
+Il existe plusieurs types de jointures, qui nous permettent de choisir exactement les données que l'on veut récupérer. Je vous propose d'en découvrir deux, les plus importantes :
+
+  1. Les jointures internes : elles ne sélectionnent que les données qui ont une correspondance entre les deux 
+     tables.
+
+  2. Les jointures externes : elles sélectionnent toutes les données, même si certaines n'ont pas de 
+     correspondance dans l'autre table.
+
+Il est important de bien comprendre la différence entre une jointure interne et une jointure externe.
+
+Pour cela, imaginons que nous ayons une 4e personne dans la table des utilisateurs, un certain Manuels Vache, qui n'a jamais publié de commentaires :
+
+user_id    full_name          email                          password        age
+
+1          Mickaël Andrieu    mickael.andrieu@exemple.com    ...             34
+
+2          Laurène Castor     laurene.castor@exemple.com     ...             28
+
+3          Mathieu Nebra      ...                            ...             ...
+
+4          Manuels Vache      ...                            ...             58
+
+
+
+Manuels Vache est référencé dans la table users  mais il n'apparaît nulle part dans la table comments  car il n'a jamais commenté.
+
+  1. Si vous récupérez les données des deux tables à l'aide d'une jointure interne, Manuels n'apparaîtra pas 
+     dans les résultats de la requête. La jointure interne force les données d'une table à avoir une 
+     correspondance dans l'autre.
+
+  2. Si vous récupérez les données des deux tables à l'aide d'une jointure externe, vous aurez toutes les 
+     données de la table des utilisateurs, même s'il n'y a pas de correspondance dans l'autre table des 
+     commentaires ; donc Manuels, qui pourtant n'a jamais commenté, apparaîtra.
+
+La jointure externe est donc plus complète car elle est capable de récupérer plus d'informations, tandis que la jointure interne est plus stricte car elle ne récupère que les données qui ont une équivalence dans l'autre table.
+
+Voici par exemple les données que l'on récupèrerait avec une jointure interne :
+
+full_name                 comment
+
+Mickaël Andrieu            Bof 😐
+
+Laurène Castor             Super recette 😍
+
+Mathieu Nebra              Pas bon du tout ! 🤢
+
+…                          …
+
+
+
+En revanche, avec une jointure externe, on aurait :
+
+full_name                 comment
+
+Mickaël Andrieu           Bof 😐
+
+Laurène Castor            Super recette 😍
+
+Mathieu Nebra             Pas bon du tout ! 🤢
+
+Manuels Vache             NULL
+
+...                       ...
+
+
+Manuels apparaît désormais. Comme il n'a jamais commenté, la valeur associée est  NULL  .
+
+Nous allons maintenant voir comment réaliser ces deux types de jointures en pratique.
+
+Effectuez des jointures internes
+
+Une jointure interne peut être effectuée à l'aide du mot-clé JOIN :
+
+  1.# Liste des noms et commentaires associés
+  2.SELECT u.full_name, c.comment
+  3.FROM users u
+  4.INNER JOIN comments c
+  5.ON u.user_id = c.user_id
+
+Cette fois, on récupère les données depuis une table principale (ici, users ) et on fait une jointure interne ( INNER JOIN  ) avec une autre table ( comments  ).
+
+La liaison entre les champs est faite dans la clause ON un peu plus loin.
+
+Si vous voulez :
+
+  - filtrer ( WHERE  ),
+
+  - ordonner ( ORDER BY  )
+
+  - ou limiter les résultats ( LIMIT  ),
+
+… vous devez le faire à la fin de la requête, après le « ON u.user_id = c.user_id ».
+
+Par exemple :
+
+  1.# Liste des noms et commentaires associés
+  2.# à la recette Cassoulet
+  3.# limité à 10
+  4.SELECT u.full_name, c.comment
+  5.FROM recipes r
+  6.INNER JOIN comments c ON c.recipe_id = r.recipe_id
+  7.INNER JOIN users u ON u.user_id = c.user_id
+  8.WHERE r.title = 'Cassoulet'
+  9.LIMIT 10
+
+Traduction (inspirez un grand coup avant de lire) :
+
+« Récupérez le commentaire et le nom de l'auteur dans les tables  users  et  comments  , la liaison entre les tables se fait sur les champs  user_id  et  recipe_id  , prenez uniquement les commentaires concernant la recette de Cassoulet et seulement les 10 premiers. »
+
+Il faut s'accrocher avec des requêtes de cette taille-là !
+
+Effectuez des jointures externes
+
+Les jointures externes permettent de récupérer toutes les données, même celles qui n'ont pas de correspondance.
+
+On pourra ainsi obtenir Manuels Vache dans la liste, même s'il n'a jamais commenté.
+
+Cette fois, la seule syntaxe disponible est à base de JOIN  .
+
+Il y a deux écritures à connaître :
+
+  1. LEFT JOIN 
+
+  2. RIGHT JOIN 
+
+Cela revient pratiquement au même, avec une subtile différence que nous allons voir.
+
+Récupérez toute la table de gauche avec LEFT JOIN
+
+Reprenons la jointure à base de INNER JOIN et remplaçons tout simplement INNER par LEFT :
+
+  1.# Liste des noms et commentaires associés
+  2.SELECT u.full_name, c.comment
+  3.FROM users u
+  4.LEFT JOIN comments c
+  5.ON u.user_id = c.user_id
+
+users  est appelée la « table de gauche » et comments  la « table de droite ».
+
+Le LEFT JOIN  demande à récupérer tout le contenu de la table de gauche, donc tous les utilisateurs, même si ces derniers n'ont pas d'équivalence dans la table comments :
+
+
+full_name                comment
+
+Mickaël Andrieu          Bof 😐
+
+Laurène Castor           Super recette 😍
+
+Mathieu Nebra            Pas bon du tout ! 🤢
+
+Manuels Vache            NULL
+
+...                      ...
+
+
+Manuels apparaît désormais dans les résultats de la requête grâce à la jointure externe. Comme il n'a jamais commenté, la colonne du commentaire est vide.
+
+Récupérez toute la table de droite avec RIGHT JOIN
+
+Le RIGHT JOIN  demande à récupérer toutes les données de la table dite « de droite », même si celle-ci n'a pas d'équivalent dans l'autre table.
+
+Prenons la requête suivante :
+
+  1.# Liste des noms et commentaires associés
+  2.SELECT u.full_name, c.comment
+  3.FROM users u
+  4.RIGHT JOIN comments c
+  5.ON u.user_id = c.user_id
+
+La table de droite est « comments ». On récupèrerait donc tous les commentaires, même ceux qui n'ont pas d'auteur associé.
+
+Comment est-ce possible qu'un commentaire n'ait pas d'utilisateur associé ?
+
+Il y a deux cas possibles :
+
+  1. Soit le champ user_id  contient une valeur qui n'a pas d'équivalent dans la table  users  , par exemple 
+     « 56 ».
+
+  2. Soit le champ user_id vaut NULL  , c'est-à-dire que la personne qui a commenté a souhaité rester anonyme, 
+     par exemple. 
+
+Le projet fil rouge ne permet pas à un visiteur de publier un commentaire sans s'authentifier à l'aide d'un e-mail, mais rien ne vous empêche de développer cette fonctionnalité : c'est votre projet, après tout !
+
+On obtiendrait donc les données exposées dans le tableau suivant :
+
+
+full_name                    comment
+
+Mickaël Andrieu              Bof 😐
+
+Laurène Castor               Super recette 😍
+
+Mathieu Nebra                Pas bon du tout ! 🤢
+
+NULL                         Le plat est ressorti cramé à mon premier essai 😥
+
+...                          ...
+
+
+
+D'accord, mais est-ce qu'il ne faudrait pas faire la même chose avec la table recipes ?
+
+Si, complètement ! À ce moment-là, vous ferez non pas une mais deux jointures !
+Par exemple, la liste des utilisateurs, commentaires et nom de recettes, comme ceci :
+
+  1.SELECT u.full_name, c.comment, r.title
+  2.FROM users u
+  3.JOIN comments c
+  4.    ON u.user_id = c.user_id
+  5.JOIN recipes r
+  6.    ON c.recipe_id = r.recipe_id
+
+
+Vous obtiendriez un résultat équivalent à celui-ci :
+
+
+
+full_name           comment                         title
+
+Mickaël Andrieu     Bof 😐                         Cassoulet
+
+Laurène Castor      Super recette 😍               Cassoulet
+
+Mathieu Nebra       Pas bon du tout ! 🤢           Couscous
+
+…                   …                               …
+
+
+
+
+Exercez-vous
+
+
