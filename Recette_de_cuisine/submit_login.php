@@ -35,7 +35,7 @@ if (isset($postData['email']) &&  isset($postData['password'])) {
                 // );
             	 $_SESSION['LOGGED_USER'] = [
                  'email' => $user['email'],
-                   // 'user_id' => $user['user_id'],
+                 'user_id' => $user['user_id'],
             	 ];
         	}
     	}

@@ -6,6 +6,7 @@ require_once(__DIR__ . '/databaseconnect.php');
 include_once(__DIR__.'/variables.php');
 require_once(__DIR__ .'/functions.php');
 
+
 $getData = $_GET;
 
 if (!isset($getData['id']) && is_numeric($getData['id']))
@@ -20,6 +21,22 @@ $retrieveRecipeStatement->execute([
 ]);
 
 $recipe = $retrieveRecipeStatement->fetch(PDO::FETCH_ASSOC);
+
+// Récupérer les commentaires sur la recette
+
+$commentsRecipeStatement = $mysqlClient->prepare('
+        SELECT u.full_name, c.comment 
+        FROM recipes r 
+        INNER JOIN comments c ON c.recipe_id = r.recipe_id 
+        INNER JOIN users u ON u.user_id = c.user_id 
+        WHERE r.recipe_id = :id
+');
+
+$commentsRecipeStatement->execute([
+    'id' => $getData['id'],
+]);
+
+$comments = $commentsRecipeStatement->fetchALL(PDO::FETCH_ASSOC);
 
 ?>
 
@@ -43,6 +60,36 @@ $recipe = $retrieveRecipeStatement->fetch(PDO::FETCH_ASSOC);
         <i>Recette de <?php echo displayAuthor($recipe['author'], $users); ?></i>
         <br />
         <p><?php echo $recipe['recipe']; ?></p>
+        <br />
+        <h3>Section de commentaires</h3>
+        <?php if (count($comments) > 0) : ?>
+        <article>
+            <ul>
+                <?php foreach ($comments as $comment) : ?>
+                    <li>
+                        <strong><?php echo($comment['full_name']); ?> : </strong> <?php echo($comment['comment']); ?>
+                    </li>
+                <?php endforeach ?>
+            </ul>
+        </article>
+        <?php else : ?>
+            <p>Aucun commentaire.</p>
+        <?php endif; ?>
+        <br />
+        <?php // Rajoute un formulaire visible pour ceux qui est connecté ?>
+        <?php if (isset($_SESSION['LOGGED_USER'])) : ?>
+            <form action="post_comment.php" method="POST">
+            <div class="mb-3 visually-hidden">
+                <label for="id" class="form-label">identifiant du commentaire</label>
+                <input type="hidden" class="form-control" id="id" name="id" value="<?php echo($recipe['recipe_id']); ?>">
+            </div>
+            <div class="mb-3">
+                <label for="comment" class="form-label"><strong>Ajouter un commentaire</strong></label>
+                <textarea class="form-control" placeholder="Ecrivez un commentaire !!" id="comment" name="comment"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Commentez</button>
+        </form>
+        <?php endif; ?>
         <br />
         <ul class="list-group list-group-horizontal">
                         <li class="list-group-item"><a class="link-info" href="index.php">Retour à la page d'accueil</a></li>

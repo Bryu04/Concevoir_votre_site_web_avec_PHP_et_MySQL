@@ -1160,4 +1160,31 @@ Mathieu Nebra       Pas bon du tout ! 🤢           Couscous
 
 Exercez-vous
 
+Et si vous mettiez en place les commentaires sur la page détail des recettes ?
+
+Étape 1 : Création de la table des commentaires
+
+Utilisez le script SQL fourni (add_comment.sql) pour créer la table des commentaires dans la base de données.
+
+Étape 2 : Affichage des commentaires sur la page détail d'une recette
+
+Modifiez le fichier recipes_read.php pour afficher les commentaires associés à une recette sur la page détail. Chaque commentaire doit afficher le nom de l'utilisateur qui l'a postée et le texte du commentaire. S'il n'y a pas de commentaires, alors il faut afficher le message "Aucun commentaire".
+
+Étape 3 : Affichage du formulaire de commentaire
+
+Sur la page détail d'une recette, affichez le formulaire permettant à un utilisateur connecté d'ajouter un commentaire. Assurez-vous que seuls les utilisateurs connectés peuvent voir et utiliser ce formulaire.
+
+Étape 4 : Validation du formulaire de commentaire
+
+Utilisez les règles suivantes pour valider le formulaire de commentaire avant de l'ajouter à la base de données :
+
+  - Les données nécessaires, telles que le texte du commentaire et l'identifiant de la recette, sont présentes 
+    et correctes.
+
+  - Le commentaire ne peut pas être vide.
+
+Vous pouvez retrouver le code modifié dans le dossier P4C5 du GitHub.
+
+
+En résumé
 

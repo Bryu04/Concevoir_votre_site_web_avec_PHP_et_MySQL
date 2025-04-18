@@ -7,6 +7,13 @@ try {
         MYSQL_PASSWORD
     );
     $mysqlClient->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    // Lecture du fichier SQL
+    $sql = file_get_contents(__DIR__.'/sql/add_comments.sql');
+
+    // Exécution du SQL
+    $mysqlClient->exec($sql);
+
 } catch (Exception $exception) {
     die('Erreur : ' . $exception->getMessage());
 }
