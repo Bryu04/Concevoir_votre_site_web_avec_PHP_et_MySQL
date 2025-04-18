@@ -1208,3 +1208,251 @@ Comment aller plus loin ? C'est ce que je vous explique dans le prochain chapitr
 
 ##############################################################################################################
 
+Allez plus loin
+
+Allez plus loin avec les fonctions SQL
+
+Découvrons une fonctionnalité bien utile du langage SQL : les fonctions.
+
+En effet, le langage SQL permet d'effectuer des calculs directement sur ses données, à l'aide de fonctions toutes prêtes.
+
+Celles-ci sont moins nombreuses qu'en PHP, mais elles sont spécialement dédiées aux bases de données, et se révèlent très puissantes dans la pratique.
+
+Ainsi, en effectuant directement certains calculs en SQL plutôt qu'en PHP, nous allégeons un petit peu la quantité de code à écrire.
+
+Nous allons mettre en application deux cas d'utilisation qui complèteront votre projet :
+
+  1. Récupérer et afficher la moyenne des notes obtenues pour une recette.
+
+  2. Améliorer les commentaires en ajoutant une date de publication.
+
+Les fonctions SQL peuvent être classées en deux catégories :
+
+  1. Les fonctions scalaires : elles agissent sur chaque entrée. Par exemple, vous pouvez transformer en 
+     majuscules la valeur de chacune des entrées d'un champ.
+
+  2. Les fonctions d'agrégat : lorsque vous utilisez ce type de fonctions, des calculs sont faits sur 
+     l'ensemble de la table pour retourner une valeur. Par exemple, calculer la moyenne des prix retourne une 
+     valeur : le prix moyen.
+
+Utilisez une fonction scalaire SQL
+
+Voyons d'abord le mode d'emploi d'une fonction SQL de type scalaire : la fonction  
+
+DATE_FORMAT
+
+Lorsque vous aurez appris à vous en servir, vous serez capable de faire de même avec toutes les autres fonctions scalaires.
+
+Pour nos exemples, nous allons nous baser sur la table comments  que nous connaissons bien maintenant.
+
+Pour rappel, voici à quoi elle pourrait ressembler, en considérant les commentaires sur la recette qui a pour identifiant unique la valeur 1 :
+
+
+
+comment_id    user_id      recipe_id      comment                 created_at                   review
+
+1              1             1             Bof 😐                 2021-07-16 13:56:48           2
+
+2              3             1             Pas bon du tout ! 🤢   2021-07-14 18:27:32           0
+
+3              2             1             Super recette 😍       2021-07-12 16:12:00           5
+
+4              ...          ...            ...                      ...                         ...
+
+
+
+
+On écrit les noms des fonctions SQL en majuscules, comme on le fait déjà pour la plupart des mots-clés comme SELECT  , INSERT  , etc.
+
+Ce n'est pas une obligation mais plutôt une convention, une habitude qu'ont prise les programmeurs.
+
+Pour vous montrer comment on utilise les fonctions scalaires SQL, je vais me baser sur la fonction DATE_FORMAT()  qui permet de convertir un timestamp en date.
+
+La requête SQL suivante va convertir la date obtenue en quelque chose de lisible :
+
+  1.SELECT *, DATE_FORMAT(c.created_at, "%d/%m/%Y") FROM recipes r LEFT JOIN comments c on r.recipe_id = 
+    c.recipe_id WHERE r.recipe_id = 1
+
+À l'aide de cette fonction, nous récupérons directement la date au format jour/mois/année plutôt que les heures/minutes/secondes qui ne nous intéressent pas.
+
+Cela modifie-t-il le contenu de la table ?
+
+Non ! La table reste la même.
+
+La fonction DATE_FORMAT modifie seulement la valeur envoyée à PHP. On ne touche donc pas au contenu de la table.
+
+Cela crée en fait un « champ virtuel » qui n'existe que le temps de la requête. Il est conseillé de donner un nom à ce champ virtuel qui représente les dates de commentaire.
+
+Il faut utiliser pour cela le mot-clé AS :
+
+  1.SELECT DATE_FORMAT(c.created_at, "%d/%m/%Y") AS comment_date FROM recipes r LEFT JOIN comments c on 
+    r.recipe_id = c.recipe_id WHERE r.recipe_id = 1
+
+On récupère les dates de commentaires via un champ virtuel appelé comment_date  .
+
+Ce champ virtuel est appelé "alias".
+
+Voici le tableau que retournera MySQL après la requête précédente :
+
+comment_date
+
+16/07/2021
+
+14/07/2021
+
+12/07/2021
+
+PHP ne récupère que le champ nommé comment_date  (même s'il n'existe pas dans la table).
+
+En affichant le contenu de ce champ, on ne récupère que les dates de publication des commentaires correctement formatées.
+
+Bien entendu, vous pouvez aussi récupérer le contenu des autres champs comme avant, sans forcément leur appliquer une fonction :
+
+  1.SELECT *, DATE_FORMAT(c.created_at, "%d/%c/%Y") AS comment_date FROM recipes r LEFT JOIN comments c on 
+    r.recipe_id = c.recipe_id WHERE r.recipe_id = 1
+
+Vous savez maintenant utiliser une fonction SQL scalaire !
+
+Utilisez une fonction d'agrégat
+
+Comme précédemment, nous allons d'abord voir comment on utilise une fonction d'agrégat dans une requête SQL. L'essentiel est de comprendre comment s'utilise ce type de fonctions : vous pourrez ensuite appliquer ce que vous connaissez à n'importe quelle autre fonction du même type.
+
+Ces fonctions diffèrent assez des précédentes. Plutôt que de modifier des valeurs une à une, elles font des opérations sur plusieurs entrées pour retourner une seule valeur.
+
+Par exemple, ROUND()  est une fonction scalaire qui permet d'arrondir une valeur. On récupère donc autant d'entrées qu'il y en avait dans la table. En revanche, une fonction d'agrégat comme AVG() renvoie une seule entrée : la valeur moyenne de tous les lignes.
+
+Regardons de près la fonction d'agrégat  AVG  .
+
+Elle calcule la moyenne d'un champ contenant des nombres.
+
+Utilisons-la sur le champ review qui – pour rappel – permet à l'utilisateur d'évaluer une recette avec l'identifiant unique  1  :
+
+  1.SELECT AVG(c.review) as rating FROM recipes r LEFT JOIN comments c on r.recipe_id = c.recipe_id WHERE 
+    r.recipe_id = 1
+
+On donne là encore un alias au résultat donné par la fonction. La particularité, c'est que cette requête ne va retourner qu'une seule entrée, à savoir l'évaluation moyenne de la recette :
+
+rating
+
+2.33333
+
+Mais c'est super moche, on peut pas calculer un arrondi de la moyenne ?
+
+Si ! Tout comme en PHP on peut appeler une fonction dans une fonction, ici on va pouvoir appliquer la fonction ROUND() avec 1 décimale sur le résultat du calcul de la moyenne !
+
+La requête devient donc la suivante :
+
+  1.SELECT ROUND(AVG(c.review),1) as rating FROM recipes r LEFT JOIN comments c on r.recipe_id = c.recipe_id 
+    WHERE r.recipe_id = 1
+
+Pour afficher cette information en PHP, on pourrait faire comme on en a l'habitude (cela fonctionne). Mais pourquoi s'embêterait-on à faire une boucle, étant donné qu'on sait qu'on ne va récupérer qu'une seule entrée, puisqu'on utilise une fonction d'agrégat ?
+
+<?php
+$sqlQuery = 'SELECT ROUND(AVG(c.review),1) as rating FROM recipes r LEFT JOIN comments c on r.recipe_id = c.recipe_id WHERE r.recipe_id = 1';
+
+// Préparation
+$averageRatingStatment = $mysqlClient->prepare($sqlQuery);
+
+// Exécution
+$averageRatingStatment->execute();
+
+/** La fonction fetch est plus performante que fetchAll()
+ * quand nous sommes certain(e)s de ne récupérer qu'une ligne.
+ * https://www.php.net/manual/fr/pdostatement.fetch.php
+ */
+$averageRating = $averageRatingStatment->fetch();
+
+
+Ce code est plus simple et plus logique :
+
+  1. On récupère la première et seule entrée avec fetch()  .
+
+  2. Et on affiche ce qu'elle contient. Inutile de le faire dans une boucle, étant donné qu'il n'y a pas de 
+     seconde entrée.
+
+Ne mélangez pas une fonction d'agrégat avec d'autres champs
+
+Soyez attentif à ce point car il n'est pas forcément évident à comprendre :
+
+Vous ne devez pas récupérer d'autres champs de la table quand vous utilisez une fonction d'agrégat, contrairement à tout à l'heure avec les fonctions scalaires.
+
+En effet, quel sens cela aurait-il de faire :
+
+  1.# Requête qui provoque une erreur !
+  2.SELECT AVG(review) AS rating, user_id FROM comments
+
+On récupérerait d'un côté la note moyenne de tous les commentaires et de l'autre la liste des auteurs de ces commentaires… Il est impossible de représenter ceci dans un seul et même tableau.
+
+Comme vous le savez, SQL renvoie les informations sous la forme d'un tableau. Or, on ne peut pas représenter la moyenne des notes (qui tient en une seule entrée) en même temps que la liste des auteurs. Si on voulait obtenir ces deux informations, il faudrait faire deux requêtes.
+
+C'est d'ailleurs ce qui est fait dans le projet fil rouge pour récupérer à la fois les commentaires et la note moyenne d'une recette !
+
+Pour plus d'informations sur les fonctions scalaires et d'agrégations, consulter le chapitre Effectuez des opérations du cours Implémentez vos bases de données relationnelles avec SQL.
+
+Regroupez des données avec GROUP BY et HAVING
+
+Je vous disais un peu plus tôt qu'on ne pouvait pas récupérer d'autres champs lorsqu'on utilisait une fonction d'agrégat.
+
+Prenons par exemple la requête suivante :
+
+  1.SELECT AVG(review) AS rating, user_id FROM comments
+
+Ça n'a pas de sens de récupérer la note moyenne de toutes les recettes et le  « User ID » à la fois. MySQL ne peut pas renvoyer un tableau correspondant à ces informations-là.
+
+Groupez des données avec GROUP BY
+
+En revanche, ce qui pourrait avoir du sens, ce serait de demander le note moyenne des commentaires pour chaque recette !
+
+Pour faire cela, on doit utiliser un nouveau mot-clé : GROUP BY qui signifie « grouper par ».
+
+On utilise cette clause en combinaison d'une fonction d'agrégat (comme AVG ) pour obtenir des informations intéressantes sur des groupes de données.
+
+Voici un exemple d'utilisation de GROUP BY :
+
+  1.SELECT AVG(review) AS rating, recipe_id FROM comments GROUP BY recipe_id
+
+Il faut utiliser GROUP BY  en même temps qu'une fonction d'agrégat, sinon il ne sert à rien.
+
+Ici, on récupère la note moyenne des commentaires, que l'on regroupe ensuite par recette. Par conséquent, on obtiendra la liste des recettes de la table et la note moyenne des commentaires !
+
+rating    recipe_id
+
+2.50       1
+
+3.00       2
+
+4.50       3
+
+Cette fois, les valeurs sont cohérentes !
+
+Filtrez les données regroupées avec HAVING
+
+HAVING  est un peu l'équivalent de WHERE  , mais il agit sur les données une fois qu'elles ont été regroupées. C'est donc une façon de filtrer les données à la fin des opérations.
+
+Voyez la requête suivante :
+
+  1.SELECT AVG(review) AS rating, recipe_id FROM comments GROUP BY recipe_id HAVING rating >= 3
+
+Avec cette requête, on récupère seulement les recettes dont la note moyenne est supérieure ou égale à 3.
+
+HAVING  ne doit s'utiliser que sur le résultat d'une fonction d'agrégat. Voilà pourquoi on l'utilise ici sur rating  et non sur recipe_id  .
+
+Je ne comprends pas la différence entre WHERE  et HAVING  . Les deux permettent de filtrer, non ?
+
+Oui, mais pas au même moment :
+
+WHERE  agit en premier, avant le groupement des données ; 
+
+HAVING  agit en second, après le groupement des données.
+
+On peut d'ailleurs très bien combiner les deux, regardez l'exemple suivant :
+
+  1.SELECT AVG(review) AS rating, recipe_id FROM comments WHERE user_id = 1 GROUP BY recipe_id HAVING 
+    rating >= 2
+
+Ça commence à faire de la requête costaude. 😉
+
+Ici, on demande à récupérer la note moyenne par recette de Mickaël ( WHERE  ), dont la valeur moyenne est supérieure ou égale à 2 ( HAVING  ).
+
+Exercez-vous
+
