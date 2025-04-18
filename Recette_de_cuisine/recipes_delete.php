@@ -9,7 +9,7 @@ $getData = $_GET;
 
 if (!isset($getData['id']) && is_numeric($getData['id']))
 {
-    echo("Il faut un identifiant de recette pour le modifier.");
+    echo("Il faut un identifiant de recette pour le supprimer.");
     return;
 }
 
