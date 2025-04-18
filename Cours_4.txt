@@ -1188,3 +1188,23 @@ Vous pouvez retrouver le code modifié dans le dossier P4C5 du GitHub.
 
 En résumé
 
+- Les bases de données permettent d'associer plusieurs tables entre elles.
+
+- Une table peut contenir les id d'une autre table, ce qui permet de faire la liaison entre les deux.
+
+- Pour rassembler les informations au moment de la requête, on effectue des jointures.
+
+- On réalise des jointures entre les tables à l'aide du mot-clé JOIN  .
+
+- On distingue les jointures internes, qui retournent des données uniquement s'il y a une correspondance entre 
+  les deux tables, et les jointures externes qui retournent toutes les données, même s'il n'y a pas de 
+  correspondance.
+
+Que pensez-vous de ce cours ? Donnez-nous votre avis ici.
+
+C'était le dernier "vrai" chapitre de ce cours qui est maintenant bientôt terminé. 😭
+
+Comment aller plus loin ? C'est ce que je vous explique dans le prochain chapitre !
+
+##############################################################################################################
+
