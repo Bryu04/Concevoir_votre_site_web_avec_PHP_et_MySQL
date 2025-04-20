@@ -25,11 +25,12 @@ $recipe = $retrieveRecipeStatement->fetch(PDO::FETCH_ASSOC);
 // Récupérer les commentaires sur la recette
 
 $commentsRecipeStatement = $mysqlClient->prepare('
-        SELECT u.full_name, c.comment 
+        SELECT u.full_name, c.comment, DATE_FORMAT(c.created_at, "%d/%m/%Y") AS comment_date
         FROM recipes r 
         INNER JOIN comments c ON c.recipe_id = r.recipe_id 
         INNER JOIN users u ON u.user_id = c.user_id 
         WHERE r.recipe_id = :id
+        ORDER BY c.created_at DESC
 ');
 
 $commentsRecipeStatement->execute([
@@ -37,6 +38,19 @@ $commentsRecipeStatement->execute([
 ]);
 
 $comments = $commentsRecipeStatement->fetchALL(PDO::FETCH_ASSOC);
+
+$ratingStatement = $mysqlClient->prepare('
+        SELECT AVG(c.review) as rating
+        FROM recipes r
+        INNER JOIN comments c ON c.recipe_id = r.recipe_id
+        WHERE r.recipe_id = :id AND c.review IS NOT NULL
+');
+
+$ratingStatement->execute([
+    'id' => $getData['id'],
+]);
+
+$averageRating = $ratingStatement->fetchColumn();
 
 ?>
 
@@ -56,7 +70,17 @@ $comments = $commentsRecipeStatement->fetchALL(PDO::FETCH_ASSOC);
 <body class="d-flex flex-column min-vh-100">
     <div class="container">
         <?php require_once(__DIR__ . '/header.php'); ?>
-        <h1>Détails sur la recette : <?php echo($recipe['title']); ?></h1>
+        <h1>Détails sur la recette : <?php echo($recipe['title']); ?>
+            (<small>
+                <em>
+                    <?php if ($averageRating) : ?>
+                        Note moyenne :  <?php echo(round($averageRating, 1) ); ?>  / 5 ⭐
+                    <?php else : ?>
+                        Aucune note pour cette recette
+                    <?php endif; ?>
+                </em>
+            </small>)
+        </h1>
         <i>Recette de <?php echo displayAuthor($recipe['author'], $users); ?></i>
         <br />
         <p><?php echo $recipe['recipe']; ?></p>
@@ -67,7 +91,7 @@ $comments = $commentsRecipeStatement->fetchALL(PDO::FETCH_ASSOC);
             <ul>
                 <?php foreach ($comments as $comment) : ?>
                     <li>
-                        <strong><?php echo($comment['full_name']); ?> : </strong> <?php echo($comment['comment']); ?>
+                        <strong><?php echo($comment['full_name']); ?> (<?php echo($comment['comment_date']); ?>) : </strong> <?php echo($comment['comment']); ?>
                     </li>
                 <?php endforeach ?>
             </ul>
@@ -82,6 +106,15 @@ $comments = $commentsRecipeStatement->fetchALL(PDO::FETCH_ASSOC);
             <div class="mb-3 visually-hidden">
                 <label for="id" class="form-label">identifiant du commentaire</label>
                 <input type="hidden" class="form-control" id="id" name="id" value="<?php echo($recipe['recipe_id']); ?>">
+            </div>
+            <div class="mb-3">
+                <label for="rating" class="form-label"><strong>Ajouter une note</strong></label>
+                <select name="rating" id="rating" class="form-select">
+                    <option value="">-- Choisir une note --</option>
+                    <?php for ($i = 5; $i >= 1; $i--): ?>
+                    <option value="<?= $i ?>"><?= $i ?> ⭐</option>
+                    <?php endfor; ?>
+                </select>
             </div>
             <div class="mb-3">
                 <label for="comment" class="form-label"><strong>Ajouter un commentaire</strong></label>

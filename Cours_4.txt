@@ -1456,3 +1456,26 @@ Ici, on demande à récupérer la note moyenne par recette de Mickaël ( WHERE  
 
 Exercez-vous
 
+Il est temps de retrouver pour la dernière fois notre fil rouge.
+
+Ajoutons un système de notation et une date de création des commentaires :
+
+Étape 1 : Mise en place de la date de création sur les commentaires
+
+Utilisez le script SQL fourni (improve_comments.sql) pour ajouter un champ de date de création et champ pour la note à la table des commentaires.
+
+Étape 2 : Affichage des commentaires de la date la plus récente à la plus ancienne
+
+Modifiez le fichier recipes_read.php pour afficher les commentaires associés à une recette dans l’ordre antichronologique (du plus récent au plus ancien). Vous pouvez afficher la date de création.
+
+Étape 3 : Saisie d'une note d'évaluation de 1 à 5 sur les recettes
+
+Ajoutez un formulaire sur la page détail d'une recette permettant à l'utilisateur de saisir une note d'évaluation de 1 à 5. Validez et enregistrez cette note dans la base de données.
+
+Étape 4 : Affichage de la moyenne des notes en haut de la page
+
+Affichez en haut de la page détail de la recette la moyenne des notes des commentaires associés à cette recette.
+
+Vous pouvez retrouver le code modifié dans le dossier P4C6 du GitHub.
+
+En résumé

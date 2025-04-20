@@ -14,6 +14,20 @@ try {
     // Exécution du SQL
     $mysqlClient->exec($sql);
 
+    // Ajoute les colones dates et review:
+    $sql2 = file_get_contents(__DIR__.'/sql/improve_comments.sql');
+
+    // On vérifie si les colonnes existent déjà
+    $result = $mysqlClient->query("SHOW COLUMNS FROM comments LIKE 'created_at'");
+    $columnExists = $result->rowCount() > 0;
+    // Exécution du SQL
+
+    if (!$columnExists) {
+        // Les columns n'existent pas, donc faut les créer
+        $mysqlClient->exec($sql2);
+    }
+    
+
 } catch (Exception $exception) {
     die('Erreur : ' . $exception->getMessage());
 }
