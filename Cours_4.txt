@@ -1479,3 +1479,60 @@ Affichez en haut de la page détail de la recette la moyenne des notes des comme
 Vous pouvez retrouver le code modifié dans le dossier P4C6 du GitHub.
 
 En résumé
+
+- MySQL permet d'exécuter certaines fonctions lui-même, sans avoir à passer par PHP. Ces fonctions modifient 
+  les données renvoyées.
+
+- Il existe deux types de fonctions :
+
+    1. Les fonctions scalaires : elles agissent sur chaque entrée récupérée. Elles permettent par exemple de 
+       convertir tout le contenu d'un champ en majuscules, ou d'arrondir chacune des valeurs.
+
+    2. Les fonctions d'agrégat : elles effectuent des calculs sur plusieurs entrées pour retourner une et une 
+       seule valeur. Par exemple : calcul de la moyenne, somme des valeurs, comptage du nombre d'entrées…
+
+- On peut donner un autre nom aux champs modifiés par les fonctions, en créant des alias à l'aide du mot-clé 
+  AS .
+
+- Lorsqu'on utilise une fonction d'agrégat, il est possible de regrouper des données avec GROUP BY .
+
+- Après un groupement de données, on peut filtrer le résultat avec HAVING . Il ne faut pas le confondre avec 
+  WHERE qui filtre avant le groupement des données.
+
+C'est la fin de ce cours, merci de l'avoir suivi !
+
+Vous avez maintenant les bases en PHP : bravo, c'est déjà un vrai morceau !
+
+Prenez le temps de refaire les différentes étapes que l'on a vues au cours de notre projet fil rouge.
+
+Ensuite ?
+
+Eh bien vous êtes loin d'avoir fini : le monde de la programmation est riche, et vous pouvez aller bien plus loin.
+
+Allez plus loin en PHP
+
+Voici ce que je vous recommande de faire après avoir fini ce cours :
+
+1. Découvrez comment mieux organiser votre code avec l'architecture MVC (Modèle Vue Contrôleur). Il s'agit 
+   d'une "façon de programmer" très connue qui vous permet de bien séparer chaque morceau de votre code. Si 
+   vous voulez travailler dans un milieu professionnel à plusieurs, cela vous sera absolument indispensable ! 
+   Ça tombe bien, j'ai écrit un cours là-dessus : Adoptez une architecture MVC en PHP ! (C'est en fait la 
+   suite de ce cours sur PHP.)
+
+2. Découvrez comment faire de la programmation orientée objet (POO), une autre technique de programmation 
+   incontournable. Elle est complémentaire à MVC : Programmez en orienté objet en PHP.
+
+3. Apprenez à utiliser un framework PHP comme Symfony. Il vous facilitera grandement le travail pour vos 
+   projets professionnels. Il se base sur la POO et MVC ; donc si vous avez suivi les deux cours précédents, 
+   vous devriez vous y retrouver bien plus facilement : Construisez un site web avec le framework Symfony 5.
+
+Si vous faites tout ça, vous aurez fortement progressé, croyez-moi ! 🤓
+
+N'oubliez pas de pratiquer régulièrement sur des projets pour vous entraîner !
+
+Vous avez presque terminé ce cours et ne savez pas quel cours suivre ensuite ? Venez faire un tour sur notre Carte des Connaissances ! Vous pourrez y voir en un clin d'œil les différents langages et spécialisations auxquels vous pourrez vous former avec OpenClassrooms !
+
+C'est la fin de ce cours, merci de l'avoir suivi ! Et comme vous vous en doutez : vous devez passer un dernier quiz pour valider vos connaissances. Allez, on y va !
+
+##############################################################################################################
+
